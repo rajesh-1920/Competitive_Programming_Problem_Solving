@@ -29,12 +29,55 @@ typedef unsigned long long int ull;
 #define MOD 1000000007
 #define N 200009
 //------------------------------------------------------------------------------------
+//-------------------------Modular-Arithmatic-----------------------------------------
+inline ll _normal(ll A, ll M)
+{
+    A = A - (A / M) * M;
+    if (A < 0)
+        A += M;
+    return A;
+}
+inline ll modadd(ll A, ll B, ll M)
+{
+    A = _normal(A, M), B = _normal(B, M);
+    return _normal(A + B, M);
+}
+inline ll modsub(ll A, ll B, ll M)
+{
+    A = _normal(A, M), B = _normal(B, M);
+    return _normal(A - B, M);
+}
+inline ll modmul(ll A, ll B, ll M)
+{
+    A = _normal(A, M), B = _normal(B, M);
+    return _normal(A * B, M);
+}
+inline ll binexpo(ll A, ll B, ll M)
+{
+    ll ans = _normal(1, M);
+    while (B)
+    {
+        if (B & 1)
+            ans = modmul(ans, A, M);
+        A = modmul(A, A, M);
+        B >>= 1;
+    }
+    return _normal(ans, M);
+}
+inline ll moddiv(ll A, ll B, ll M)
+{
+    A = _normal(A, M), B = _normal(B, M);
+    return _normal(modmul(A, (binexpo(B, M - 2, M)), M), M);
+}
+//----------------------------------------------------------------------------------*/
+//------------------------------------------------------------------------------------
 void solve(void)
 {
     ll n;
     cin >> n;
     vector<ll> v(n);
-    scv(v, n);
+    for (auto &it : v)
+        cin >> it;
     sort(all(v));
 }
 //------------------------------------------------------------------------------------
