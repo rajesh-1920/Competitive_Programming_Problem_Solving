@@ -1,12 +1,20 @@
 // Author:  Rajesh Biswas
-// Date  :  23.10.2024
+// CF    :  rajesh19
+// Date  :  28.10.2024
 
 #include <bits/stdc++.h>
 using namespace std;
 typedef long long int ll;
-typedef unsigned long long int ull;
-//------------------------------------------------------------------------------------
-/*/-------------------------Modular-Arithmatic----------------------------------------
+//------------------------------------------------------------------------------------------
+/*/----------------------------(Order_set)--------------------------------------------------
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+using namespace __gnu_pbds;
+template <class T>
+using o_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
+o_set<ll> s;
+//---------------------------------------------------------------------------------------*/
+/*/-------------------------Modular-Arithmatic----------------------------------------------
 inline ll _normal(ll A, ll M)
 {
     A = A - (A / M) * M;
@@ -46,8 +54,8 @@ inline ll moddiv(ll A, ll B, ll M)
     A = _normal(A, M), B = _normal(B, M);
     return _normal(modmul(A, (binexpo(B, M - 2, M)), M), M);
 }
-//----------------------------------------------------------------------------------*/
-//----------------------------(definition section)-------------------------------------
+//--------------------------------------------------------------------------------------*/
+//----------------------------(definition section)------------------------------------------
 #define f(i, a, b) for (ll i = a; i < b; i++)
 #define scv(v, n) f(i, 0, n) cin >> (v[i]);
 #define dbg(x) cout << #x << " = " << x << '\n'
@@ -70,7 +78,7 @@ inline ll moddiv(ll A, ll B, ll M)
 #define inf 90000000000000
 #define MOD 1000000007
 #define N 200009
-//------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------
 void solve(void)
 {
     ll n;
@@ -78,9 +86,8 @@ void solve(void)
     vector<ll> v(n);
     for (auto &it : v)
         cin >> it;
-    sort(all(v));
 }
-//------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------
 int main()
 {
     // cout << fixed << showpoint << setprecision(10);
