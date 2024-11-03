@@ -81,11 +81,46 @@ inline ll moddiv(ll A, ll B, ll M)
 //------------------------------------------------------------------------------------------
 void solve(void)
 {
-    ll n;
+    ll n, cnt = 1;
     cin >> n;
-    vector<ll> v(n);
-    for (auto &it : v)
-        cin >> it;
+    vector<pair<pair<ll, ll>, ll>> vp(n);
+    for (ll i = 0; i < n; i++)
+    {
+        cin >> vp[i].fi.fi >> vp[i].fi.sc;
+        vp[i].sc = i;
+    }
+    multiset<pair<ll, ll>> st;
+    sort(all(vp));
+    vector<ll> ans(n);
+    for (auto it : vp)
+    {
+        ll x = it.fi.fi, y = it.fi.sc, i = it.sc;
+        if (st.empty())
+        {
+            ans[i] = cnt;
+            st.insert({y, cnt++});
+        }
+        else
+        {
+            auto it = st.begin();
+            if ((*it).fi < x)
+            {
+                ll t = (*it).sc;
+                ans[i] = t;
+                st.erase(it);
+                st.insert({y, t});
+            }
+            else
+            {
+                ans[i] = cnt;
+                st.insert({y, cnt++});
+            }
+        }
+    }
+    cnt--;
+    cout << cnt << '\n';
+    for (auto it : ans)
+        cout << it << ' ';
 }
 //------------------------------------------------------------------------------------------
 int main()

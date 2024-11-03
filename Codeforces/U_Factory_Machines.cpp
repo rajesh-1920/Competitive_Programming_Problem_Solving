@@ -81,11 +81,39 @@ inline ll moddiv(ll A, ll B, ll M)
 //------------------------------------------------------------------------------------------
 void solve(void)
 {
-    ll n;
-    cin >> n;
+    ll n, t;
+    cin >> n >> t;
     vector<ll> v(n);
     for (auto &it : v)
         cin >> it;
+    sort(all(v));
+    ll l = 0, r = t * v[n - 1] + 5;
+    while (r - l > 1)
+    {
+        ll m = (r + l) / 2;
+        ll sum = 0;
+        for (auto it : v)
+        {
+            sum += (m / it);
+            if (sum >= t)
+                break;
+        }
+        if (sum < t)
+            l = m + 1;
+        else
+            r = m;
+    }
+    ll sum = 0;
+    for (auto it : v)
+    {
+        sum += (l / it);
+        if (sum >= t)
+            break;
+    }
+    if (sum >= t)
+        cout << l;
+    else
+        cout << r;
 }
 //------------------------------------------------------------------------------------------
 int main()
