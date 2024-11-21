@@ -59,8 +59,6 @@ inline ll moddiv(ll A, ll B, ll M)
 #define f(i, a, b) for (ll i = a; i < b; i++)
 #define scv(v, n) f(i, 0, n) cin >> (v[i]);
 #define dbg(x) cout << #x << " = " << x << '\n'
-#define nl cout << ("\n")
-#define rrr return
 #define fi first
 #define sc second
 
@@ -79,50 +77,12 @@ inline ll moddiv(ll A, ll B, ll M)
 //------------------------------------------------------------------------------------------
 void solve(void)
 {
-    ll n;
-    cin >> n;
-    vector<vector<ll>> v(n + 5);
-    f(i, 1, n + 1)
-    {
-        ll p, sum = 0;
-        cin >> p;
-        while (p--)
-        {
-            ll x;
-            cin >> x;
-            v[i].push_back(x);
-            sum += x;
-        }
-        v[i].push_back(sum);
-    }
-    ll qq;
-    cin >> qq;
-    f(q, 1, qq + 1)
-    {
-        ll c1, c2, dt, mn, yr;
-        cin >> c1 >> c2 >> dt >> mn >> yr;
-        ll total = (v[c1].back() * (yr - 1)) + dt;
-        f(i, 0, mn - 1)
-            total += v[c1][i];
-
-        // dbg(total);
-        ll year = total / v[c2].back() + 1;
-        ll date = total % v[c2].back();
-        if (date == 0)
-        {
-            year--;
-            date = v[c2].back();
-        }
-        ll month = 1;
-        for (auto it : v[c2])
-        {
-            if (it >= date)
-                break;
-            date -= it;
-            month++;
-        }
-        cout << "Query " << q << ": " << date << ' ' << month << ' ' << year << '\n';
-    }
+    ll p, s, r;
+    cin >> p >> s >> r;
+    if (s != p || r == 1)
+        cout << "Yes\n";
+    else
+        cout << "No\n";
 }
 //------------------------------------------------------------------------------------------
 int main()
@@ -131,10 +91,10 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    // cin >> test;
+    cin >> test;
     for (T = 1; T <= test; T++)
     {
-        // cout << "Case " << T << ": ";
+        cout << "Case " << T << ": ";
         solve();
     }
     return 0;
