@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh19
-// Date  :  07.11.2024
+// Date  :  06.11.2024
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -86,6 +86,19 @@ void solve(void)
     vector<ll> v(n);
     for (auto &it : v)
         cin >> it;
+    map<ll, ll> mp;
+    f(i, 0, n)
+    {
+        mp[v[i]] = i + 1;
+        auto it = mp.lower_bound(v[i]);
+        if (it == mp.begin())
+            cout << 0 << ' ';
+        else
+        {
+            it--;
+            cout << (*it).sc << ' ';
+        }
+    }
 }
 //------------------------------------------------------------------------------------------
 int main()

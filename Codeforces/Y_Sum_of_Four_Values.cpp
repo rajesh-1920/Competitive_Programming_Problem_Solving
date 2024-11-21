@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh19
-// Date  :  07.11.2024
+// Date  :  06.11.2024
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -81,11 +81,38 @@ inline ll moddiv(ll A, ll B, ll M)
 //------------------------------------------------------------------------------------------
 void solve(void)
 {
-    ll n;
-    cin >> n;
-    vector<ll> v(n);
-    for (auto &it : v)
-        cin >> it;
+    ll n, x;
+    cin >> n >> x;
+    vector<pair<ll, ll>> v(n);
+    f(i, 0, n)
+    {
+        cin >> v[i].fi;
+        v[i].sc = i + 1;
+    }
+    sort(all(v));
+    for (ll t = 0; t < n; t++)
+        for (ll it = t + 1; it < n; it++)
+        {
+            ll tar = x - v[it].fi - v[t].fi;
+            ll i = it + 1, l = n - 1;
+            if (tar <= 0)
+                break;
+            while (i < l)
+            {
+                if (v[i].fi + v[l].fi <= tar)
+                {
+                    if (v[i].fi + v[l].fi == tar)
+                    {
+                        cout << v[i].sc << ' ' << v[l].sc << ' ' << v[it].sc << ' ' << v[t].sc;
+                        rrr;
+                    }
+                    i++;
+                }
+                else
+                    l--;
+            }
+        }
+    cout << -1;
 }
 //------------------------------------------------------------------------------------------
 int main()

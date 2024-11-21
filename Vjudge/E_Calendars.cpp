@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh19
-// Date  :  07.11.2024
+// Date  :  21.11.2024
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -63,8 +63,6 @@ inline ll moddiv(ll A, ll B, ll M)
 #define rrr return
 #define fi first
 #define sc second
-#define pb(x) push_back(x)
-#define ppb(x, y) push_back({x, y})
 
 #define all(s) s.begin(), s.end()
 #define rall(s) s.rbegin(), s.rend()
@@ -83,9 +81,42 @@ void solve(void)
 {
     ll n;
     cin >> n;
-    vector<ll> v(n);
-    for (auto &it : v)
-        cin >> it;
+    vector<vector<ll>> v(n + 5);
+    f(i, 1, n + 1)
+    {
+        ll p, sum = 0;
+        cin >> p;
+        while (p--)
+        {
+            ll x;
+            cin >> x;
+            v[i].push_back(x);
+            sum += x;
+        }
+        v[i].push_back(sum);
+    }
+    ll qq;
+    cin >> qq;
+    f(q, 1, qq + 1)
+    {
+        ll c1, c2, dt, mn, yr;
+        cin >> c1 >> c2 >> dt >> mn >> yr;
+        ll total = (v[c1].back() * (yr - 1)) + dt;
+        f(i, 0, mn-1)
+            total += v[c1][i];
+        //dbg(total);
+        ll year = total / v[c2].back() + 1;
+        ll date = total % v[c2].back();
+        ll month = 1;
+        for (auto it : v[c2])
+        {
+            if (it >= date)
+                break;
+            date -= it;
+            month++;
+        }
+        cout << "Query " << q << ": " << date << ' ' << month << ' ' << year << '\n';
+    }
 }
 //------------------------------------------------------------------------------------------
 int main()

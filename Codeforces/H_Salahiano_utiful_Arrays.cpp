@@ -79,13 +79,76 @@ inline ll moddiv(ll A, ll B, ll M)
 #define MOD 1000000007
 #define N 200009
 //------------------------------------------------------------------------------------------
+vector<ll> b(N), a(N);
+set<ll> pos_a[N], pos_b[N];
+
 void solve(void)
 {
     ll n;
     cin >> n;
-    vector<ll> v(n);
-    for (auto &it : v)
-        cin >> it;
+    ll fl = 0;
+    map<ll, ll> mpa, mpb;
+    for (ll i = 0; i < n; i++)
+    {
+        cin >> a[i] >> b[i];
+        mpa[a[i]]++;
+        mpb[b[i]]++;
+        pos_a[a[i]].insert(i);
+        pos_b[b[i]].insert(i);
+        if (mpa[a[i]] > 2 || mpb[a[i]] > 2)
+            fl = 1;
+    }
+    if (fl)
+    {
+        cout << -1 << '\n';
+        return;
+    }
+    ll cnt = 0;
+    for (ll i = 0; i < n; i++)
+    {
+        if (pos_a[a[i]].size() == 2)
+        {
+            ll x = *(pos_a[a[i]].begin());
+            pos_a[a[i]].erase(pos_a[a[i]].begin());
+            ll y = *(pos_a[a[i]].begin());
+            pos_a[a[i]].erase(pos_a[a[i]].begin());
+
+            if (mpa[b[x]] == 0 && mpb[a[x]] == 0)
+            {
+                mpa[a[x]]--;
+                mpb[b[x]]--;
+                mpa[b[x]]++;
+                mpb[a[x]]++;
+                pos_b[b[x]].erase(x);
+                pos_b[a[x]].insert(x);
+                pos_a[b[x]].insert(x);
+                pos_a[a[x]].insert(y);
+                cnt++;
+            }
+            else
+            {
+                swap(x, y);
+                if (mpa[b[x]] == 0 && mpb[a[x]] == 0)
+                {
+                    mpa[a[x]]--;
+                    mpb[b[x]]--;
+                    mpa[b[x]]++;
+                    mpb[a[x]]++;
+                    pos_b[b[x]].erase(x);
+                    pos_b[a[x]].insert(x);
+                    pos_a[b[x]].insert(x);
+                    pos_a[a[x]].insert(y);
+                    cnt++;
+                }
+                else
+                {
+                    cout << -1 << '\n';
+                    return;
+                }
+            }
+        }
+    }
+    cout << cnt << '\n';
 }
 //------------------------------------------------------------------------------------------
 int main()
@@ -94,7 +157,7 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    // cin >> test;
+    cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";
