@@ -1,5 +1,5 @@
 // Author:  Rajesh Biswas
-// Date  :  23.11.2024
+// Date  :  22.11.2024
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -24,15 +24,48 @@ typedef unsigned long long int ull;
 #define base1 1000002089
 #define base2 1000003853
 #define hashmod 1000002989
-#define N 200009
-ll xx[] = {0, 0, 1, -1}, yy[] = {1, -1, 0, 0}, n, m;
+#define N 1009
+//------------------------------------------------------------------------------------
+ll xx[] = {1, -1, 0, 0};
+ll yy[] = {0, 0, 1, -1};
+bool vis[N][N];
+ll n, m;
+vector<vector<char>> grid(N, vector<char>(N));
 bool isvalid(ll x, ll y)
 {
-    return (x > 0 && y > 0 && x <= n && y <= m);
+    return (x > 0 and y > 0 and x <= n and y <= m);
 }
-//------------------------------------------------------------------------------------
+void dfs(ll x, ll y)
+{
+    vis[x][y] = true;
+    f(i, 0, 4)
+    {
+        if (!isvalid(x + xx[i], y + yy[i]))
+            continue;
+        if (vis[x + xx[i]][y + yy[i]] || grid[x + xx[i]][y + yy[i]] == '#')
+            continue;
+        dfs(x + xx[i], y + yy[i]);
+    }
+}
 void solve(void)
 {
+    cin >> n >> m;
+    f(i, 1, n + 1)
+    {
+        f(j, 1, m + 1) cin >> grid[i][j];
+    }
+    ll cnt = 0;
+    f(i, 1, n + 1)
+    {
+        f(j, 1, m + 1)
+        {
+            if (vis[i][j] || grid[i][j] == '#')
+                continue;
+            cnt++;
+            dfs(i, j);
+        }
+    }
+    cout << cnt << '\n';
 }
 //------------------------------------------------------------------------------------
 int main()

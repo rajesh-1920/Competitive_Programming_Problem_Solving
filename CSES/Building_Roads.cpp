@@ -25,14 +25,43 @@ typedef unsigned long long int ull;
 #define base2 1000003853
 #define hashmod 1000002989
 #define N 200009
-ll xx[] = {0, 0, 1, -1}, yy[] = {1, -1, 0, 0}, n, m;
-bool isvalid(ll x, ll y)
-{
-    return (x > 0 && y > 0 && x <= n && y <= m);
-}
 //------------------------------------------------------------------------------------
+vector<ll> g[N];
+bool vis[N];
+void dfs(ll n)
+{
+    vis[n] = true;
+    for (auto it : g[n])
+    {
+        if (!vis[it])
+            dfs(it);
+    }
+}
 void solve(void)
 {
+    ll n, m;
+    cin >> n >> m;
+    while (m--)
+    {
+        ll x, y;
+        cin >> x >> y;
+        g[x].push_back(y);
+        g[y].push_back(x);
+    }
+    dfs(1);
+    ll cnt = 0;
+    vector<ll> ans;
+    f(i, 2, n + 1)
+    {
+        if (vis[i])
+            continue;
+        cnt++;
+        ans.push_back(i);
+        dfs(i);
+    }
+    cout << cnt << '\n';
+    for (auto it : ans)
+        cout << 1 << ' ' << it<<'\n';
 }
 //------------------------------------------------------------------------------------
 int main()
