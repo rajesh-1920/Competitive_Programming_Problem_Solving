@@ -57,14 +57,10 @@ inline ll moddiv(ll A, ll B, ll M)
 //-----------------------------------------------------------------------------------------*/
 //----------------------------(definition section)-------------------------------------------
 #define f(i, a, b) for (ll i = a; i < b; i++)
-#define scv(v, n) f(i, 0, n) cin >> (v[i]);
 #define dbg(x) cout << #x << " = " << x << '\n'
-#define nl cout << ("\n")
 #define rrr return
 #define fi first
 #define sc second
-#define pb(x) push_back(x)
-#define ppb(x, y) push_back({x, y})
 
 #define all(s) s.begin(), s.end()
 #define rall(s) s.rbegin(), s.rend()
