@@ -22,9 +22,14 @@ void solve(void)
 {
     ll n;
     cin >> n;
-    vector<ll> v(n);
-    for (auto &it : v)
-        cin >> it;
+    ll ans = 1, i = 1;
+    while (i < n)
+    {
+        ans++;
+        i++;
+        i *= 2;
+    }
+    cout << ans << '\n';
 }
 //-----------------------------------------------------------------------------------------
 int main()
@@ -33,7 +38,7 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    // cin >> test;
+    cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";

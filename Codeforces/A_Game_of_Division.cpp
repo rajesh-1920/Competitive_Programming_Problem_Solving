@@ -20,11 +20,33 @@ const ll N = 1e9 + 10;
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    ll n;
-    cin >> n;
+    ll n, k;
+    cin >> n >> k;
     vector<ll> v(n);
     for (auto &it : v)
         cin >> it;
+    for (ll i = 0; i < n; i++)
+    {
+        ll fl = 1;
+        for (ll j = 0; j < n; j++)
+        {
+            if (i == j)
+                continue;
+            ll t = abs(v[i] - v[j]);
+            if (t % k == 0)
+            {
+                fl = 0;
+                break;
+            }
+        }
+        if (fl)
+        {
+            cout << "YES\n"
+                 << i + 1 << '\n';
+            return;
+        }
+    }
+    cout << "NO\n";
 }
 //-----------------------------------------------------------------------------------------
 int main()
@@ -33,7 +55,7 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    // cin >> test;
+    cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";
