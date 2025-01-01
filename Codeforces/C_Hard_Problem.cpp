@@ -5,7 +5,7 @@
 using namespace std;
 typedef long long int ll;
 //----------------------------(definition section)-----------------------------------------
-#define dbg(x) cout << #x << " = " << x << '\n'
+#define dbg(x) cout << #x << " = " << x << '\n';
 #define fi first
 #define sc second
 
@@ -19,11 +19,53 @@ const ll N = 1e9 + 10;
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    ll n;
-    cin >> n;
-    vector<ll> v(n);
-    for (auto &it : v)
-        cin >> it;
+    ll m, a, b, c;
+    cin >> m >> a >> b >> c;
+    ll ans = 0;
+    ll t = m;
+    if (a >= m)
+    {
+        ans += m;
+        m = 0;
+    }
+    else
+    {
+        m -= a;
+        ans += a;
+        if (c >= m)
+        {
+            ans += m;
+            c -= m;
+        }
+        else
+        {
+            ans += c;
+            c = 0;
+        }
+    }
+    m = t;
+    if (b >= m)
+    {
+        ans += m;
+        m = 0;
+    }
+    else
+    {
+        m -= b;
+        ans += b;
+        if (c >= m)
+        {
+            ans += m;
+            c -= m;
+        }
+        else
+        {
+            ans += c;
+            c = 0;
+        }
+    }
+
+    cout << ans << '\n';
 }
 //-----------------------------------------------------------------------------------------
 int main()

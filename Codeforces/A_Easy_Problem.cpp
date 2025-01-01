@@ -5,7 +5,7 @@
 using namespace std;
 typedef long long int ll;
 //----------------------------(definition section)-----------------------------------------
-#define dbg(x) cout << #x << " = " << x << '\n'
+#define dbg(x) cout << #x << " = " << x << '\n';
 #define fi first
 #define sc second
 
@@ -21,9 +21,16 @@ void solve(void)
 {
     ll n;
     cin >> n;
-    vector<ll> v(n);
-    for (auto &it : v)
-        cin >> it;
+    ll cnt = 0;
+    for (ll i = 1; i <= n; i++)
+    {
+        for (ll j = 1; j <= n; j++)
+        {
+            if (i == (n - j))
+                cnt++;
+        }
+    }
+    cout << cnt << '\n';
 }
 //-----------------------------------------------------------------------------------------
 int main()
