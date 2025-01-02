@@ -20,8 +20,32 @@ const ll N = 1e9 + 10;
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    ll n;
-    cin >> n;
+    string s;
+    cin >> s;
+    map<char, ll> mp;
+    ll cur;
+    for (ll i = 0; i < 26; i++)
+    {
+        mp[s[i]] = i;
+        if (s[i] == 'A')
+            cur = i;
+    }
+    set<char> st;
+    for (ll i = 1; i < 26; i++)
+    {
+        char ch = char('A' + i);
+        st.insert(ch);
+    }
+    ll ans = 0;
+    while (!st.empty())
+    {
+        char ch = *st.begin();
+        st.erase(st.begin());
+        ll pos = mp[ch];
+        ans += max((pos - cur), (-pos + cur));
+        cur = mp[ch];
+    }
+    cout << ans;
 }
 //-----------------------------------------------------------------------------------------
 int main()

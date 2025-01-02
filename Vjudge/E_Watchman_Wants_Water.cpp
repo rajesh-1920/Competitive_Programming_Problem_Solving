@@ -13,15 +13,15 @@ typedef long long int ll;
 #define all(s) s.begin(), s.end()
 #define rall(s) s.rbegin(), s.rend()
 
-const double eps = 1e-1;
+const double eps = 1e-8;
 const ll inf = 9e15 + 7;
 const ll MOD = 1e9 + 7;
 const ll N = 1e9 + 10;
 //-----------------------------------------------------------------------------------------
+
 void solve(void)
 {
-    ll n;
-    cin >> n;
+    double x1, y1, x2, y2;
 }
 //-----------------------------------------------------------------------------------------
 int main()
@@ -30,7 +30,7 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    // cin >> test;
+    cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";

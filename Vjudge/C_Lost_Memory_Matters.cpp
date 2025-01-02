@@ -21,7 +21,12 @@ const ll N = 1e9 + 10;
 void solve(void)
 {
     ll n;
-    cin >> n;
+    vector<ll> v;
+    while (cin >> n)
+        v.push_back(n);
+    reverse(all(v));
+    for (auto it : v)
+        cout << it << '\n';
 }
 //-----------------------------------------------------------------------------------------
 int main()
