@@ -1,11 +1,11 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  04.01.2025
+// Date  :  03.01.2025
 
 #include <bits/stdc++.h>
 using namespace std;
-//----------------------------(definition section)-----------------------------------------
 typedef long long int ll;
+//----------------------------(definition section)-----------------------------------------
 #define dbg(x) cout << #x << " = " << x << '\n'
 #define fi first
 #define sc second
@@ -18,16 +18,14 @@ const ll inf = 9e15 + 7;
 const ll MOD = 1e9 + 7;
 const ll N = 1e9 + 10;
 //-----------------------------------------------------------------------------------------
-class Solution {
-public:
-    vector<int> twoSum(vector<int>& nums, int target) {
-        
-    }
-};
-//-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    
+    ll n;
+    cin >> n;
+    if (n % 33)
+        cout << "NO\n";
+    else
+        cout << "YES\n";
 }
 //-----------------------------------------------------------------------------------------
 int main()

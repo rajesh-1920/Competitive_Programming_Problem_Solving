@@ -4,8 +4,8 @@
 
 #include <bits/stdc++.h>
 using namespace std;
-//----------------------------(definition section)-----------------------------------------
 typedef long long int ll;
+//----------------------------(definition section)-----------------------------------------
 #define dbg(x) cout << #x << " = " << x << '\n'
 #define fi first
 #define sc second
@@ -18,16 +18,23 @@ const ll inf = 9e15 + 7;
 const ll MOD = 1e9 + 7;
 const ll N = 1e9 + 10;
 //-----------------------------------------------------------------------------------------
-class Solution {
-public:
-    vector<int> twoSum(vector<int>& nums, int target) {
-        
-    }
-};
-//-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    
+    ll n, m, ans = 0, fl = 1;
+    cin >> n >> m;
+    while (n--)
+    {
+        string s;
+        cin >> s;
+        if (s.size() <= m && fl)
+        {
+            ans++;
+            m -= s.size();
+        }
+        else
+            fl = 0;
+    }
+    cout << ans << '\n';
 }
 //-----------------------------------------------------------------------------------------
 int main()
