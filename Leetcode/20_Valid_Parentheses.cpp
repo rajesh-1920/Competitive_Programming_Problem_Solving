@@ -21,13 +21,45 @@ class Solution
     const ll N = 1e9 + 10;
 
 public:
-    
+    bool isValid(string s)
+    {
+        bool ans = true;
+        stack<char> st;
+        for (auto it : s)
+        {
+            if (it == '(' || it == '{' || it == '[')
+                st.push(it);
+            else
+            {
+                if (st.size() == 0)
+                {
+                    ans = false;
+                    break;
+                }
+                if (it == ')')
+                    if (st.top() != '(')
+                        ans = false;
+                if (it == '}')
+                    if (st.top() != '{')
+                        ans = false;
+                if (it == ']')
+                    if (st.top() != '[')
+                        ans = false;
+                st.pop();
+            }
+        }
+        if (st.size())
+            ans = false;
+        return ans;
+    }
 };
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
     Solution aa;
-    
+    string s;
+    cin >> s;
+    cout << aa.isValid(s);
 }
 //-----------------------------------------------------------------------------------------
 int main()
