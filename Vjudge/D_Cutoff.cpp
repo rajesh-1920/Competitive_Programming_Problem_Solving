@@ -20,8 +20,36 @@ const ll N = 1e9 + 10;
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    ll n;
-    cin >> n;
+    ll n, x, mn = 500;
+    cin >> n >> x;
+    multiset<ll> st;
+    ll sum = 0;
+    for (ll i = 1; i < n; i++)
+    {
+        ll t;
+        cin >> t;
+        st.insert(t);
+        sum += t;
+    }
+
+    for (ll i = 0; i <= 100; i++)
+    {
+        ll temp = sum;
+        st.insert(i);
+        ll t = *(st.begin());
+        sum -= t;
+        t = *(--st.end());
+        sum -= t;
+        sum += i;
+        if (sum >= x)
+        {
+            cout << i;
+            return;
+        }
+        st.erase(st.find(i));
+        sum = temp;
+    }
+    cout << -1;
 }
 //-----------------------------------------------------------------------------------------
 int main()
