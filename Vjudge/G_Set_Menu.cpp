@@ -26,47 +26,19 @@ void solve(void)
     for (auto &it : a)
         cin >> it;
     sort(all(a));
-    vector<ll> pre(n + 1, 0);
+    vector<ll> pre(n + 2, 0);
     for (ll i = 0; i < n; i++)
         pre[i + 1] = a[i] + pre[i];
-
+    pre[n + 1] = pre[n];
     for (ll i = 0; i < m; i++)
     {
         ll b;
         cin >> b;
         ll need = (p - b);
-        if (a[0] >= need)
-        {
-            ans += (p * n);
-            continue;
-        }
-        if (a[n - 1] < need)
-        {
-            ans += (b * n + pre[n]);
-            continue;
-        }
-        // dbg(i);
-        // dbg(need);
-        ll l = 0, r = n - 1, temp = 0;
-        while (r > l)
-        {
-            ll mm = (r + l) / 2;
-            if (a[mm] > need)
-                r = mm - 1;
-            else
-            {
-                l = mm + 1;
-                temp = mm;
-            }
-        }
-        l = temp;
-        // dbg(l);
-        ll tt = b * (l + 1) + pre[l + 1];
-        ll pp = p * (m - l - 1);
-        // dbg(m - l - 1);
-        ans += b * (l + 1) + pre[l + 1];
-        ans += p * (n - l - 1);
-        // cout << '\n';
+        ll x = upper_bound(all(a), need) - a.begin();
+        x--;
+        ans += (n - x - 1) * p + b * (x + 1) + pre[x + 1];
+        //dbg(x);
     }
     cout << ans;
 }
