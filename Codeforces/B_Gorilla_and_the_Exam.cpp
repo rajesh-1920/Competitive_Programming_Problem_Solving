@@ -16,13 +16,35 @@ typedef long long int ll;
 const double eps = 1e-1;
 const ll inf = 9e15 + 7;
 const ll MOD = 1e9 + 7;
-const ll N = 1e5 + 10;
+const ll N = 1e9 + 10;
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    ll n;
-    cin >> n;
-    // vector<ll> v(n);
+    ll n, k;
+    cin >> n >> k;
+    vector<ll> v(n);
+    map<ll, ll> mp;
+    for (auto &it : v)
+    {
+        cin >> it;
+        mp[it]++;
+    }
+    vector<pair<ll, ll>> vp;
+    for (auto it : mp)
+        vp.push_back({it.sc, it.fi});
+    sort(all(vp));
+
+    for (auto it : vp)
+    {
+        if (it.fi <= k)
+        {
+            k -= it.fi;
+            mp.erase(it.sc);
+        }
+        else
+            break;
+    }
+    cout << max(1ll, 1ll * mp.size()) << '\n';
 }
 //-----------------------------------------------------------------------------------------
 int main()
@@ -31,7 +53,7 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    // cin >> test;
+    cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";
