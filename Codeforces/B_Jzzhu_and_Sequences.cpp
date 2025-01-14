@@ -16,45 +16,28 @@ typedef long long int ll;
 const double eps = 1e-1;
 const ll inf = 9e15 + 7;
 const ll MOD = 1e9 + 7;
-const ll N = 2e3 + 10;
+const ll N = 1e5 + 10;
 //-----------------------------------------------------------------------------------------
-vector<ll> g[N], vis(N, 0), depth(N, 0);
-
-void dfs(ll n)
+inline ll mod(ll n)
 {
-    vis[n] = 1;
-    // dbg(n);
-    for (auto it : g[n])
-    {
-        if (!vis[it])
-        {
-            depth[it] = depth[n] + 1;
-            dfs(it);
-        }
-    }
+    n = n - ((n / MOD) * MOD);
+    if (n < 0)
+        n += MOD;
+    return n;
 }
 void solve(void)
 {
-    ll n;
-    cin >> n;
-    vector<ll> t;
-    for (ll i = 1; i <= n; i++)
-    {
-        ll x;
-        cin >> x;
-        if (x == -1)
-            t.push_back(i);
-        else
-            g[x].push_back(i);
-    }
-    for (auto it : t)
-        if (vis[it] == 0)
-            dfs(it);
-
-    ll ss = 0;
-    for (ll i = 1; i <= n; i++)
-        ss = max(ss, depth[i]);
-    cout << (ss + 1) << '\n';
+    ll n, x, y;
+    cin >> x >> y >> n;
+    vector<ll> v(6);
+    v[0] = mod(x - y);
+    v[1] = mod(x);
+    v[2] = mod(y);
+    v[3] = mod(y - x);
+    v[4] = mod(-x);
+    v[5] = mod(-y);
+    n %= 6;
+    cout << v[n];
 }
 //-----------------------------------------------------------------------------------------
 int main()
