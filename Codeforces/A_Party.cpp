@@ -18,11 +18,42 @@ const ll inf = 9e15 + 7;
 const ll MOD = 1e9 + 7;
 const ll N = 1e5 + 10;
 //-----------------------------------------------------------------------------------------
+vector<ll> g[N], vis(N, 0), depth(N, 0);
+
+void dfs(ll n)
+{
+    vis[n] = 1;
+    // dbg(n);
+    for (auto it : g[n])
+    {
+        if (!vis[it])
+        {
+            depth[it] = depth[n] + 1;
+            dfs(it);
+        }
+    }
+}
 void solve(void)
 {
     ll n;
     cin >> n;
-    // vector<ll> v(n);
+    vector<ll> v(n), t;
+    for (ll i = 1; i <= n; i++)
+    {
+        cin >> v[i];
+        if (v[i] == -1)
+            t.push_back(i);
+        else
+            g[v[i]].push_back(i);
+    }
+    for (auto it : t)
+        if (vis[it] == 0)
+            dfs(it);
+
+    ll ss = 0;
+    for (ll i = 1; i <= n; i++)
+        ss = max(ss, depth[i]);
+    cout << (ss + 1) << '\n';
 }
 //-----------------------------------------------------------------------------------------
 int main()
