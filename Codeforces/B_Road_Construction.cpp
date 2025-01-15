@@ -20,9 +20,30 @@ const ll N = 1e5 + 10;
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    ll n;
-    cin >> n;
-    // vector<ll> v(n);
+    ll n, m;
+    cin >> n >> m;
+    map<ll, ll> mp;
+    m += m;
+    while (m--)
+    {
+        ll x;
+        cin >> x;
+        mp[x]++;
+    }
+    cout << n - 1 << '\n';
+    ll t;
+    for (ll i = 1; i <= n; i++)
+        if (mp.find(i) == mp.end())
+        {
+            t = i;
+            break;
+        }
+    for (ll i = 1; i <= n; i++)
+    {
+        if (t == i)
+            continue;
+        cout << t << ' ' << i << '\n';
+    }
 }
 //-----------------------------------------------------------------------------------------
 int main()
