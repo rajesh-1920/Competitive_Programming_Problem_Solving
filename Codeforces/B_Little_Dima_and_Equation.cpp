@@ -18,11 +18,39 @@ const ll inf = 9e15 + 7;
 const ll MOD = 1e9 + 7;
 const ll N = 1e5 + 10;
 //-----------------------------------------------------------------------------------------
+ll po(ll a, ll b)
+{
+    ll ans = 1;
+    while (b)
+    {
+        if (b & 1)
+            ans *= a;
+        a *= a;
+        b >>= 1;
+    }
+    return ans;
+}
 void solve(void)
 {
-    ll n;
-    cin >> n;
-    // vector<ll> v(n);
+    ll a, b, c;
+    cin >> a >> b >> c;
+    set<ll> st;
+    for (ll s = 1; s <= 85; s++)
+    {
+        ll x = b * (po(s, a)) + c;
+        ll sum = 0;
+        ll t = x;
+        while (x)
+        {
+            sum += (x % 10);
+            x /= 10;
+        }
+        if (sum == s && t > 0 && t < 1000000000)
+            st.insert(t);
+    }
+    cout << st.size() << '\n';
+    for (auto it : st)
+        cout << it << ' ';
 }
 //-----------------------------------------------------------------------------------------
 int main()
