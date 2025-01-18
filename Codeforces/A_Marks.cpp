@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  18.01.2025
+// Date  :  17.01.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -20,9 +20,22 @@ const ll N = 1e5 + 10;
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    ll n;
-    cin >> n;
-    // vector<ll> v(n);
+    ll n, m;
+    cin >> n >> m;
+    string s[n];
+    for (ll i = 0; i < n; i++)
+        cin >> s[i];
+    set<ll> st;
+    for (ll j = 0; j < m; j++)
+    {
+        map<char, vector<ll>> mp;
+        for (ll i = 0; i < n; i++)
+            mp[s[i][j]].push_back(i);
+        auto it = --mp.end();
+        for (auto ii : it->sc)
+            st.insert(ii);
+    }
+    cout << st.size() << '\n';
 }
 //-----------------------------------------------------------------------------------------
 int main()
@@ -31,7 +44,7 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    cin >> test;
+    // cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";
