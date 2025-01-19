@@ -22,7 +22,18 @@ void solve(void)
 {
     ll n;
     cin >> n;
-    // vector<ll> v(n);
+    vector<ll> v(n, 1);
+    ll x = 2;
+    for (ll i = 1; i < n / 2; i++)
+    {
+        v[i] = x++;
+        if (n / 2 + i < n - 1)
+            v[n / 2 + i] = x++;
+    }
+
+    for (ll i = 0; i < n; i++)
+        cout << v[i] << ' ';
+    cout << '\n';
 }
 //-----------------------------------------------------------------------------------------
 int main()

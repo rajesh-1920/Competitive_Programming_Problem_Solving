@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  18.01.2025
+// Date  :  19.01.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -16,57 +16,48 @@ typedef long long int ll;
 const double eps = 1e-1;
 const ll inf = 9e15 + 7;
 const ll MOD = 1e9 + 7;
-const ll N = 1e5 + 10;
+const ll N = 1e3 + 10;
 //-----------------------------------------------------------------------------------------
+vector<ll> g[N], topo, vis(N);
+void dfs(ll n)
+{
+    vis[n] = 1;
+    for (auto it : g[n])
+    {
+        if (vis[it] == 0)
+            dfs(it);
+    }
+    topo.push_back(n);
+}
 void solve(void)
 {
     ll n;
     cin >> n;
-    vector<pair<ll, ll>> v;
-    map<pair<ll, ll>, ll> tm;
-    set<ll> st;
-    for (ll i = 0; i < n; i++)
+    for (ll i = 1; i <= n; i++)
+        vis[i] = 0;
+    for (ll i = 1; i <= n; i++)
     {
-        st.insert(i + 1);
         string s;
         cin >> s;
         for (ll j = 0; j < n; j++)
         {
-            if (s[j] == '1')
-            {
-                if (i < j)
-                {
-                    v.push_back({i + 1, j + 1});
-                    tm[{i + 1, j + 1}]++;
-                    tm[{j + 1, i + 1}]++;
-                }
-            }
+            if (s[j] == '1' && i < j + 1)
+                g[i].push_back(j + 1);
         }
     }
-    vector<ll> ans(n + 5, -1);
-    map<ll, ll> mp;
-    for (auto it : v)
-    {
-        auto it1 = find(all(ans), it.fi);
-        auto it2 = find(all(ans), it.sc);
-        if (*it1 == -1 && *it2 == -1)
-        {
-            *it1 = it.fi;
-            *it2 = it.sc;
-        }
-    }
-    // cout << 'a' << ' ';
+    for (ll i = 1; i <= n; i++)
+        if (vis[i] == 0)
+            dfs(i);
+    reverse(all(topo));
+    for (auto it : topo)
+        cout << it << ' ';
+    cout << '\n';
+    topo.clear();
     for (ll i = 1; i <= n; i++)
     {
-        if (ans[i] == -1)
-        {
-            auto it = --st.end();
-            ans[i] = *(it);
-            st.erase(it);
-        }
-        cout << ans[i] << ' ';
+        g[i].push_back(1);
+        g[i].clear();
     }
-    cout << '\n';
 }
 //-----------------------------------------------------------------------------------------
 int main()
