@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  21.01.2025
+// Date  :  20.01.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -22,7 +22,12 @@ void solve(void)
 {
     ll n;
     cin >> n;
-    //vector<ll>v(n);for(auto &it:v)cin>>it;
+    vector<ll> v(n);
+    for (auto &it : v)
+        cin >> it;
+    sort(all(v));
+    for (auto it : v)
+        cout << it << ' ';
 }
 //-----------------------------------------------------------------------------------------
 int main()

@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  21.01.2025
+// Date  :  20.01.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -20,9 +20,39 @@ const ll N = 1e9 + 10;
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    ll n;
-    cin >> n;
-    //vector<ll>v(n);for(auto &it:v)cin>>it;
+    ll n, q;
+    cin >> n >> q;
+    vector<ll> v(n + 1, 0), ev;
+    ll ans = 0, cur = 0;
+    while (q--)
+    {
+        ll t, x;
+        cin >> t >> x;
+        if (t == 1)
+        {
+            ans++;
+            v[x]++;
+            ev.push_back(x);
+        }
+        else if (t == 2)
+        {
+            ans -= v[x];
+            v[x] = 0;
+        }
+        else
+        {
+            for (ll i = 0; i < x; i++)
+            {
+                if (v[ev[i]] > 0)
+                {
+                    v[ev[i]]--;
+                    ans--;
+                }
+            }
+            //cur = x - 1;
+        }
+        cout << ans << '\n';
+    }
 }
 //-----------------------------------------------------------------------------------------
 int main()

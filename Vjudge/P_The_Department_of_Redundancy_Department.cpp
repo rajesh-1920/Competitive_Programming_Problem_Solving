@@ -21,8 +21,19 @@ const ll N = 1e9 + 10;
 void solve(void)
 {
     ll n;
-    cin >> n;
-    //vector<ll>v(n);for(auto &it:v)cin>>it;
+    map<ll, ll> mp;
+    vector<ll> v;
+    while (cin >> n)
+    {
+        mp[n]++;
+        v.push_back(n);
+    }
+    for (auto it : v)
+    {
+        if (mp[it] > 0)
+            cout << it << ' ' << mp[it] << '\n';
+        mp[it] = 0;
+    }
 }
 //-----------------------------------------------------------------------------------------
 int main()

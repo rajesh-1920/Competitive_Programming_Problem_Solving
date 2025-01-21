@@ -22,7 +22,32 @@ void solve(void)
 {
     ll n;
     cin >> n;
-    //vector<ll>v(n);for(auto &it:v)cin>>it;
+    map<string, ll> mp;
+    map<string, ll> pre;
+    while (n--)
+    {
+        string s;
+        cin >> s;
+        if (mp[s] == 0)
+        {
+            cout << "OK\n";
+            mp[s]++;
+            pre[s] = 0;
+            continue;
+        }
+        for (ll i = pre[s] + 1;; i++)
+        {
+            string t = to_string(i);
+            string temp = s + t;
+            if (mp[temp] == 0)
+            {
+                pre[s] = i;
+                cout << temp << '\n';
+                mp[temp]++;
+                break;
+            }
+        }
+    }
 }
 //-----------------------------------------------------------------------------------------
 int main()

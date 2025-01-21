@@ -22,7 +22,21 @@ void solve(void)
 {
     ll n;
     cin >> n;
-    //vector<ll>v(n);for(auto &it:v)cin>>it;
+    vector<ll> v(n + 1);
+    for (ll i = 1; i <= n; i++)
+    {
+        ll x;
+        cin >> x;
+        v[x] = i;
+    }
+    ll ans = 1, cur = v[1];
+    for (ll i = 2; i <= n; i++)
+    {
+        if (cur > v[i])
+            ans++;
+        cur = v[i];
+    }
+    cout << ans << '\n';
 }
 //-----------------------------------------------------------------------------------------
 int main()

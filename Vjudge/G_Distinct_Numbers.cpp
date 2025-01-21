@@ -22,7 +22,14 @@ void solve(void)
 {
     ll n;
     cin >> n;
-    //vector<ll>v(n);for(auto &it:v)cin>>it;
+    set<ll> st;
+    while (n--)
+    {
+        ll x;
+        cin >> x;
+        st.insert(x);
+    }
+    cout << st.size();
 }
 //-----------------------------------------------------------------------------------------
 int main()

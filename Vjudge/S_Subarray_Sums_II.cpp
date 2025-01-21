@@ -20,9 +20,29 @@ const ll N = 1e9 + 10;
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    ll n;
-    cin >> n;
-    //vector<ll>v(n);for(auto &it:v)cin>>it;
+    ll n, x;
+    cin >> n >> x;
+    vector<ll> v(n + 1), sum(n + 1);
+    for (ll i = 1; i <= n; i++)
+    {
+        cin >> v[i];
+        sum[i] = sum[i - 1] + v[i];
+    }
+    map<ll, ll> mp;
+    for (ll i = 0; i <= n; i++)
+    {
+        //cout<<sum[i]<<' ';
+        sum[i] %= x;
+        mp[sum[i]]++;
+    }
+    //cout<<'\n';
+    ll cnt = 0;
+    for (auto it : mp)
+    {
+        //cout<<it.fi<<' '<<it.sc<<'\n';
+        cnt += it.sc - 1;
+    }
+    cout << cnt << '\n';
 }
 //-----------------------------------------------------------------------------------------
 int main()

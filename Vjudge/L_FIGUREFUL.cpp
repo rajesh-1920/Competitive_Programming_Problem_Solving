@@ -22,7 +22,21 @@ void solve(void)
 {
     ll n;
     cin >> n;
-    //vector<ll>v(n);for(auto &it:v)cin>>it;
+    map<pair<ll, ll>, string> mp;
+    while (n--)
+    {
+        ll x, y;
+        string s;
+        cin >> x >> y >> s;
+        mp[{x, y}] = s;
+    }
+    cin >> n;
+    while (n--)
+    {
+        ll x, y;
+        cin >> x >> y;
+        cout << mp[{x, y}] << '\n';
+    }
 }
 //-----------------------------------------------------------------------------------------
 int main()

@@ -20,9 +20,29 @@ const ll N = 1e9 + 10;
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    ll n;
-    cin >> n;
-    //vector<ll>v(n);for(auto &it:v)cin>>it;
+    ll n, m;
+    cin >> n >> m;
+    multiset<ll> st;
+    while (n--)
+    {
+        ll x;
+        cin >> x;
+        st.insert(x);
+    }
+    while (m--)
+    {
+        ll x;
+        cin >> x;
+        auto it = st.upper_bound(x);
+        if (it == st.begin())
+            cout << -1 << '\n';
+        else
+        {
+            it--;
+            cout << *it << '\n';
+            st.erase(it);
+        }
+    }
 }
 //-----------------------------------------------------------------------------------------
 int main()

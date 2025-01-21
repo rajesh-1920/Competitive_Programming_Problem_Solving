@@ -20,9 +20,34 @@ const ll N = 1e9 + 10;
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    ll n;
-    cin >> n;
-    //vector<ll>v(n);for(auto &it:v)cin>>it;
+    ll n, x;
+    cin >> n >> x;
+    map<ll, vector<ll>> mp;
+    vector<pair<ll, ll>> v;
+    for (ll i = 1; i <= n; i++)
+    {
+        ll x;
+        cin >> x;
+        v.push_back({x, i});
+        mp[x].push_back(i);
+    }
+    for (auto it : v)
+    {
+        ll now = it.fi;
+        ll need = x - now;
+        if (mp.find(need) == mp.end())
+            continue;
+        // dbg(need);
+        for (auto ii : mp[need])
+        {
+            if (it.sc != ii)
+            {
+                cout << ii << ' ' << it.sc << '\n';
+                return;
+            }
+        }
+    }
+    cout << "IMPOSSIBLE\n";
 }
 //-----------------------------------------------------------------------------------------
 int main()

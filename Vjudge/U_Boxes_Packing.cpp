@@ -22,7 +22,16 @@ void solve(void)
 {
     ll n;
     cin >> n;
-    //vector<ll>v(n);for(auto &it:v)cin>>it;
+    ll cnt = 0;
+    map<ll, ll> mp;
+    while (n--)
+    {
+        ll x;
+        cin >> x;
+        mp[x]++;
+        cnt = max(cnt, mp[x]);
+    }
+    cout << cnt << '\n';
 }
 //-----------------------------------------------------------------------------------------
 int main()

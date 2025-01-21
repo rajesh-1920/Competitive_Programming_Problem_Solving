@@ -20,9 +20,29 @@ const ll N = 1e9 + 10;
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    ll n;
-    cin >> n;
-    //vector<ll>v(n);for(auto &it:v)cin>>it;
+    ll n, m;
+    cin >> m >> n;
+    map<string, ll> mp;
+    while (m--)
+    {
+        string s;
+        ll t;
+        cin >> s >> t;
+        mp[s] = t;
+    }
+    while (n--)
+    {
+        ll ans = 0;
+        string s;
+        while (cin >> s)
+        {
+            if (s[0] == '.')
+                break;
+            if (mp.find(s) != mp.end())
+                ans += mp[s];
+        }
+        cout << ans << '\n';
+    }
 }
 //-----------------------------------------------------------------------------------------
 int main()

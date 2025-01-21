@@ -22,7 +22,27 @@ void solve(void)
 {
     ll n;
     cin >> n;
-    //vector<ll>v(n);for(auto &it:v)cin>>it;
+    map<ll, ll> mp;
+    while (n--)
+    {
+        ll t, x;
+        cin >> t >> x;
+        if (t == 1)
+            mp[x]++;
+        if (t == 2)
+        {
+            if (mp[x] > 0)
+                mp[x]--;
+        }
+        if (t == 3)
+        {
+            if (mp[x] > 0)
+                cout << "Yes\n";
+            else
+                cout << "No\n";
+        }
+    }
+    cout << '\n';
 }
 //-----------------------------------------------------------------------------------------
 int main()
