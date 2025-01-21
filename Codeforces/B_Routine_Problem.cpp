@@ -20,43 +20,38 @@ const ll N = 1e5 + 10;
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    ll n;
-    cin >> n;
-    vector<ll> v(n);
-    for (auto &it : v)
+    ll a, b, c, d;
+    cin >> a >> b >> c >> d;
+    ll lc = (c * d) / (__gcd(c, d));
+    ll nom1, denom1, nom2, denom2;
+    a *= lc, b *= lc;
+
+    ll t = b / d;
+    ll tc = t * c;
+    nom1 = a - tc;
+    denom1 = a;
+
+    t = a / c;
+    tc = t * d;
+    nom2 = b - tc;
+    denom2 = b;
+    float n1 = nom1;
+    float n2 = nom2;
+    float dn1 = denom1;
+    float dn2 = denom2;
+
+    if ((n1 / dn1) > (n2 / dn2) && n2 >= 0)
     {
-        cin >> it;
+        swap(nom1, nom2);
+        swap(denom1, denom2);
     }
-    sort(all(v));
-    map<ll, vector<ll>> mp;
-    for (ll i = 0; i + 1 < n; i++)
+    if (n1 < 0)
     {
-        ll dif = v[i + 1] - v[i];
-        mp[dif].push_back(i);
-        // cout << v[i] << ' ';
+        swap(nom1, nom2);
+        swap(denom1, denom2);
     }
-    for (ll i = 0; i + 1 < n; i++)
-    {
-        if (v[i] == v[i + 1])
-        {
-            ll t = v[i] + v[i + 1];
-            for (auto it : mp)
-            {
-                // cout << it->fi << ' ';
-                if (it.fi >= t)
-                    break;
-                for (auto ii : it.sc)
-                {
-                    // dbg(ii);
-                    if (ii == i || ii == i + 1 || ii + 1 == i)
-                        continue;
-                    cout << v[i] << ' ' << v[i + 1] << ' ' << v[ii] << ' ' << v[ii + 1] << '\n';
-                    return;
-                }
-            }
-        }
-    }
-    cout << -1 << '\n';
+    ll g = __gcd(nom1, denom1);
+    cout << nom1 / g << '/' << denom1 / g;
 }
 //-----------------------------------------------------------------------------------------
 int main()
@@ -65,7 +60,7 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    cin >> test;
+    // cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";
