@@ -20,9 +20,57 @@ const ll N = 1e5 + 10;
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    ll n;
-    cin >> n;
-    // vector<ll> v(n);
+    ll n, v;
+    cin >> n >> v;
+    map<ll, ll> mp;
+    while (n--)
+    {
+        ll a, b;
+        cin >> a >> b;
+        mp[a] += b;
+    }
+    ll ans = 0;
+    if (mp[1] <= v)
+    {
+        ans += mp[1];
+        mp[1] = 0;
+    }
+    else
+    {
+        ans += v;
+        mp[1] -= v;
+    }
+    for (ll i = 2; i <= 10; i++)
+    {
+        ll t = v;
+        if (mp[i - 1] <= t)
+        {
+            ans += mp[i - 1];
+            t -= mp[i - 1];
+            mp[i - 1] = 0;
+        }
+        else
+        {
+            ans += t;
+            mp[i - 1] -= t;
+            t = 0;
+        }
+        if (mp[i] <= t)
+        {
+            ans += mp[i];
+            t -= mp[i];
+            mp[i] = 0;
+        }
+        else
+        {
+            ans += t;
+            mp[i] -= t;
+            t = 0;
+        }
+        //dbg(i);
+        //dbg(ans);
+    }
+    cout << ans << '\n';
 }
 //-----------------------------------------------------------------------------------------
 int main()
@@ -31,7 +79,7 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    cin >> test;
+    // cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";
