@@ -40,7 +40,7 @@ void solve(void)
         ans += v;
         mp[1] -= v;
     }
-    for (ll i = 2; i <= 10; i++)
+    for (ll i = 2; i <= 3010; i++)
     {
         ll t = v;
         if (mp[i - 1] <= t)
