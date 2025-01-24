@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  20.01.2025
+// Date  :  23.01.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -22,8 +22,10 @@ void solve(void)
 {
     ll n, q;
     cin >> n >> q;
-    vector<ll> v(n + 1, 0), ev;
-    ll ans = 0, cur = 0;
+    vector<ll> event(300010, 0);
+    vector<stack<ll>> kon_kon_event(n + 5);
+    set<ll> st;
+    ll ans = 0, ev = 0;
     while (q--)
     {
         ll t, x;
@@ -31,26 +33,40 @@ void solve(void)
         if (t == 1)
         {
             ans++;
-            v[x]++;
-            ev.push_back(x);
+            kon_kon_event[x].push(ev);
+            st.insert(ev);
+            event[ev++] = 1;
         }
         else if (t == 2)
         {
-            ans -= v[x];
-            v[x] = 0;
+            while (!kon_kon_event[x].empty())
+            {
+                ll temp = kon_kon_event[x].top();
+                kon_kon_event[x].pop();
+                if (event[temp])
+                    ans--;
+                event[temp] = 0;
+                st.erase(temp);
+            }
         }
         else
         {
-            for (ll i = 0; i < x; i++)
+            stack<ll> sss;
+            for (auto it : st)
             {
-                if (v[ev[i]] > 0)
-                {
-                    v[ev[i]]--;
+                if (it >= x)
+                    break;
+                if (event[it])
                     ans--;
-                }
+                event[it] = 0;
+                sss.push(it);
             }
-            //cur = x - 1;
-        }
+            while (!sss.empty())
+            {
+                st.erase(sss.top());
+                sss.pop();
+            }
+                }
         cout << ans << '\n';
     }
 }

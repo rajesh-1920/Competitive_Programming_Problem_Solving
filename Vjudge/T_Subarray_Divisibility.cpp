@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  24.01.2025
+// Date  :  21.01.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -22,7 +22,22 @@ void solve(void)
 {
     ll n;
     cin >> n;
-    //vector<ll>v(n);for(auto &it:v)cin>>it;
+    vector<ll> v(n), sum(n + 10, 0);
+    for (ll i = 0; i < n; i++)
+    {
+        cin >> v[i];
+        v[i] = v[i] % n;
+        sum[i + 1] = sum[i] + v[i];
+    }
+    map<ll, ll> mp;
+    ll ans = 0;
+    for (ll i = 1; i <= n; i++)
+    {
+        sum[i] %= n;
+        ans += mp[sum[i]];
+        mp[sum[i]]++;
+    }
+    cout << ans << '\n';
 }
 //-----------------------------------------------------------------------------------------
 int main()

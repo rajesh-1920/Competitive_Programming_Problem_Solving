@@ -22,21 +22,21 @@ void solve(void)
 {
     ll n;
     cin >> n;
-    map<ll, ll> mp;
+    set<ll> st;
     while (n--)
     {
         ll t, x;
         cin >> t >> x;
         if (t == 1)
-            mp[x]++;
+            st.insert(x);
         if (t == 2)
         {
-            if (mp[x] > 0)
-                mp[x]--;
+            if (st.find(x) != st.end())
+                st.erase(x);
         }
         if (t == 3)
         {
-            if (mp[x] > 0)
+            if (st.find(x) != st.end())
                 cout << "Yes\n";
             else
                 cout << "No\n";

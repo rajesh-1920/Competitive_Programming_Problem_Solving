@@ -20,9 +20,10 @@ const ll N = 1e9 + 10;
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    ll n;
-    cin >> n;
-    //vector<ll>v(n);for(auto &it:v)cin>>it;
+    string s1, s2;
+    cin >> s1 >> s2;
+    swap(s1[0], s2[0]);
+    cout << s1 << ' ' << s2 << '\n';
 }
 //-----------------------------------------------------------------------------------------
 int main()
@@ -31,7 +32,7 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    // cin >> test;
+    cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";
