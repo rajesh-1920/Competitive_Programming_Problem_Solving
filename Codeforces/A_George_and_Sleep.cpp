@@ -20,10 +20,30 @@ const ll N = 1e5 + 10;
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    ll n;
-    cin >> n;
-    // vector<ll> v(n);
-    // vector<vector<ll>> v(110, vector<ll>(110, 0));
+    ll s1, s2, t1, t2;
+    char ch;
+    cin >> s1 >> ch >> s2 >> t1 >> ch >> t2;
+    ll total = t1 * 60 + t2;
+    s1 += 24;
+    s1 -= (total / 60);
+    total %= 60;
+    if (total > s2)
+    {
+        s1 -= 1;
+        s2 += 60;
+    }
+    s2 -= total;
+    if (s1 >= 24)
+        s1 -= 24;
+    if (s1 > 9)
+        cout << s1;
+    else
+        cout << 0 << s1;
+    cout << ch;
+    if (s2 > 9)
+        cout << s2;
+    else
+        cout << 0 << s2;
 }
 //-----------------------------------------------------------------------------------------
 int main()
@@ -32,7 +52,7 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    cin >> test;
+    // cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";
