@@ -20,10 +20,25 @@ const ll N = 1e5 + 10;
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    ll n;
-    cin >> n;
-    // vector<ll> v(n);
-    // vector<vector<ll>> v(110, vector<ll>(110, 0));
+    ll n, need;
+    cin >> n >> need;
+    ll ans = inf;
+    for (ll i = 0; i <= n; i++)
+    {
+        for (ll j = 0; j <= n; j++)
+        {
+            for (ll k = 0; k <= n; k++)
+            {
+                for (ll l = 0; l <= n; l++)
+                {
+                    ll t = 2 * i + 3 * j + 4 * k + 5 * l;
+                    if (i + j + k + l == n && t == need)
+                        ans = min(ans, i);
+                }
+            }
+        }
+    }
+    cout << ans << '\n';
 }
 //-----------------------------------------------------------------------------------------
 int main()
@@ -32,7 +47,7 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    cin >> test;
+    // cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";
