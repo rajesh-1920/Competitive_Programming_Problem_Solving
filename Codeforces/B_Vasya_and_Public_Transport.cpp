@@ -20,10 +20,24 @@ const int N = 1e5 + 10;
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    int n;
-    cin >> n;
-    // vector<int> v(n);
-    // vector<vector<int>> v(110, vector<int>(110, 0));
+    int n, m, c1, c2, c3, c4;
+    cin >> c1 >> c2 >> c3 >> c4 >> n >> m;
+    int a[n + 5], b[m + 5];
+    int bus = 0;
+    for (int i = 1; i <= n; i++)
+    {
+        cin >> a[i];
+        bus += min(c2, c1 * a[i]);
+    }
+    bus = min(c3, bus);
+    int troly = 0;
+    for (int i = 1; i <= m; i++)
+    {
+        cin >> b[i];
+        troly += min(c2, b[i] * c1);
+    }
+    troly = min(c3, troly);
+    cout << min(c4, (bus + troly));
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -32,7 +46,7 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    cin >> test;
+    // cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";
