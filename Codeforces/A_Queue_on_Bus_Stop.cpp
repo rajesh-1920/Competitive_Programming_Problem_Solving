@@ -20,19 +20,14 @@ const int N = 1e5 + 10;
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    int n, m, ans = 0, t = 0;
+    int n, m, ans = 0;
     cin >> n >> m;
-    while (n--)
-    {
-        int x;
-        cin >> x;
-        t += x;
-        ans += (t / m);
-        t %= m;
-    }
-    if (t)
-        ans++;
-    cout << ans << ' ';
+    vector<int> v(n);
+    for (auto &it : v)
+        cin >> it;
+    int t = accumulate(all(v), 0LL);
+    ans = (t / m) + (t % m == 0 ? 0 : 1);
+    cout << ans;
 }
 //-----------------------------------------------------------------------------------------
 signed main()
