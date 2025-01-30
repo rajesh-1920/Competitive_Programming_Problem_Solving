@@ -20,27 +20,22 @@ const int N = 1e5 + 10;
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    int n, m, ans = 0, t = 0;
-    cin >> n >> m;
+    int n, k;
+    cin >> n >> k;
+    set<int> st;
     while (n--)
     {
-        int x;
-        cin >> x;
-        t += x;
-        if (t > m)
-        {
-            ans++;
-            t = x;
-        }
-        else if (t == m)
-        {
-            ans++;
-            t = 0;
-        }
+        int x, y;
+        cin >> x >> y;
+        while (x <= y)
+            st.insert(x++);
     }
-    if (t)
-        ans++;
-    cout << ans << ' ';
+    // dbg(st.size());
+    int t = k - st.size() % k;
+    if (t == k)
+        t = 0;
+    //t = min(t, k - t);
+    cout << t;
 }
 //-----------------------------------------------------------------------------------------
 signed main()
