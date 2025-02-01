@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  05.01.2025
+// Date  :  01.02.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -21,13 +21,11 @@ class Solution
     const ll N = 1e9 + 10;
 
 public:
-    
 };
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
     Solution aa;
-    
 }
 //-----------------------------------------------------------------------------------------
 int main()
