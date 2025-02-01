@@ -8,6 +8,7 @@ using namespace std;
 class Solution
 {
     typedef long long int ll;
+// cout << fixed << showpoint << setprecision(10);
 #define dbg(x) cout << #x << " = " << x << '\n'
 #define fi first
 #define sc second
@@ -23,22 +24,12 @@ class Solution
 public:
 };
 //-----------------------------------------------------------------------------------------
-void solve(void)
-{
-    Solution aa;
-}
-//-----------------------------------------------------------------------------------------
 int main()
 {
-    // cout << fixed << showpoint << setprecision(10);
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-    int test = 1, T;
-    // cin >> test;
-    for (T = 1; T <= test; T++)
     {
-        // cout << "Case " << T << ": ";
-        solve();
+        Solution aa;
     }
     return 0;
 }
