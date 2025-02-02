@@ -22,8 +22,19 @@ void solve(void)
 {
     int n;
     cin >> n;
-    // vector<int> v(n);
-    // vector<vector<int>> v(110, vector<int>(110, 0));
+    vector<int> v(n);
+    for (auto &it : v)
+        cin >> it;
+    int ans = v[0], msum = 0, sum = 0;
+    for (int i = 0; i < n; i++)
+    {
+        sum += v[i];
+        ans = max(sum + msum, ans);
+        msum += v[i];
+        if (msum < 0)
+            msum = 0;
+    }
+    cout << ans << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
