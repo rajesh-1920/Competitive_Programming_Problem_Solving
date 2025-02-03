@@ -20,10 +20,56 @@ const int N = 1e5 + 10;
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    int n;
-    cin >> n;
-    // vector<int> v(n); for (auto &it : v) cin >> it;
-    // vector<vector<int>> v(110, vector<int>(110, 0));
+    int n, s;
+    cin >> n >> s;
+    if (s == 0)
+    {
+        if (n == 1)
+            cout << 0 << ' ' << 0;
+        else
+            cout << -1 << ' ' << -1;
+        return;
+    }
+    string st;
+    for (int i = 0; i < n; i++)
+        st.push_back('0');
+    st[0] = '1';
+    int temp = s;
+    s -= 1;
+    for (int i = n - 1; i > 0; i--)
+    {
+        if (s < 9)
+        {
+            st[i] = char('0' + s);
+            s = 0;
+            break;
+        }
+        st[i] = '9';
+        s -= 9;
+    }
+    s++;
+    if (s > 9)
+    {
+        cout << -1 << ' ' << -1;
+        return;
+    }
+    st[0] = char('0' + s);
+    cout << st << ' ';
+    s = temp;
+    for (int i = 0; i < n; i++)
+        st[i] = '0';
+    for (int i = 0; i < n; i++)
+    {
+        if (s < 9)
+        {
+            st[i] = char('0' + s);
+            s = 0;
+            break;
+        }
+        st[i] = '9';
+        s -= 9;
+    }
+    cout << st;
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -32,7 +78,7 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    cin >> test;
+    // cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";
