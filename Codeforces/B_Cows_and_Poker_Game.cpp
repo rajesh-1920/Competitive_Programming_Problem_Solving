@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  01.02.2025
+// Date  :  31.01.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -21,9 +21,17 @@ const int N = 1e5 + 10;
 void solve(void)
 {
     int n;
-    cin >> n;
-    // vector<int> v(n); for (auto &it : v) cin >> it;
-    // vector<vector<int>> v(110, vector<int>(110, 0));
+    string s;
+    cin >> n >> s;
+    int a = 0, i = 0;
+    for (auto it : s)
+    {
+        if (it == 'A')
+            a++;
+        if (it == 'I')
+            i++;
+    }
+    cout << (i == 0 ? a : i == 1);
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -32,7 +40,7 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    cin >> test;
+    // cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";

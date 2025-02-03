@@ -22,8 +22,37 @@ void solve(void)
 {
     int n;
     cin >> n;
-    // vector<int> v(n); for (auto &it : v) cin >> it;
-    // vector<vector<int>> v(110, vector<int>(110, 0));
+    set<int> st;
+    for (int i = 1; i <= n; i++)
+        st.insert(i);
+    for (int i = 1; i <= n; i++)
+    {
+        for (int j = 1; j <= n; j++)
+        {
+            int x;
+            cin >> x;
+            if (x == 1)
+            {
+                st.insert(i);
+                st.erase(i);
+            }
+            if (x == 2)
+            {
+                st.insert(j);
+                st.erase(j);
+            }
+            if (x == 3)
+            {
+                st.insert(j);
+                st.erase(j);
+                st.insert(i);
+                st.erase(i);
+            }
+        }
+    }
+    cout << st.size() << '\n';
+    for (auto it : st)
+        cout << it << ' ';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -32,7 +61,7 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    cin >> test;
+    // cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";
