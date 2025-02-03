@@ -22,7 +22,29 @@ void solve(void)
 {
     int n;
     cin >> n;
-    //vector<int> v(n);for (auto &it : v) cin >> it;
+    // vector<int> v(n);for (auto &it : v) cin >> it;
+    int ev = 0, od = 0, pos = 0, neg = 0;
+    while (n--)
+    {
+        int x;
+        cin >> x;
+        if (x > 0)
+            pos++;
+        else if (x < 0)
+        {
+            neg++;
+            x = -x;
+        }
+        if (x & 1)
+            od++;
+        else
+            ev++;
+    }
+
+    cout << "Even: " << ev << '\n';
+    cout << "Odd: " << od << '\n';
+    cout << "Positive: " << pos << '\n';
+    cout << "Negative: " << neg << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -31,7 +53,7 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-   // cin >> test;
+    // cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";

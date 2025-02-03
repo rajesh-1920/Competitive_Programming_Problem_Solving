@@ -20,9 +20,15 @@ const int N = 1e5 + 10;
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    int n;
+    int n, mx = 0;
     cin >> n;
-    //vector<int> v(n);for (auto &it : v) cin >> it;
+    while (n--)
+    {
+        int x;
+        cin >> x;
+        mx = max(x, mx);
+    }
+    cout << mx;
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -31,7 +37,7 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-   // cin >> test;
+    // cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";

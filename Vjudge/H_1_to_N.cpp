@@ -22,7 +22,9 @@ void solve(void)
 {
     int n;
     cin >> n;
-    //vector<int> v(n);for (auto &it : v) cin >> it;
+    // vector<int> v(n);for (auto &it : v) cin >> it;
+    for (int i = 1; i <= n; i++)
+        cout << i << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -31,7 +33,7 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-   // cin >> test;
+    // cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";
