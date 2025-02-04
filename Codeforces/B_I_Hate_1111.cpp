@@ -22,8 +22,20 @@ void solve(void)
 {
     int n;
     cin >> n;
-    // vector<int> v(n); for (auto &it : v) cin >> it;
-    // vector<vector<int>> v(110, vector<int>(110, 0));
+    for (int i = 0;; i++)
+    {
+        int t = i * 111;
+        if (t > n)
+        {
+            cout << "NO\n";
+            return;
+        }
+        if ((n - t) % 11 == 0)
+        {
+            cout << "YES\n";
+            return;
+        }
+    }
 }
 //-----------------------------------------------------------------------------------------
 signed main()
