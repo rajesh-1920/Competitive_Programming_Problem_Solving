@@ -20,10 +20,17 @@ const int N = 1e5 + 10;
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    int n;
+    int n, mx = 1;
     cin >> n;
-    // vector<int> v(n); for (auto &it : v) cin >> it;
-    // vector<vector<int>> v(110, vector<int>(110, 0));
+    for (int i = 2; i * i < n; i++)
+    {
+        if (n % i == 0 && i != n / i)
+        {
+            if (__gcd(i, n / i) == 1)
+                mx = max(mx, i);
+        }
+    }
+    cout << mx << ' ' << n / mx;
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -32,7 +39,7 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    cin >> test;
+    // cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";
