@@ -21,7 +21,26 @@ const int N = 1e5 + 10;
 void solve(void)
 {
     int n, a, b;
-    cin >> n;
+    cin >> n >> a >> b;
+    if (a == 1)
+    {
+        if ((n - 1) % b == 0)
+            cout << "Yes\n";
+        else
+            cout << "No\n";
+        return;
+    }
+    int t = 1;
+    while (t <= n)
+    {
+        if ((n - t) % b == 0)
+        {
+            cout << "Yes\n";
+            return;
+        }
+        t *= a;
+    }
+    cout << "No\n";
 }
 //-----------------------------------------------------------------------------------------
 signed main()
