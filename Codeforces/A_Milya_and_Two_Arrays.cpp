@@ -22,8 +22,30 @@ void solve(void)
 {
     int n;
     cin >> n;
-    // vector<int> v(n); for (auto &it : v) cin >> it;
-    // vector<vector<int>> v(110, vector<int>(110, 0));
+    vector<int> a(n);
+    for (auto &it : a)
+        cin >> it;
+    vector<int> b(n);
+    for (auto &it : b)
+        cin >> it;
+    sort(all(a));
+    sort(all(b));
+    for (int i = 1; i + 1 < n; i++)
+    {
+        set<int> st;
+        st.insert(a[0] + b[0]);
+        st.insert(a[n - 1] + b[n - 1]);
+        for (int j = 0; j + 1 < n; j++)
+        {
+            st.insert(a[i] + b[j]);
+            if (st.size() == 3)
+            {
+                cout << "YES\n";
+                return;
+            }
+        }
+    }
+    cout << "NO\n";
 }
 //-----------------------------------------------------------------------------------------
 signed main()
