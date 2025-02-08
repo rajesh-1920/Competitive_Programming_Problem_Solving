@@ -20,10 +20,26 @@ const int N = 1e5 + 10;
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    int n;
-    cin >> n;
-    // vector<int> v(n); for (auto &it : v) cin >> it;
-    // vector<vector<int>> v(110, vector<int>(110, 0));
+    int n, x;
+    cin >> n >> x;
+    int ans = 0;
+    for (int a = 1; a <= n; a++)
+        for (int b = 1; a * b < n; b++)
+        {
+            int c = (n - (a * b)) / (a + b);
+            if (c > 0)
+            {
+                if (a + b + c <= x)
+                    ans += c;
+                else
+                {
+                    int t = x - a - b;
+                    if (t > 0)
+                        ans += t;
+                }
+            }
+        }
+    cout << ans << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
