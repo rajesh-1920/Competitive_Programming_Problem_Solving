@@ -20,10 +20,25 @@ const int N = 1e5 + 10;
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    int n;
-    cin >> n;
-    // vector<int> v(n); for (auto &it : v) cin >> it;
-    // vector<vector<int>> v(110, vector<int>(110, 0));
+    int n, k, mx = 0;
+    cin >> n >> k;
+    vector<int> v(n), powr;
+    multiset<int> st;
+    for (auto &it : v)
+    {
+        cin >> it;
+        mx = max(mx, it);
+        if (it)
+            st.insert(it);
+    }
+    int x = 1;
+    while (x <= mx)
+    {
+        powr.push_back(x);
+        x *= k;
+    }
+    for (auto it : powr)
+        cout << it << ' ';
 }
 //-----------------------------------------------------------------------------------------
 signed main()

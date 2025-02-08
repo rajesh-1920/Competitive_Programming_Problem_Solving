@@ -18,12 +18,23 @@ const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
 const int N = 1e5 + 10;
 //-----------------------------------------------------------------------------------------
+int ok(int n, vector<int> v)
+{
+    if (n == 1)
+        return 0;
+    int ans = inf;
+    if (v[v.size() - 2] <= v[v.size() - 1])
+    {
+        ans = min(ans, ok(n - 1, v));
+    }
+}
 void solve(void)
 {
     int n;
     cin >> n;
-    // vector<int> v(n); for (auto &it : v) cin >> it;
-    // vector<vector<int>> v(110, vector<int>(110, 0));
+    vector<int> v(n);
+    for (auto &it : v)
+        cin >> it;
 }
 //-----------------------------------------------------------------------------------------
 signed main()

@@ -22,8 +22,31 @@ void solve(void)
 {
     int n;
     cin >> n;
-    // vector<int> v(n); for (auto &it : v) cin >> it;
-    // vector<vector<int>> v(110, vector<int>(110, 0));
+    vector<int> v(n);
+    map<int, int> mp;
+    for (auto &it : v)
+    {
+        cin >> it;
+        mp[it]++;
+    }
+    sort(all(v));
+    int x = v[0] * v[n - 1], ans = x;
+    set<int> st;
+    for (int i = 0; n - i - 1 >= 0; i++)
+        st.insert(v[i] * v[n - i - 1]);
+    if (st.size() > 1)
+        ans = -1;
+    for (int i = 2; i * i <= x; i++)
+    {
+        if (ans == -1)
+            break;
+        if (x % i == 0)
+        {
+            if (mp[i] == 0 || mp[x / i] == 0)
+                ans = -1;
+        }
+    }
+    cout << ans << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
