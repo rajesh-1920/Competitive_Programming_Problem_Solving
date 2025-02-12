@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  11.02.2025
+// Date  :  12.02.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -22,8 +22,7 @@ int is_seven(int n)
 {
     while (n)
     {
-        int x = n - (n / 10) * 10;
-        if (x == 7)
+        if (n % 10 == 7)
             return 1;
         n /= 10;
     }
@@ -39,49 +38,38 @@ int arr[] = {9,
              99999999,
              999999999,
              9999999999};
-int ok(int n)
+map<int, int> mp;
+int x;
+int ok(int n, vector<int> cnt)
 {
-    int ans = 7;
+    if (mp.find(n) != mp.end())
+        return mp[n];
     if (is_seven(n))
-        ans = min(ans, 0LL);
-    for (int i1 = 0; i1 < 9; i1++)
-    {
-        if (is_seven(n + arr[i1]))
-            ans = min(ans, 1LL);
-        for (int i2 = 0; i2 < 8; i2++)
+        return 0;
+    int ans = 7;
+    for (int i = 0; i < 10; i++)
+        if (n + arr[i] <= x && cnt[i] <= 6)
         {
-            if (is_seven(n + arr[i1] + arr[i2]))
-                ans = min(ans, 2LL);
-            for (int i3 = 0; i3 < 7; i3++)
-            {
-                if (is_seven(n + arr[i1] + arr[i2] + arr[i3]))
-                    ans = min(ans, 3LL);
-                for (int i4 = 0; i4 < 6; i4++)
-                {
-                    if (is_seven(n + arr[i1] + arr[i2] + arr[i3] + arr[i4]))
-                        ans = min(ans, 4LL);
-                    for (int i5 = 0; i5 < 5; i5++)
-                    {
-                        if (is_seven(n + arr[i1] + arr[i2] + arr[i3] + arr[i4] + arr[i5]))
-                            ans = min(ans, 5LL);
-                        for (int i6 = 0; i6 < 4; i6++)
-                        {
-                            if (is_seven(n + arr[i1] + arr[i2] + arr[i3] + arr[i4] + arr[i5] + arr[i6]))
-                                ans = min(ans, 6LL);
-                        }
-                    }
-                }
-            }
+            cnt[i]++;
+            ans = min(ans, ok(n + arr[i], cnt) + 1);
         }
-    }
-    return ans;
+    return mp[n] = ans;
 }
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
     int n;
     cin >> n;
-    cout << ok(n) << '\n';
+    int t = n;
+    x = 10;
+    while (t)
+    {
+        t /= 10;
+        x *= 10;
+    }
+    vector<int> cnt(10, 0);
+    cout << ok(n, cnt) << '\n';
+    mp.clear();
 }
 //-----------------------------------------------------------------------------------------
 signed main()
