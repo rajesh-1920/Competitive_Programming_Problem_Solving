@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  13.02.2025
+// Date  :  07.02.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -16,40 +16,39 @@ using namespace std;
 const double eps = 1e-1;
 const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
-const int N = 1e6 + 10;
+const int N = 1e5 + 10;
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    int n, ans = 1, mx = 0;
+    int n;
     cin >> n;
-    vector<int> mp(N, 0);
+    map<int, int> mp;
+    set<int> st;
+    int mx = 0;
     while (n--)
     {
-        int x;
-        cin >> x;
-        mp[x]++;
-        mx = max(mx, x);
+        int it;
+        cin >> it;
+        mp[it]++;
+        st.insert(it);
+        mx = max(mx, it);
     }
-    for (int i = 2; i <= mx; i++)
+    set<int> ans;
+    ans.insert(1);
+    for (auto it : st)
     {
-        int cnt = 0;
-        for (int j = i; j <= mx; j += i)
+        mp[it]--;
+        for (int j = it; j <= mx; j += it)
         {
-            if (mp[j] > 1)
+            if (mp[j] > 0)
             {
-                ans = max(ans, i);
-                break;
-            }
-            else if (mp[j])
-                cnt++;
-            if (cnt > 1)
-            {
-                ans = max(ans, i);
+                ans.insert(it);
                 break;
             }
         }
+        mp[it]++;
     }
-    cout << ans << '\n';
+    cout << *(--ans.end());
 }
 //-----------------------------------------------------------------------------------------
 signed main()

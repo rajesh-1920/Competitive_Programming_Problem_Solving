@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  13.02.2025
+// Date  :  14.02.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -16,40 +16,33 @@ using namespace std;
 const double eps = 1e-1;
 const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
-const int N = 1e6 + 10;
+const int N = 2e5 + 10;
 //-----------------------------------------------------------------------------------------
+vector<int> v(N), dp(N);
+int n;
+int ok(int i)
+{
+    if (i > n)
+        return 0;
+    if (dp[i] != -inf)
+        return dp[i];
+    int ans = -inf;
+    if (i + 1 <= n)
+    {
+        ans = max(ans, ok(i + 2) + (v[i] + v[i + 1]));
+        ans = max(ans, ok(i + 2) - (v[i] + v[i + 1]));
+    }
+    ans = max(ans, ok(i + 1) + (v[i]));
+    return dp[i] = ans;
+}
 void solve(void)
 {
-    int n, ans = 1, mx = 0;
+    for (int i = 0; i < N; i++)
+        dp[i] = -inf;
     cin >> n;
-    vector<int> mp(N, 0);
-    while (n--)
-    {
-        int x;
-        cin >> x;
-        mp[x]++;
-        mx = max(mx, x);
-    }
-    for (int i = 2; i <= mx; i++)
-    {
-        int cnt = 0;
-        for (int j = i; j <= mx; j += i)
-        {
-            if (mp[j] > 1)
-            {
-                ans = max(ans, i);
-                break;
-            }
-            else if (mp[j])
-                cnt++;
-            if (cnt > 1)
-            {
-                ans = max(ans, i);
-                break;
-            }
-        }
-    }
-    cout << ans << '\n';
+    for (int i = 1; i <= n; i++)
+        cin >> v[i];
+    cout << ok(1) << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -58,7 +51,7 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    // cin >> test;
+    cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";
