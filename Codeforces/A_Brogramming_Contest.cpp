@@ -20,10 +20,29 @@ const int N = 1e5 + 10;
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
+    string s;
     int n;
-    cin >> n;
-    // vector<int> v(n); for (auto &it : v) cin >> it;
-    // vector<vector<int>> v(110, vector<int>(110, 0));
+    cin >> n >> s;
+    int ans = 0;
+    int fl = 0;
+    char t = 'a';
+    for (auto it : s)
+    {
+        if (it == '1' && fl == 0)
+        {
+            fl = 1;
+            ans++;
+            t = it;
+            continue;
+        }
+        if (fl)
+        {
+            if (t != it)
+                ans++;
+        }
+        t = it;
+    }
+    cout << ans << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()

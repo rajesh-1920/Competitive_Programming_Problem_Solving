@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  16.02.2025
+// Date  :  15.02.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -22,8 +22,34 @@ void solve(void)
 {
     int n;
     cin >> n;
-    // vector<int> v(n); for (auto &it : v) cin >> it;
-    // vector<vector<int>> v(110, vector<int>(110, 0));
+    vector<int> v(n);
+    for (auto &it : v)
+        cin >> it;
+    vector<int> sum[n + 5];
+    for (int i = 0; i < n; i++)
+    {
+        int x;
+        cin >> x;
+        sum[v[i]].push_back(x);
+    }
+    for (auto &it : sum)
+    {
+        sort(rall(it));
+        for (int j = 1; j < it.size(); j++)
+            it[j] += it[j - 1];
+    }
+    for (int i = 1; i <= n; i++)
+    {
+        int x = 0;
+        for (int j = 1; j <= n; j++)
+        {
+            int t = sum[j].size() / i;
+            if (t)
+                x += sum[j][t * i - 1];
+        }
+        cout << x << ' ';
+    }
+    cout << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()

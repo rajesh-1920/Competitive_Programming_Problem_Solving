@@ -22,8 +22,43 @@ void solve(void)
 {
     int n;
     cin >> n;
-    // vector<int> v(n); for (auto &it : v) cin >> it;
-    // vector<vector<int>> v(110, vector<int>(110, 0));
+    vector<int> v(n);
+    map<int, int> mp, cnt1;
+
+    for (auto &it : v)
+    {
+        cin >> it;
+        mp[it]++;
+    }
+    for (auto it : mp)
+        if (it.sc == 1)
+            cnt1[it.fi] = 1;
+    int ans = 0, al = 0, ar = 0, l = -1, r = -1;
+    for (int i = 0; i < n; i++)
+    {
+        if (cnt1.find(v[i]) != cnt1.end())
+        {
+            if (l == -1)
+            {
+                l = i + 1;
+                r = i + 1;
+            }
+            else
+                r = i + 1;
+            if (ans < (r - l + 1))
+            {
+                ans = r - l + 1;
+                al = l;
+                ar = r;
+            }
+        }
+        else
+            l = -1;
+    }
+    if (ans == 0)
+        cout << 0 << '\n';
+    else
+        cout << al << ' ' << ar << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
