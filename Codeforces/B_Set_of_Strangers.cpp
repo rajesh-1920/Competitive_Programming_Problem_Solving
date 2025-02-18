@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  17.02.2025
+// Date  :  18.02.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -20,30 +20,51 @@ const int N = 1e5 + 10;
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    int n;
-    cin >> n;
-    vector<int> v(n), sum(n + 1, 0), s(n + 1, 0);
-    int i = 1;
-    for (auto &it : v)
+    int n, m;
+    cin >> n >> m;
+    vector<vector<int>> v(n, vector<int>(m));
+    map<int, int> mp, t;
+
+    for (int i = 0; i < n; i++)
     {
-        cin >> it;
-        if (it > 0)
-            s[i] = s[i - 1] + it;
-        else
-            s[i] = s[i - 1];
-        i++;
+        for (int j = 0; j < m; j++)
+        {
+            cin >> v[i][j];
+            mp[v[i][j]]++;
+            if (i > 0)
+            {
+                if (v[i][j] == v[i - 1][j])
+                    t[v[i][j]]++;
+            }
+            if (j > 0)
+            {
+                if (v[i][j] == v[i][j - 1])
+                    t[v[i][j]]++;
+            }
+        }
     }
-    int ans = -inf;
-    for (int i = n - 1; i >= 0; i--)
+    int tar = v[0][0], maxmp = 0;
+    for (auto it : t)
     {
-        if (v[i] < 0)
-            sum[i] = sum[i + 1] - v[i];
-        else
-            sum[i] = sum[i + 1];
+        if (it.second > maxmp)
+        {
+            maxmp = it.second;
+            tar = it.first;
+        }
     }
-    for (int i = 0; i <= n; i++)
-        ans = max(ans, s[i] + sum[i]);
-    cout << ans << '\n';
+    t[tar]++;
+    t.erase(tar);
+    int cnt = 0;
+    for (auto it : mp)
+    {
+        if (it.first != tar)
+        {
+            //dbg(tar);
+            cnt++;
+        }
+    }
+    int x = t.size();
+    cout << cnt + x << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()

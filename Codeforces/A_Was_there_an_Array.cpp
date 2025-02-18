@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  17.02.2025
+// Date  :  18.02.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -22,28 +22,19 @@ void solve(void)
 {
     int n;
     cin >> n;
-    vector<int> v(n), sum(n + 1, 0), s(n + 1, 0);
-    int i = 1;
+    n -= 2;
+    vector<int> v(n);
     for (auto &it : v)
-    {
         cin >> it;
-        if (it > 0)
-            s[i] = s[i - 1] + it;
-        else
-            s[i] = s[i - 1];
-        i++;
-    }
-    int ans = -inf;
-    for (int i = n - 1; i >= 0; i--)
+    for (int i = 0; i + 2 < n; i++)
     {
-        if (v[i] < 0)
-            sum[i] = sum[i + 1] - v[i];
-        else
-            sum[i] = sum[i + 1];
+        if (v[i] == 1 && v[i + 1] == 0 && v[i + 2] == 1)
+        {
+            cout << "NO\n";
+            return;
+        }
     }
-    for (int i = 0; i <= n; i++)
-        ans = max(ans, s[i] + sum[i]);
-    cout << ans << '\n';
+    cout << "YES\n";
 }
 //-----------------------------------------------------------------------------------------
 signed main()
