@@ -60,18 +60,40 @@ inline int moddiv(int a, int b, int m)
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    int n, sod = 1, deno = 1, pod = 1, nod = 1;
+    int n, sod = 1, deno = 1, pod = 1, nod = 1, odpos = -1, gama = 1;
     cin >> n;
-    while (n--)
+    vector<pair<int, int>> vp(n);
+    for (int i = 0; i < n; i++)
     {
         int x, y;
         cin >> x >> y;
+        vp[i].fi = x, vp[i].sc = y;
+        if (y & 1)
+            odpos = i;
         sod = modmul(sod, (modsub(binexpo(x, y + 1, MOD), 1, MOD)), MOD);
         deno = modmul(deno, modsub(x, 1, MOD), MOD);
         nod = modmul(nod, modadd(y, 1, MOD), MOD);
-        pod = modmul(pod, binexpo(x, moddiv(modmul(y, y + 1, MOD), 2, MOD), MOD), MOD);
     }
     sod = moddiv(sod, deno, MOD);
+    if (odpos != -1)
+    {
+        for (int i = 0; i < n; i++)
+        {
+            if (i == odpos)
+                gama = modmul(gama, (vp[i].sc + 1) / 2, (MOD - 1));
+            else
+                gama = modmul(gama, modadd(vp[i].sc, 1, MOD), (MOD - 1));
+        }
+        for (int i = 0; i < n; i++)
+            pod = modmul(pod, binexpo(vp[i].fi, modmul(vp[i].sc, gama, (MOD - 1)), MOD), MOD);
+    }
+    else
+    {
+        for (int i = 0; i < n; i++)
+            gama = modmul(gama, modadd(vp[i].sc, 1, MOD), (MOD - 1));
+        for (int i = 0; i < n; i++)
+            pod = modmul(pod, binexpo(vp[i].fi, modmul((vp[i].sc / 2), gama, (MOD - 1)), MOD), MOD);
+    }
     cout << nod << ' ' << sod << ' ' << pod;
 }
 //-----------------------------------------------------------------------------------------
