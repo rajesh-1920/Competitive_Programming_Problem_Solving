@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  24.02.2025
+// Date  :  25.02.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -20,32 +20,39 @@ const int N = 1e5 + 10;
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    int n;
-    cin >> n;
-    map<int, int> mp;
-    int sz = n;
-    while (n--)
+    int n, x;
+    cin >> n >> x;
+    if (n == 1)
     {
-        int x;
-        cin >> x;
-        mp[x]++;
+        cout << x << '\n';
+        return;
     }
-    priority_queue<int> pq;
-    for (auto it : mp)
-        pq.push(it.sc);
-    while (pq.size() >= 2)
+    int t = 1;
+    for (int i = 0; i <= 30; i++)
     {
-        int x = pq.top();
-        pq.pop();
-        int y = pq.top();
-        pq.pop();
-        if (x > 1)
-            pq.push(x - 1);
-        if (y > 1)
-            pq.push(y - 1);
-        sz -= 2;
+        if ((x & (1 << i)))
+            t *= 2;
+        else
+            break;
     }
-    cout << sz << '\n';
+    vector<int> v;
+    int tt = 0;
+    for (int i = 0; i < min(n, t); i++)
+    {
+        v.push_back(i);
+        tt |= i;
+    }
+    if (tt != x)
+    {
+        if (v.size() == n)
+            v.pop_back();
+        v.push_back(x);
+    }
+    while (v.size() < n)
+        v.push_back(0);
+    for (auto it : v)
+        cout << it << ' ';
+    cout << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()

@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  24.02.2025
+// Date  :  25.02.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -22,30 +22,33 @@ void solve(void)
 {
     int n;
     cin >> n;
-    map<int, int> mp;
-    int sz = n;
-    while (n--)
+    vector<int> v(n), cnt(n, 0);
+    for (auto &it : v)
+        cin >> it;
+    int mx = 0, al = -1, ar = 1;
+    for (int i = 0; i < n; i++)
+        for (int j = i; j < n; j++)
+        {
+            if (v[i] > v[j])
+                cnt[i]++;
+            if (mx < cnt[i])
+            {
+                mx = cnt[i];
+                al = i + 1;
+            }
+        }
+    if (al == -1)
+        cout << 1 << ' ' << ar << '\n';
+    else
     {
-        int x;
-        cin >> x;
-        mp[x]++;
+        for (int i = n - 1; i >= 0; i--)
+            if (v[i] < v[al - 1])
+            {
+                ar = i + 1;
+                break;
+            }
+        cout << al << ' ' << ar << '\n';
     }
-    priority_queue<int> pq;
-    for (auto it : mp)
-        pq.push(it.sc);
-    while (pq.size() >= 2)
-    {
-        int x = pq.top();
-        pq.pop();
-        int y = pq.top();
-        pq.pop();
-        if (x > 1)
-            pq.push(x - 1);
-        if (y > 1)
-            pq.push(y - 1);
-        sz -= 2;
-    }
-    cout << sz << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()

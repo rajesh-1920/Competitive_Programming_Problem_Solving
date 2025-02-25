@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  24.02.2025
+// Date  :  25.02.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -20,32 +20,19 @@ const int N = 1e5 + 10;
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    int n;
-    cin >> n;
-    map<int, int> mp;
-    int sz = n;
-    while (n--)
+    int n, k, p;
+    cin >> n >> k >> p;
+    if (k < 0)
+        k = -k;
+    if (p * n < k)
+        cout << -1 << '\n';
+    else
     {
-        int x;
-        cin >> x;
-        mp[x]++;
+        int ans = k / p;
+        if (k % p)
+            ans++;
+        cout << ans << '\n';
     }
-    priority_queue<int> pq;
-    for (auto it : mp)
-        pq.push(it.sc);
-    while (pq.size() >= 2)
-    {
-        int x = pq.top();
-        pq.pop();
-        int y = pq.top();
-        pq.pop();
-        if (x > 1)
-            pq.push(x - 1);
-        if (y > 1)
-            pq.push(y - 1);
-        sz -= 2;
-    }
-    cout << sz << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
