@@ -22,33 +22,33 @@ void solve(void)
 {
     int n;
     cin >> n;
-    vector<int> v(n), cnt(n, 0);
+    vector<int> v(n);
     for (auto &it : v)
         cin >> it;
-    int mx = 0, al = -1, ar = 1;
+    int mn = 0, l = 1, r = 1;
     for (int i = 0; i < n; i++)
+        for (int j = i + 1; j < n; j++)
+            if (v[i] > v[j])
+                mn++;
+    int t = mn;
+    for (int i = 0; i < n; i++)
+    {
+        int now = t;
         for (int j = i; j < n; j++)
         {
             if (v[i] > v[j])
-                cnt[i]++;
-            if (mx < cnt[i])
+                now--;
+            if (v[i] < v[j])
+                now++;
+            if (now < mn)
             {
-                mx = cnt[i];
-                al = i + 1;
+                mn = now;
+                l = i + 1;
+                r = j + 1;
             }
         }
-    if (al == -1)
-        cout << 1 << ' ' << ar << '\n';
-    else
-    {
-        for (int i = n - 1; i >= 0; i--)
-            if (v[i] < v[al - 1])
-            {
-                ar = i + 1;
-                break;
-            }
-        cout << al << ' ' << ar << '\n';
     }
+    cout << l << ' ' << r << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
