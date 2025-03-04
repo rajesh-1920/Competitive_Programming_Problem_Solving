@@ -24,40 +24,40 @@ void solve(void)
     string s;
     cin >> n >> s;
     set<int> w, r, st;
-    for (int i = 0; i < 2 * n; i++)
-    {
-        st.insert(i);
-        if (s[i] == 'W')
-            w.insert(i);
-        else
-            r.insert(i);
-    }
-    vector<int> a1, a2;
-    while (!st.empty())
-    {
-        int it = *st.begin();
-        a1.push_back(it);
-        if (w.size() == 0)
-        {
-            int t = *r.begin();
-            r.erase(t);
-            st.erase(t);
-            a2.push_back(t);
-            continue;
-        }
-        int t = *w.begin();
-    }
-    for (int i = 0; i < n; i++)
-        swap(s[a1[i]], s[a2[i]]);
-    for (int i = 0; i < n; i++)
-    {
-        cout<<s[i];
-        if (s[i] != 'W')
-        {
-            cout << "NO\n";
-            return;
-        }
-    }
+    // for (int i = 0; i < 2 * n; i++)
+    // {
+    //     st.insert(i);
+    //     if (s[i] == 'W')
+    //         w.insert(i);
+    //     else
+    //         r.insert(i);
+    // }
+    // vector<int> a1, a2;
+    // while (!st.empty())
+    // {
+    //     int it = *st.begin();
+    //     a1.push_back(it);
+    //     if (w.size() == 0)
+    //     {
+    //         int t = *r.begin();
+    //         r.erase(t);
+    //         st.erase(t);
+    //         a2.push_back(t);
+    //         continue;
+    //     }
+    //     int t = *w.begin();
+    // }
+    // for (int i = 0; i < n; i++)
+    //     swap(s[a1[i]], s[a2[i]]);
+    // for (int i = 0; i < n; i++)
+    // {
+    //     cout<<s[i];
+    //     if (s[i] != 'W')
+    //     {
+    //         cout << "NO\n";
+    //         return;
+    //     }
+    // }
     cout << "YES\n";
 }
 //-----------------------------------------------------------------------------------------

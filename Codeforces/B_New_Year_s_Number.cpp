@@ -6,8 +6,7 @@
 using namespace std;
 //----------------------------(definition section)-----------------------------------------
 #define dbg(x) cout << #x << " = " << x << '\n'
-// #define int long long int
-#define ll long long int
+#define int long long int
 #define fi first
 #define sc second
 
@@ -19,34 +18,18 @@ const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
 const int N = 1e5 + 10;
 //-----------------------------------------------------------------------------------------
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
-using namespace __gnu_pbds;
-template <typename T>
-using ordered_set = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_statistics_node_update>; // multiple value
-// using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>; // single
-
-//-----------------------------------------------------------------------------------------
 void solve(void)
 {
     int n;
     cin >> n;
-    vector<ll> a(n);
-    for (auto &it : a)
-        cin >> it;
-    vector<ll> b(n);
-    for (auto &it : b)
-        cin >> it;
-
-    ordered_set<ll> st;
-    st.insert(b[n - 1] - a[n - 1]);
-    int ans = 0;
-    for (int i = n - 2; i >= 0; i--)
-    {
-        ans += st.order_of_key(a[i] - b[i]);
-        st.insert(b[i] - a[i]);
-    }
-    cout << ans;
+    while (n % 10)
+        n -= 2021;
+    if (n % 2020 == 0 && n >= 0)
+        cout << "YES\n";
+    else if (n % 2021 == 0 && n >= 0)
+        cout << "YES\n";
+    else
+        cout << "NO\n";
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -55,7 +38,7 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    // cin >> test;
+    cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";
