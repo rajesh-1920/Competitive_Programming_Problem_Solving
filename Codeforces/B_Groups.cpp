@@ -20,41 +20,32 @@ const int N = 1e5 + 10;
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    int n, st, en;
-    cin >> n >> st >> en;
-    vector<vector<int>> gh(n + 1);
-    for (int i = 1; i < n; i++)
-    {
-        int u, v;
-        cin >> u >> v;
-        gh[u].push_back(v);
-        gh[v].push_back(u);
-    }
-    vector<int> dpt(n + 1, 0), vis(n + 1, 0);
-
-    queue<int> q;
-    q.push(en);
-    vis[en] = 1;
-    while (!q.empty())
-    {
-        int t = q.front();
-        q.pop();
-        for (auto it : gh[t])
+    int n;
+    cin >> n;
+    vector<vector<int>> v(n, vector<int>(5));
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < 5; j++)
+            cin >> v[i][j];
+    for (int i = 0; i < 5; i++)
+        for (int j = i + 1; j < 5; j++)
         {
-            if (vis[it])
-                continue;
-            dpt[it] += dpt[t] + 1;
-            vis[it] = 1;
-            q.push(it);
+            int cn1 = 0, cn2 = 0, cn = 0;
+            for (int t = 0; t < n; t++)
+            {
+                if (v[t][i] && v[t][j])
+                    cn++;
+                else if (v[t][i])
+                    cn1++;
+                else if (v[t][j])
+                    cn2++;
+            }
+            if (cn1 <= n / 2 && cn2 <= n / 2 && (cn1 + cn2 + cn) >= n)
+            {
+                cout << "YES\n";
+                return;
+            }
         }
-    }
-    vector<pair<int, int>> ans;
-    for (int i = 1; i <= n; i++)
-        ans.push_back({dpt[i], i});
-    sort(rall(ans));
-    for (auto it : ans)
-        cout << it.sc << ' ';
-    cout << '\n';
+    cout << "NO\n";
 }
 //-----------------------------------------------------------------------------------------
 signed main()

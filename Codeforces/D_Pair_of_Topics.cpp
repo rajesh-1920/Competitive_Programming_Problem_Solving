@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  28.02.2025
+// Date  :  04.03.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -18,43 +18,33 @@ const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
 const int N = 1e5 + 10;
 //-----------------------------------------------------------------------------------------
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+using namespace __gnu_pbds;
+template <class T>
+using o_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
+
+//-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    int n, st, en;
-    cin >> n >> st >> en;
-    vector<vector<int>> gh(n + 1);
-    for (int i = 1; i < n; i++)
+    int n;
+    cin >> n;
+    vector<int> a(n);
+    for (auto &it : a)
+        cin >> it;
+    vector<int> b(n);
+    for (auto &it : b)
+        cin >> it;
+    o_set<int> st;
+    // int pos = st.order_of_key(5);
+    // int val = *st.find_by_order(2);
+    int ans = 0;
+    for (int i = n - 1; i >= 0; i--)
     {
-        int u, v;
-        cin >> u >> v;
-        gh[u].push_back(v);
-        gh[v].push_back(u);
+        ans += st.order_of_key(b[i] - a[i]);
+        st.insert(a[i] - b[i]);
     }
-    vector<int> dpt(n + 1, 0), vis(n + 1, 0);
-
-    queue<int> q;
-    q.push(en);
-    vis[en] = 1;
-    while (!q.empty())
-    {
-        int t = q.front();
-        q.pop();
-        for (auto it : gh[t])
-        {
-            if (vis[it])
-                continue;
-            dpt[it] += dpt[t] + 1;
-            vis[it] = 1;
-            q.push(it);
-        }
-    }
-    vector<pair<int, int>> ans;
-    for (int i = 1; i <= n; i++)
-        ans.push_back({dpt[i], i});
-    sort(rall(ans));
-    for (auto it : ans)
-        cout << it.sc << ' ';
-    cout << '\n';
+    cout << ans;
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -63,7 +53,7 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    cin >> test;
+    // cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";
