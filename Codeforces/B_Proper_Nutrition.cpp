@@ -6,7 +6,7 @@
 using namespace std;
 //----------------------------(definition section)-----------------------------------------
 #define dbg(x) cout << #x << " = " << x << '\n'
-#define int long long int
+// #define int long long int
 #define fi first
 #define sc second
 
@@ -18,37 +18,23 @@ const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
 const int N = 1e7 + 10;
 //-----------------------------------------------------------------------------------------
-int a, b, l, r;
-vector<int> dp(N, -1);
-void ok(int n, int t1, int t2)
-{
-    if (n == 0)
-    {
-        l = t1;
-        r = t2;
-        return;
-    }
-    if (n < 0)
-        return;
-    if (dp[n] != -1)
-        return;
-    ok(n - a, t1 + 1, t2);
-    ok(n - b, t1, t2 + 1);
-    dp[n] = 1;
-}
 void solve(void)
 {
-    int n;
+    int n, a, b;
     cin >> n >> a >> b;
-    l = r = -1;
-    ok(n, 0, 0);
-    if (l != -1)
+    for (int r = 0; r <= n; r++)
     {
-        cout << "YES\n";
-        cout << l << ' ' << r << '\n';
+        int l = (n - b * r);
+        if (l < 0)
+            break;
+        if (l % a == 0)
+        {
+            cout << "YES\n";
+            cout << l / a << ' ' << r << '\n';
+            return;
+        }
     }
-    else
-        cout << "NO\n";
+    cout << "NO\n";
 }
 //-----------------------------------------------------------------------------------------
 signed main()
