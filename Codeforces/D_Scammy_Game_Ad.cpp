@@ -6,7 +6,7 @@
 using namespace std;
 //----------------------------(definition section)-----------------------------------------
 #define dbg(x) cout << #x << " = " << x << '\n'
-#define int long long int
+// #define int long long int
 #define fi first
 #define sc second
 
@@ -18,7 +18,7 @@ const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
 const int N = 1e5 + 10;
 //-----------------------------------------------------------------------------------------
-int dp[35][2500][2500];
+int dp[35][100][100];
 int ok(int n, int s1, int s2, int &sz, vector<pair<int, int>> &a, vector<pair<int, int>> &b)
 {
     if (n > sz)
