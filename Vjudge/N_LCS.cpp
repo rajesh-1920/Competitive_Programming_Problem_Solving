@@ -18,38 +18,51 @@ const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
 const int N = 3e3 + 10;
 //-----------------------------------------------------------------------------------------
-string dp[N][N];
-string ok(int i, int j, string &s1, string &s2)
+int dp[N][N];
+int ok(int i, int j, string &s1, string &s2)
 {
-    if (i == 0 || j == 0)
-        return "";
-    if (dp[i][j].size())
+    if (i == s1.size() || j == s2.size())
+        return 0;
+    if (dp[i][j] != -1)
         return dp[i][j];
-    string ans = "";
+    int ans = 0;
     if (s1[i] == s2[j])
-    {
-        string t1 = ok(i - 1, j - 1, s1, s2) + s1[i];
-        if (ans.size() < t1.size())
-            ans = t1;
-    }
+        ans = max(ans, ok(i + 1, j + 1, s1, s2) + 1);
     else
     {
-        string t1 = ok(i - 1, j, s1, s2);
-        if (ans.size() < t1.size())
-            ans = t1;
-        t1 = ok(i, j - 1, s1, s2);
-        if (ans.size() < t1.size())
-            ans = t1;
+        ans = max(ans, ok(i, j + 1, s1, s2));
+        ans = max(ans, ok(i + 1, j, s1, s2));
     }
     return dp[i][j] = ans;
 }
+string s = "";
+void path(int i, int j, string &s1, string &s2)
+{
+    if (i == s1.size() || j == s2.size())
+        return;
+    if (s1[i] == s2[j])
+    {
+        s.push_back(s1[i]);
+        path(i + 1, j + 1, s1, s2);
+    }
+    else
+    {
+        if (ok(i + 1, j, s1, s2) > ok(i, j + 1, s1, s2))
+            path(i + 1, j, s1, s2);
+        else
+            path(i, j + 1, s1, s2);
+    }
+}
 void solve(void)
 {
+    memset(dp, -1, sizeof(dp));
     string s1, s2;
     cin >> s1 >> s2;
-    s1 = '*' + s1;
-    s2 = '.' + s2;
-    cout << ok(s1.size() - 1, s2.size() - 1, s1, s2);
+    s1 = s1;
+    s2 = s2;
+    int x = ok(0, 0, s1, s2);
+    path(0, 0, s1, s2);
+    cout << s;
 }
 //-----------------------------------------------------------------------------------------
 signed main()
