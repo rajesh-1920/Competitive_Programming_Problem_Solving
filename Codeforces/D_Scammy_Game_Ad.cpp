@@ -18,27 +18,30 @@ const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
 const int N = 1e5 + 10;
 //-----------------------------------------------------------------------------------------
-int dp[35][100][100];
-int ok(int n, int s1, int s2, int &sz, vector<pair<int, int>> &a, vector<pair<int, int>> &b)
+int dp[35][N];
+int ok(int n, int inc, int s1, int s2, int &sz, vector<pair<int, int>> &a, vector<pair<int, int>> &b)
 {
     if (n > sz)
-        return s1 + s2;
-    if (dp[n][s1][s2] != -1)
-        return dp[n][s1][s2];
-    int in = 0;
-    if (a[n].fi == 1)
-        in += a[n].sc;
-    else
-        in += s1 * a[n].sc;
-
-    if (b[n].fi == 1)
-        in += b[n].sc;
-    else
-        in += s2 * b[n].sc;
+        return inc;
+    // if (dp[n][inc] != -1)
+    //     return dp[n][inc];
     int ans = 0;
-    for (int i = 0; i <= in; i++)
-        ans = max(ans, ok(n + 1, s1 + i, s2 + in - i, sz, a, b));
-    return dp[n][s1][s2] = ans;
+    for (int i = 0; i <= inc; i++)
+    {
+        int in = 0;
+        if (a[n].fi == 1)
+            in += a[n].sc;
+        else
+            in += (i + s1) * a[n].sc;
+
+        if (b[n].fi == 1)
+            in += b[n].sc;
+        else
+            in += (inc - i + s2) * b[n].sc;
+
+        ans = max(ans, ok(n + 1, in, i + s1, inc - i + s2, sz, a, b) + inc);
+    }
+    return dp[n][inc] = ans;
 }
 void solve(void)
 {
@@ -61,7 +64,10 @@ void solve(void)
         else
             b[i].fi = 2, b[i].sc = x - 1;
     }
-    cout << ok(1, 1, 1, n, a, b) << '\n';
+    int inc = 0;
+    inc += a[1].sc;
+    inc += b[1].sc;
+    cout << ok(2, inc, 1, 1, n, a, b) + 2 << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
