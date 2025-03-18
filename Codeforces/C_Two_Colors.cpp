@@ -29,6 +29,8 @@ void solve(void)
     int ans = 0;
     int ptr = m - 1, sum = 0;
     for (int i = 0; i < m; i++)
+        v[i] = min(v[i], n - 1);
+    for (int i = 0; i < m; i++)
     {
         while (ptr >= 0 && (v[i] + v[ptr] >= n))
         {
