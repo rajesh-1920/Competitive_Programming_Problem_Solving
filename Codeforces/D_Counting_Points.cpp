@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  10.03.2025
+// Date  :  17.03.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -18,40 +18,28 @@ const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
 const int N = 1e5 + 10;
 //-----------------------------------------------------------------------------------------
-bool possible(int y)
-{
-
-}
 void solve(void)
 {
     int n, m;
     cin >> n >> m;
-    vector<pair<int, int>> v(n), srt(n);
-    for (int i = 0; i < n; i++)
-        cin >> v[i].fi;
-    set<int> st, pos;
-    int mx = -inf;
+    vector<pair<int, int>> v(n);
+    for (auto &it : v)
+        cin >> it.fi;
+    for (auto &it : v)
+        cin >> it.sc;
+    map<int, int> mp;
     for (int i = 0; i < n; i++)
     {
-        cin >> v[i].sc;
-        mx = max(mx, v[i].sc + 10LL);
         for (int j = v[i].fi - v[i].sc; j <= v[i].fi + v[i].sc; j++)
-            st.insert(j);
-        srt[i].fi = v[i].fi - v[i].sc;
-        pos.insert(v[i].fi - v[i].sc);
-        srt[i].sc = i;
-    }
-    sort(all(srt));
-    int i = 0, j = 0, ans = 0;
-    for (auto it : st)
-    {
-        int l = 0, r = mx;
-        while (l <= r)
         {
-            int mid = (l + r) / 2;
-            if (possible(mid));
+            int t = (int)sqrt((v[i].sc * v[i].sc) - ((j - v[i].fi) * (j - v[i].fi)));
+            t = 2 * t + 1;
+            mp[j] = max(mp[j], t);
         }
     }
+    int ans = 0;
+    for (auto it : mp)
+        ans += it.sc;
     cout << ans << '\n';
 }
 //-----------------------------------------------------------------------------------------
