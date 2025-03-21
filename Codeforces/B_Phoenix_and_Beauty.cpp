@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  08.03.2025
+// Date  :  17.03.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -20,21 +20,33 @@ const int N = 1e5 + 10;
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    int n;
-    cin >> n;
+    int n, k;
+    cin >> n >> k;
+    vector<int> v(n), ans;
     map<int, int> mp;
-    for (int i = 1; i <= n; i++)
+    for (auto &it : v)
     {
-        int x;
-        cin >> x;
-        x++;
-        x -= i;
-        int t = i;
-        if (x > 0)
-            t += ((x + n - 1) / n) * n;
-        mp[t] = i;
+        cin >> it;
+        mp[it]++;
     }
-    cout << (*mp.begin()).sc << '\n';
+    if (mp.size() > k)
+    {
+        cout << -1 << '\n';
+        return;
+    }
+    int mx = 100;
+    int i = 1;
+    while (mp.size() < k)
+        mp[i++]++;
+    while (mx--)
+    {
+        for (auto it : mp)
+            ans.push_back(it.fi);
+    }
+    cout << ans.size() << '\n';
+    for (auto it : ans)
+        cout << it << ' ';
+    cout << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -43,7 +55,7 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    // cin >> test;
+    cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";
