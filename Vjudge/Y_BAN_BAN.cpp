@@ -23,21 +23,34 @@ void solve(void)
     int n;
     cin >> n;
     int t = n;
-    cout << (n + 1) / 2 << '\n';
+    vector<pair<int, int>> v;
     if (t & 1)
         t--;
     int i = 2;
     t /= 2;
-    while (t--)
-    {
-        cout << i << ' ' << i + 4 << '\n';
-        i += 6;
-    }
     if (n & 1)
     {
         n *= 3;
-        cout << n - 2 << ' ' << n - 1 << '\n';
+        // cout << n - 2 << ' ' << n - 1 << '\n';
+        v.push_back({1, 2});
+        i = 5;
+        while (t--)
+        {
+            // cout << i << ' ' << i + 4 << '\n';
+            v.push_back({i, i + 4});
+            i += 6;
+        }
     }
+    else
+        while (t--)
+        {
+            // cout << i << ' ' << i + 4 << '\n';
+            v.push_back({i, i + 4});
+            i += 6;
+        }
+    cout << v.size() << '\n';
+    for (auto it : v)
+        cout << it.fi << ' ' << it.sc << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()

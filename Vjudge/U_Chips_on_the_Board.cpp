@@ -23,18 +23,22 @@ void solve(void)
     int n;
     cin >> n;
     vector<int> v(n), a(n);
-    int sv = 0, av = 0;
+    int sv = 0, sa = 0;
     for (auto &it : v)
-    {
-        cin >> it;
-        av += it;
-    }
-    for (auto &it : a)
     {
         cin >> it;
         sv += it;
     }
-
+    for (auto &it : a)
+    {
+        cin >> it;
+        sa += it;
+    }
+    sort(all(v));
+    sort(all(a));
+    sa += (n * v[0]);
+    sv += (n * a[0]);
+    cout << min(sa, sv) << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()

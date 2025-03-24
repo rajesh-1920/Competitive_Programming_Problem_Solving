@@ -24,7 +24,7 @@ void solve(void)
     cin >> n;
     for (int i = 0; i < n; i++)
     {
-        if (i % 3 == 2)
+        if (i % 4 > 1)
             cout << 'b';
         else
             cout << 'a';

@@ -20,15 +20,42 @@ const int N = 1e5 + 10;
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    int a, b, c;
-    cin >> a >> b >> c;
-    int z = c;
-    int y = c + b;
-    int x = a + b + c;
-    cout << x << ' ' << y << ' ' << z << '\n';
-    // dbg(x % y);
-    // dbg(y % z);
-    // dbg(z % x);
+    int n, m;
+    cin >> n >> m;
+    vector<vector<int>> v(n, vector<int>(m)), w(n, vector<int>(m));
+    map<int, int> mp;
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++)
+        {
+            cin >> v[i][j];
+            mp[v[i][j]]++;
+        }
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++)
+        {
+            auto it = mp.upper_bound(v[i][j]);
+            if (it == mp.end())
+            {
+                int t = (*mp.begin()).fi;
+                if (t == v[i][j])
+                {
+                    cout << -1 << '\n';
+                    return;
+                }
+                w[i][j] = t;
+            }
+            else
+                w[i][j] = (*it).fi;
+            mp[w[i][j]]--;
+            if (mp[w[i][j]] == 0)
+                mp.erase(mp[w[i][j]]);
+        }
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < m; j++)
+            cout << w[i][j] << ' ';
+        cout << '\n';
+    }
 }
 //-----------------------------------------------------------------------------------------
 signed main()

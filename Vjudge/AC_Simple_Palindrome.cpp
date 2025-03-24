@@ -20,15 +20,14 @@ const int N = 1e5 + 10;
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    int a, b, c;
-    cin >> a >> b >> c;
-    int z = c;
-    int y = c + b;
-    int x = a + b + c;
-    cout << x << ' ' << y << ' ' << z << '\n';
-    // dbg(x % y);
-    // dbg(y % z);
-    // dbg(z % x);
+    int n;
+    cin >> n;
+    string s = "";
+    vector<char> v = {'a', 'e', 'i', 'o', 'u'};
+    for (int i = 0; i < n; i++)
+        s.push_back(v[i % 5]);
+    sort(all(s));
+    cout << s << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
