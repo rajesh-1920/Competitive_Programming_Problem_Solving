@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  22.03.2025
+// Date  :  25.03.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -20,21 +20,25 @@ const int N = 1e5 + 10;
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    int x, y;
-    cin >> x >> y;
-    if (x == y)
+    string s;
+    cin >> s;
+    map<string, int> mp;
+    for (int i = 0; i < 10; i++)
     {
-        cout << -1 << '\n';
-        return;
+        string t;
+        cin >> t;
+        mp[t] = i;
     }
-    x = max(x, y);
-    int t = 2, tm = x;
-    while (tm)
+    string t = "";
+    for (int i = 0; i < s.size(); i++)
     {
-        t *= 2;
-        tm /= 2;
+        t.push_back(s[i]);
+        if (t.size() == 10)
+        {
+            cout << mp[t];
+            t = "";
+        }
     }
-    cout << (t - x) << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -43,7 +47,7 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    cin >> test;
+    // cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";

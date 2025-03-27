@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  22.03.2025
+// Date  :  25.03.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -20,21 +20,42 @@ const int N = 1e5 + 10;
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    int x, y;
-    cin >> x >> y;
-    if (x == y)
+    int n, m;
+    cin >> n >> m;
+    map<int, int> mp;
+    vector<int> v(n);
+    for (auto &it : v)
     {
-        cout << -1 << '\n';
-        return;
+        cin >> it;
+        it %= m;
+        mp[it]++;
     }
-    x = max(x, y);
-    int t = 2, tm = x;
-    while (tm)
+    sort(all(v));
+    int ans = 0;
+    for (int i = 0; i < n; i++)
     {
-        t *= 2;
-        tm /= 2;
+        if (mp[v[i]] > 0 && v[i] > 0)
+        {
+            int x = m - v[i];
+            if (mp[x] == mp[v[i]])
+                mp[x] = mp[v[i]] = -1;
+            else if (mp[x] > mp[v[i]])
+            {
+                mp[x] -= (mp[v[i]] + 1);
+                mp[v[i]] = 0;
+            }
+            else
+            {
+                mp[v[i]] -= (mp[x] + 1);
+                mp[x] = 0;
+            }
+            ans++;
+        }
     }
-    cout << (t - x) << '\n';
+    for (auto it : mp)
+        if (it.sc > 0)
+            ans++;
+    cout << ans << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
