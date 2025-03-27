@@ -67,13 +67,6 @@ void solve(void)
         }
         v[i] = min(v[i], temp[i]);
         st.erase({sz[i], i});
-        // dbg(i);
-        // for (int i = 1; i <= n; i++)
-        //     cout << temp[i] << ' ';
-        // cout << '\n';
-        // for (int i = 1; i <= n; i++)
-        //     cout << v[i] << ' ';
-        // cout << '\n';
     }
 
     for (int i = 1; i <= n; i++)
