@@ -21,57 +21,44 @@ const int N = 1e5 + 10;
 void solve(void)
 {
     int n, k;
-    cin >> n >> k;
-    vector<int> v(n + 1);
-    for (int i = 1; i <= n; i++)
-        cin >> v[i];
-    for (int i = 0; i < k; i++)
+    string a, b;
+    cin >> n >> k >> a >> b;
+    vector<int> v(n + 1, 0), can(n + 1, 0);
+    a = '*' + a;
+    b = '*' + b;
+    for (int i = n-k+1; i >= 1; i--)
     {
-        int x;
-        cin >> x;
-        v[x] = 0;
+        if (a[i] == a[n-k+1])
+            can[i] = 1;
+        else
+            break;
     }
-    set<pair<int, int>> st; // size,indx
-    vector<int> g[n + 1], sz(n + 5, 0);
     for (int i = 1; i <= n; i++)
     {
-        int m;
-        cin >> m;
-        for (int j = 0; j < m; j++)
+        if (can[i])
         {
-            int t;
-            cin >> t;
-            if (v[i] != 0)
-                g[t].push_back(i);
-        }
-        if (v[i] == 0)
-            m = 0;
-        st.insert({m, i});
-        sz[i] = m;
-    }
-
-    vector<int> temp(n + 5, inf), vis(n + 5, 0);
-    while (st.size())
-    {
-        int i = (*st.begin()).sc;
-        v[i] = min(v[i], temp[i]);
-        for (auto it : g[i])
-        {
-            st.erase({sz[it], it});
-            sz[it]--;
-            st.insert({sz[it], it});
-            if (temp[it] == inf)
-                temp[it] = v[i];
+            v[i] = v[i - 1];
+            if (a[i] + v[i] >= 'z')
+                a[i] = 'z';
             else
-                temp[it] += v[i];
+                a[i] = char(a[i] + v[i]);
+            if (a[i] < b[i])
+            {
+                v[i] += b[i] - a[i];
+                a[i] = b[i];
+            }
         }
-        v[i] = min(v[i], temp[i]);
-        st.erase({sz[i], i});
+        if (a[i] == b[i])
+            continue;
+        else
+        {
+            cout << a << '\n';
+            cout << "NO\n";
+            return;
+        }
     }
-
-    for (int i = 1; i <= n; i++)
-        cout << v[i] << ' ';
-    cout << '\n';
+    cout << a << ' ';
+    cout << "YES\n";
 }
 //-----------------------------------------------------------------------------------------
 signed main()
