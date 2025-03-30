@@ -22,38 +22,26 @@ void solve(void)
 {
     int n;
     cin >> n;
-    int t = n;
-    string s = "";
-    set<int> a;
-    vector<int> b;
-    int k = 2;
-    // for (int i = 0; i < n; i++)
-    //     s += "BAN";
-    for (int i = 0; i < n; i++)
+    vector<int> v(n);
+    if (n % 2 == 0)
     {
-        a.insert(k);
-        b.push_back(k + 1);
-        k += 3;
+        int t = 2;
+        for (int i = 0; i < n; i += 2)
+            v[i] = t, t += 2;
+        t = 1;
+        for (int i = 1; i < n; i += 2)
+            v[i] = t, t += 2;
+        for (auto it : v)
+            cout << it << ' ';
+        cout << '\n';
     }
-
-    vector<pair<int, int>> v;
-    for (int i = 0; i < n; i++)
+    else
     {
-        int t1 = b.back();
-        int t2 = *a.begin();
-        if (t1 < t2)
-            break;
-        v.push_back({t2, t1});
-        a.erase(a.begin());
-        b.pop_back();
+        if (n == 1)
+            cout << 1 << '\n';
+        else
+            cout << -1 << '\n';
     }
-    cout << v.size() << '\n';
-    for (auto it : v)
-    {
-        cout << it.fi << ' ' << it.sc << '\n';
-        // swap(s[it.fi - 1], s[it.sc - 1]);
-    }
-    // cout << s << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()

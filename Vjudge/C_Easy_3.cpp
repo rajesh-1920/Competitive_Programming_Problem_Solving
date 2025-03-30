@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  22.03.2025
+// Date  :  25.03.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -20,40 +20,46 @@ const int N = 1e5 + 10;
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    int n;
-    cin >> n;
-    int t = n;
-    string s = "";
-    set<int> a;
-    vector<int> b;
-    int k = 2;
-    // for (int i = 0; i < n; i++)
-    //     s += "BAN";
-    for (int i = 0; i < n; i++)
+    int n, q;
+    cin >> n >> q;
+    map<int, int> mp, tm;
+    while (n--)
     {
-        a.insert(k);
-        b.push_back(k + 1);
-        k += 3;
+        int x, y;
+        cin >> x >> y;
+        mp[x]++;
+        mp[y + 1]--;
     }
-
-    vector<pair<int, int>> v;
-    for (int i = 0; i < n; i++)
+    int t = 0;
+    for (auto it : mp)
     {
-        int t1 = b.back();
-        int t2 = *a.begin();
-        if (t1 < t2)
-            break;
-        v.push_back({t2, t1});
-        a.erase(a.begin());
-        b.pop_back();
+        tm[it.fi] = it.sc + t;
+        t += it.sc;
+        // cout << it.fi << ' ' << tm[it.fi] << '\n';
     }
-    cout << v.size() << '\n';
-    for (auto it : v)
+    while (q--)
     {
-        cout << it.fi << ' ' << it.sc << '\n';
-        // swap(s[it.fi - 1], s[it.sc - 1]);
+        int x;
+        cin >> x;
+        auto it = tm.lower_bound(x);
+        if (it == tm.end())
+        {
+            cout << 0 << '\n';
+            continue;
+        }
+        else if ((*it).fi == x)
+            cout << (*it).sc << '\n';
+        else
+        {
+            if (it == tm.begin())
+                cout << 0 << '\n';
+            else
+            {
+                it--;
+                cout << (*it).sc << '\n';
+            }
+        }
     }
-    // cout << s << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -62,7 +68,7 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    cin >> test;
+    // cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";

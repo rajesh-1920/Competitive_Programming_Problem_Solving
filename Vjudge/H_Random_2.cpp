@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  22.03.2025
+// Date  :  25.03.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -21,39 +21,19 @@ const int N = 1e5 + 10;
 void solve(void)
 {
     int n;
-    cin >> n;
-    int t = n;
-    string s = "";
-    set<int> a;
-    vector<int> b;
-    int k = 2;
-    // for (int i = 0; i < n; i++)
-    //     s += "BAN";
-    for (int i = 0; i < n; i++)
+    string s, t = "";
+    cin >> n >> s;
+    for (auto it : s)
+        if (it != '-')
+            t.push_back(it);
+    for (int i = 0; i + 1 < t.size(); i++)
     {
-        a.insert(k);
-        b.push_back(k + 1);
-        k += 3;
+        if (t[i] > t[i + 1])
+        {
+            cout << 0 << '\n';
+            return;
+        }
     }
-
-    vector<pair<int, int>> v;
-    for (int i = 0; i < n; i++)
-    {
-        int t1 = b.back();
-        int t2 = *a.begin();
-        if (t1 < t2)
-            break;
-        v.push_back({t2, t1});
-        a.erase(a.begin());
-        b.pop_back();
-    }
-    cout << v.size() << '\n';
-    for (auto it : v)
-    {
-        cout << it.fi << ' ' << it.sc << '\n';
-        // swap(s[it.fi - 1], s[it.sc - 1]);
-    }
-    // cout << s << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()

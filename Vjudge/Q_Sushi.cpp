@@ -20,49 +20,33 @@ const int N = 1e5 + 10;
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    int n;
+    int n, sum = 0;
     cin >> n;
-    int t = n;
-    string s = "";
-    set<int> a;
-    vector<int> b;
-    int k = 2;
-    // for (int i = 0; i < n; i++)
-    //     s += "BAN";
-    for (int i = 0; i < n; i++)
+    vector<int> v(n);
+    for (auto &it : v)
     {
-        a.insert(k);
-        b.push_back(k + 1);
-        k += 3;
+        cin >> it;
+        sum += it;
     }
-
-    vector<pair<int, int>> v;
-    for (int i = 0; i < n; i++)
+    long double ans = 0;
+    for (int i = 1; i <= n; i++)
     {
-        int t1 = b.back();
-        int t2 = *a.begin();
-        if (t1 < t2)
-            break;
-        v.push_back({t2, t1});
-        a.erase(a.begin());
-        b.pop_back();
+        long double t = i;
+        long double x = n;
+        long double y = v[i - 1];
+        dbg(t/x);
+        ans += (t / x);
     }
-    cout << v.size() << '\n';
-    for (auto it : v)
-    {
-        cout << it.fi << ' ' << it.sc << '\n';
-        // swap(s[it.fi - 1], s[it.sc - 1]);
-    }
-    // cout << s << '\n';
+    cout << ans << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
 {
-    // cout << fixed << showpoint << setprecision(10);
+    cout << fixed << showpoint << setprecision(10);
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    cin >> test;
+    // cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";

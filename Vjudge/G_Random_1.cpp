@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  22.03.2025
+// Date  :  25.03.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -20,40 +20,57 @@ const int N = 1e5 + 10;
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    int n;
-    cin >> n;
-    int t = n;
-    string s = "";
-    set<int> a;
-    vector<int> b;
-    int k = 2;
-    // for (int i = 0; i < n; i++)
-    //     s += "BAN";
-    for (int i = 0; i < n; i++)
+    string a, b;
+    cin >> a >> b;
+    int j = 0, fl = 1, cnt = 0;
+    for (int i = 0; i < a.size(); i++)
     {
-        a.insert(k);
-        b.push_back(k + 1);
-        k += 3;
+        if (a[i] == b[j])
+            j++;
+        else
+            cnt++;
     }
-
-    vector<pair<int, int>> v;
-    for (int i = 0; i < n; i++)
+    if (cnt > 1)
     {
-        int t1 = b.back();
-        int t2 = *a.begin();
-        if (t1 < t2)
+        cout << 0;
+        return;
+    }
+    set<int> ans;
+    int to;
+    if (cnt == 0)
+    {
+        to = a.size() - 1;
+        ans.insert(a.size());
+    }
+    else
+    {
+        j = 0;
+        for (int i = 0; i < a.size(); i++)
+        {
+            if (a[i] != b[j])
+            {
+                to = i;
+                ans.insert(i + 1);
+                break;
+            }
+            j++;
+        }
+    }
+    for (int i = to; i < a.size(); i++)
+    {
+        if (a[i] != a[to])
             break;
-        v.push_back({t2, t1});
-        a.erase(a.begin());
-        b.pop_back();
+        ans.insert(i + 1);
     }
-    cout << v.size() << '\n';
-    for (auto it : v)
+    for (int i = to; i >= 0; i--)
     {
-        cout << it.fi << ' ' << it.sc << '\n';
-        // swap(s[it.fi - 1], s[it.sc - 1]);
+        if (a[i] != a[to])
+            break;
+        ans.insert(i + 1);
     }
-    // cout << s << '\n';
+    cout << ans.size() << '\n';
+    for (auto it : ans)
+        cout << it << ' ';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -62,7 +79,7 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    cin >> test;
+    // cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";
