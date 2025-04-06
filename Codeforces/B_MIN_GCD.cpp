@@ -22,8 +22,42 @@ void solve(void)
 {
     int n;
     cin >> n;
-    // vector<int> v(n); for (auto &it : v) cin >> it;
-    // vector<vector<int>> v(110, vector<int>(110, 0));
+    map<int, int> mp;
+    vector<int> v(n);
+    for (auto &it : v)
+    {
+        cin >> it;
+        mp[it]++;
+    }
+    int mn = (*mp.begin()).fi;
+    if (mp[mn] > 1)
+    {
+        cout << "Yes\n";
+        return;
+    }
+    mp.clear();
+    vector<int> st;
+    for (int i = 0; i < n; i++)
+    {
+        if (v[i] == mn)
+            continue;
+        if (v[i] % mn == 0 && mp[v[i] / mn] == 0)
+        {
+            st.push_back(v[i] / mn);
+            mp[v[i] / mn]++;
+        }
+    }
+    n = st.size();
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = i + 1; j < n; j++)
+            if (__gcd(st[i], st[j]) == 1)
+            {
+                cout << "Yes\n";
+                return;
+            }
+    }
+    cout << "No\n";
 }
 //-----------------------------------------------------------------------------------------
 signed main()
