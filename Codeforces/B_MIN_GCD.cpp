@@ -48,8 +48,13 @@ void solve(void)
         }
     }
     n = st.size();
+    if (n == 0)
+    {
+        cout << "No\n";
+        return;
+    }
     int gc = st.back();
-    //dbg(gc);
+    // dbg(gc);
     for (int i = 0; i < n; i++)
     {
         gc = gcd(st[i], gc);
