@@ -20,11 +20,11 @@ const int N = 1e5 + 10;
 //-----------------------------------------------------------------------------------------
 bool isPossible(vector<int> &a, int &k, int &x)
 {
-    set<int> need;
+    unordered_set<int> need;
     for (int i = 0; i < x; ++i)
         need.insert(i);
     int cnt = 0;
-    set<int> curr;
+    unordered_set<int> curr;
     for (int it : a)
     {
         if (it < x)

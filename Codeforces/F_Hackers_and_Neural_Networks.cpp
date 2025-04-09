@@ -22,7 +22,7 @@ vector<int> g[N];
 int fl = 0, sz;
 int ok(int n, int pre)
 {
-    dbg(n);
+    //dbg(n);
     // dbg(pre);
     if (n > sz || fl)
         return 0;
