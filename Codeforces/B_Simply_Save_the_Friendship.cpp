@@ -18,29 +18,33 @@ const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
 const int N = 1e5 + 10;
 //-----------------------------------------------------------------------------------------
+bool cmp(int a, int b)
+{
+    return a > b;
+}
 void solve(void)
 {
-    int n;
-    cin >> n;
-    vector<pair<int, int>> v(n);
-    for (auto &it : v)
-        cin >> it.fi >> it.sc;
-    sort(all(v));
-    vector<int> pos(n), dp(n + 5, 0);
+    int n, q;
+    string s;
+    cin >> n >> q >> s;
+    vector<int> v(n + 5, 0), an(n);
     for (int i = 0; i < n; i++)
-        pos[i] = v[i].fi;
-    int mx = 0;
+        an[i] = s[i] - 'a';
+    while (q--)
+    {
+        int x, y, t;
+        cin >> x >> y >> t;
+        x--;
+        if (t == 1)
+            sort(an.begin() + x, an.begin() + y);
+        else
+            sort(an.begin() + x, an.begin() + y, cmp);
+    }
     for (int i = 0; i < n; i++)
     {
-        int l = v[i].fi - v[i].sc;
-        int ii = (lower_bound(all(pos), l) - pos.begin());
-        if (ii)
-            dp[i] = dp[ii - 1] + 1;
-        else
-            dp[i] = 1;
-        mx = max(mx, dp[i]);
+        char ch = ('a' + an[i]);
+        cout << ch;
     }
-    cout << (n - mx);
 }
 //-----------------------------------------------------------------------------------------
 signed main()

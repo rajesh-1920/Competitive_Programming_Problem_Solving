@@ -20,27 +20,25 @@ const int N = 1e5 + 10;
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    int n;
-    cin >> n;
-    vector<pair<int, int>> v(n);
-    for (auto &it : v)
-        cin >> it.fi >> it.sc;
-    sort(all(v));
-    vector<int> pos(n), dp(n + 5, 0);
-    for (int i = 0; i < n; i++)
-        pos[i] = v[i].fi;
-    int mx = 0;
-    for (int i = 0; i < n; i++)
+    int a, b, n, m, t;
+    cin >> a >> b >> m >> n >> t;
+    int ax = a, ay = b;
+    t = 90 - t;
+    int bad = cos(acos(-1) * t / 180) * b;
+    // dbg(bad);
+    ax = a + bad;
+    t = (ax + m - 1) / m;
+    ax = t * m;
+    // dbg(ax);
+    ay = ax * n / m;
+    if (ay < b)
     {
-        int l = v[i].fi - v[i].sc;
-        int ii = (lower_bound(all(pos), l) - pos.begin());
-        if (ii)
-            dp[i] = dp[ii - 1] + 1;
-        else
-            dp[i] = 1;
-        mx = max(mx, dp[i]);
+        ay = b;
+        t = (ay + n - 1) / n;
+        ay = t * n;
+        ax = ay * m / n;
     }
-    cout << (n - mx);
+    cout << ax << ' ' << ay << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -49,7 +47,7 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    // cin >> test;
+    cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";
