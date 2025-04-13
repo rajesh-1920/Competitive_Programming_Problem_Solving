@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  14.02.2025
+// Date  :  13.04.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -20,49 +20,74 @@ const int N = 1e5 + 10;
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    int n;
+    int n, s = 0;
     cin >> n;
-    vector<int> v(n), sum(n + 1, 0);
-    for (int i = 0; i < n; i++)
+    vector<int> v(n);
+    for (auto &it : v)
     {
-        cin >> v[i];
-        sum[i + 1] = sum[i] + v[i];
+        cin >> it;
+        s += it;
     }
-    if (n < 3 || sum[n] % 3)
+    if (n < 3 || s % 3)
     {
         cout << 0;
         return;
     }
-    int need = sum[n] / 3;
-    int st = 1, ls = 1;
-    for (int i = 1; i <= n; i++)
-        if (sum[i] == need)
+    int need = s / 3, pos = 1;
+    s = v[0];
+    for (int i = 1; i + 1 < n; i++)
+    {
+        if (s == need)
         {
-            st = i + 1;
+            pos = i;
             break;
         }
-    for (int i = n - 1; i >= 1; i--)
-        if (sum[n] - sum[i] == need)
+        if (s > need)
         {
-            ls = i;
+            cout << 0;
+            return;
+        }
+        s += v[i];
+    }
+    int pos2 = n - 2;
+    s = v[n - 1];
+    for (int i = n - 2; i > 0; i--)
+    {
+        if (s == need)
+        {
+            pos2 = i;
             break;
         }
-    sum[st - 1] = 0;
+        if (s > need)
+        {
+            cout << 0;
+            return;
+        }
+        s += v[i];
+    }
+    if (pos > pos2)
+    {
+        cout << 0;
+        return;
+    }
     int cnt = 1;
-    for (int i = st; i < ls; i++)
+    while (pos < pos2)
     {
-        sum[i] = v[i - 1] + sum[i - 1];
-        if (sum[i] == 0)
-            cnt++;
+        if (v[pos])
+            break;
+        cnt++;
+        pos++;
     }
-    sum[ls + 1] = 0;
-    for (int i = ls; i > st; i--)
+    int ans = (cnt * (cnt + 1)) / 2;
+    cnt = ans;
+    while (pos < pos2)
     {
-        sum[i] = v[i - 1] + sum[i + 1];
-        if (sum[i] == 0)
-            cnt++;
+        if (v[pos2])
+            break;
+        pos2--;
+        ans += cnt;
     }
-    cout << cnt;
+    cout << ans << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
