@@ -20,19 +20,28 @@ const int N = 1e5 + 10;
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    int n, s = 0;
+    int n, s = 0, c = 0;
     cin >> n;
     vector<int> v(n);
     for (auto &it : v)
     {
         cin >> it;
         s += it;
+        if (it == 0)
+            c++;
     }
     if (n < 3 || s % 3)
     {
         cout << 0;
         return;
     }
+    if (c == n)
+    {
+        n -= 2;
+        cout << (n * (n + 1)) / 2;
+        return;
+    }
+
     int need = s / 3, pos = 1;
     s = v[0];
     for (int i = 1; i + 1 < n; i++)
@@ -70,7 +79,7 @@ void solve(void)
         cout << 0;
         return;
     }
-    int cnt = 1;
+    int cnt = 0;
     while (pos < pos2)
     {
         if (v[pos])
@@ -78,7 +87,8 @@ void solve(void)
         cnt++;
         pos++;
     }
-    int ans = (cnt * (cnt + 1)) / 2;
+    // dbg(cnt);
+    int ans = cnt + 1;
     cnt = ans;
     while (pos < pos2)
     {
