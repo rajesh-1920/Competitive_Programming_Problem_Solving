@@ -43,59 +43,26 @@ void solve(void)
     }
 
     int need = s / 3, pos = 1;
-    s = v[0];
-    for (int i = 1; i + 1 < n; i++)
+    vector<int> cnt(n, 0), sum(n, 0);
+    s = 0;
+    for (int i = n - 1; i >= 0; i--)
     {
-        if (s == need)
-        {
-            pos = i;
-            break;
-        }
-        if (s > need)
-        {
-            cout << 0;
-            return;
-        }
+        if (s + v[i] == need)
+            cnt[i] = 1;
         s += v[i];
     }
-    int pos2 = n - 2;
-    s = v[n - 1];
-    for (int i = n - 2; i > 0; i--)
+    sum[n - 1] = cnt[n - 1];
+    for (int i = n - 2; i >= 0; i--)
+        sum[i] = sum[i + 1] + cnt[i];
+    int ans = 0;
+
+    s = 0;
+    for (int i = 0; i + 2 < n; i++)
     {
-        if (s == need)
-        {
-            pos2 = i;
-            break;
-        }
-        if (s > need)
-        {
-            cout << 0;
-            return;
-        }
+        if (s + v[i] == need)
+            ans += sum[i + 2];
+        // dbg(sum[i + 2]);
         s += v[i];
-    }
-    if (pos > pos2)
-    {
-        cout << 0;
-        return;
-    }
-    int cnt = 0;
-    while (pos < pos2)
-    {
-        if (v[pos])
-            break;
-        cnt++;
-        pos++;
-    }
-    // dbg(cnt);
-    int ans = cnt + 1;
-    cnt = ans;
-    while (pos < pos2)
-    {
-        if (v[pos2])
-            break;
-        pos2--;
-        ans += cnt;
     }
     cout << ans << '\n';
 }
