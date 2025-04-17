@@ -61,7 +61,6 @@ void solve(void)
     {
         if (s + v[i] == need)
             ans += sum[i + 2];
-        // dbg(sum[i + 2]);
         s += v[i];
     }
     cout << ans << '\n';
