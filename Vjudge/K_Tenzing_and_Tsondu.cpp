@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  13.04.2025
+// Date  :  12.04.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -20,32 +20,27 @@ const int N = 1e5 + 10;
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    int n, l, r;
-    cin >> n >> l >> r;
-    if (n == 2)
+    int n, m;
+    cin >> n >> m;
+    int t1 = 0, t2 = 0;
+    while (n--)
     {
-        if (l + 2 > r)
-            cout << -1 << '\n';
-        else
-            cout << l << ' ' << l + 2 << '\n';
-        return;
+        int x;
+        cin >> x;
+        t1 += x;
     }
-    vector<int> v;
-    v.push_back(l);
-    while (v.size() < n)
+    while (m--)
     {
-        v.push_back(v.back() + 3);
-        v.push_back(v.back() - 2);
+        int x;
+        cin >> x;
+        t2 += x;
     }
-    for (int i = 0; i < n; i++)
-        if (v[i] > r)
-        {
-            cout << -1 << '\n';
-            return;
-        }
-    for (int i = 0; i < n; i++)
-        cout << v[i] << ' ';
-    cout << '\n';
+    if (t1 > t2)
+        cout << "Tsondu\n";
+    else if (t1 < t2)
+        cout << "Tenzing\n";
+    else
+        cout << "Draw\n";
 }
 //-----------------------------------------------------------------------------------------
 signed main()
