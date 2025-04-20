@@ -31,11 +31,14 @@ void solve(void)
         return;
     }
     vector<int> v;
+    v.push_back(l + 2);
     v.push_back(l);
+    v.push_back(l + 3);
+    int pre = l + l + 3;
     while (v.size() < n)
     {
-        v.push_back(v.back() + 3);
-        v.push_back(v.back() - 2);
+        pre++;
+        v.push_back(pre - v.back());
     }
     for (int i = 0; i < n; i++)
         if (v[i] > r)
@@ -43,8 +46,16 @@ void solve(void)
             cout << -1 << '\n';
             return;
         }
+    // map<int, int> mp;
     for (int i = 0; i < n; i++)
+    {
         cout << v[i] << ' ';
+        // mp[v[i] + v[i + 1]]++;
+        //  if (mp[v[i] + v[i + 1]] > 1)
+        //  {
+        //      dbg(i);
+        //  }
+    }
     cout << '\n';
 }
 //-----------------------------------------------------------------------------------------
