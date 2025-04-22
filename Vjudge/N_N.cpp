@@ -20,31 +20,59 @@ const int N = 1e5 + 10;
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    int n;
+    int n, k;
     string s;
-    cin >> n >> s;
-    string s1 = "FBFFBFFBFBFFBFFBFBFFBFFBFBFFBFFB";
-    for (int i = 0; i + n < s1.size(); i++)
+    cin >> n >> k >> s;
+    int ans = 0;
+    priority_queue<pair<int, int>> pq;
+    int cnt = 0, fl = 0;
+    for (int i = 0; i < n; i++)
     {
-        int t = 0, fl = 1;
-        for (int j = i; j < s1.size(); j++)
+        if (s[i] == 'W')
         {
-            if (s[t] != s1[j])
-            {
-                fl = 0;
-                break;
-            }
-            t++;
-            if (t == s.size())
-                break;
+            fl++;
+            fl = min(fl, 2LL);
+            if (cnt)
+                pq.push({-cnt, fl});
+            cnt = 0;
+            ans++;
+            if (i)
+                if (s[i - 1] == 'W')
+                    ans++;
         }
-        if (fl)
-        {
-            cout << "YES\n";
-            return;
-        }
+        else
+            cnt++;
     }
-    cout << "NO\n";
+    fl = min(fl, 1LL);
+    if (cnt)
+        pq.push({-cnt, fl});
+    // dbg(ans);
+    while (!pq.empty())
+    {
+        if (k == 0)
+            break;
+        fl = pq.top().sc;
+        int t = -pq.top().fi;
+        pq.pop();
+        if (k >= t)
+        {
+            ans += 2 * t;
+            k -= t;
+            if (fl == 2)
+                ans++;
+            else if (fl == 0)
+                ans--;
+        }
+        else
+        {
+            ans += 2 * k;
+            k = 0;
+            if (fl == 0)
+                ans--;
+        }
+        // dbg(ans);
+    }
+    cout << ans << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()

@@ -20,17 +20,33 @@ const int N = 1e5 + 10;
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    int n, a, b, c, d;
-    cin >> n >> a >> b >> c >> d;
-    for (int i = c - d; i <= c + d; i++)
+    int n;
+    cin >> n;
+    vector<int> v(n);
+    for (auto &it : v)
+        cin >> it;
+    sort(all(v));
+    int ans = (v.back() * v[0]);
+    for (auto it : v)
     {
-        if (i >= (a - b) * n && i <= (a + b) * n)
+        if (ans % it)
         {
-            cout << "Yes\n";
+            cout << -1 << '\n';
             return;
         }
     }
-    cout << "No\n";
+    set<int> st;
+    for (int i = 2; i * i <= ans + 10; i++)
+    {
+        if (ans % i == 0)
+        {
+            st.insert(i);
+            st.insert(ans / i);
+        }
+    }
+    if (st.size() != v.size())
+        ans = -1;
+    cout << ans << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
