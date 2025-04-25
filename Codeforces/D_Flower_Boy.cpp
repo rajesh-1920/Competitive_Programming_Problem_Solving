@@ -60,6 +60,10 @@ void solve()
         }
     }
 
+    for (auto it : next)
+        cout << it << ' ';
+    cout << '\n';
+
     int ans = N;
     for (int i = 0; i < m; ++i)
     {
