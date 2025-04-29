@@ -77,33 +77,18 @@ void solve(void)
     vector<int> vv(m);
     for (auto &it : vv)
         cin >> it;
-    int fl = 0;
+    int ans = 1;
     for (int i = 0; i < m; i++)
     {
         int t;
         cin >> t;
         if (x[vv[i]] < t)
-            fl = 1;
+            ans = 0;
         x[vv[i]] -= t;
     }
-    if (fl)
-    {
-        cout << 0;
-        return;
-    }
-    int ans = 1;
     for (auto it : x)
-    {
         if (it.sc)
-        {
-            it.sc = 1;
-            fl = 1;
-        }
-        ans = modadd(ans, it.sc, MOD);
-        // cout << it.sc << '\n';
-    }
-    if (fl)
-        ans = modmul(2, ans, MOD);
+            ans = modmul(2, ans, MOD);
     cout << ans << '\n';
 }
 //-----------------------------------------------------------------------------------------
