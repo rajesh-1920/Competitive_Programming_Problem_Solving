@@ -32,28 +32,36 @@ void solve(void)
         st.insert(x);
     }
     vector<int> v(2 * n + 1);
-    int s = 0;
     for (int i = 1; i < 2 * n + 1; i += 2)
     {
         v[i] = pq.top();
-        s += v[i];
         pq.pop();
     }
     for (int i = 2; i < 2 * n + 1; i += 2)
     {
         v[i] = pq.top();
-        s -= v[i];
         pq.pop();
     }
+    int s = 0;
+    for (int i = 1; i < 2 * n + 1; i++)
+        if (i & 1)
+            s += v[i];
+        else
+            s -= v[i];
     v[0] = s;
-    if (st.find(v[0]) == st.end())
-    {
-        for (auto it : v)
-            cout << it << ' ';
-        cout << '\n';
-        return;
-    }
-   
+    if (v[0] == v[1])
+        for (int i = 2; i + 1 < 2 * n + 1; i += 2)
+            if (v[i] != v[1] && v[i + 1] != v[0] && v[i - 1] != v[0])
+            {
+                swap(v[i], v[0]);
+                break;
+            }
+    if (v[0] == v[1] && v[2 * n] != v[0])
+        swap(v[0], v[2 * n]);
+
+    for (auto it : v)
+        cout << it << ' ';
+    cout << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()

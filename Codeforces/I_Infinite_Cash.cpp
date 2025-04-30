@@ -16,13 +16,14 @@ using namespace std;
 const double eps = 1e-1;
 const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
-const int N = 2e3 + 10;
+const int N = 1e6 + 10;
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
     string ss, sd, sm;
+    vector<int> cnt(N, 0);
     cin >> ss >> sd >> sm;
-    int d = 0, t = 1;
+    int d = 0, t = 1, ans = -1;
     for (int i = sd.size() - 1; i >= 0; i--)
     {
         if (sd[i] == '1')
@@ -30,102 +31,85 @@ void solve(void)
         t *= 2;
         if (d > sm.size())
         {
-            int ans = sm.size();
-            string temp = "";
-            while (ans)
-            {
-                if (ans & 1)
-                    temp.push_back('1');
-                else
-                    temp.push_back('0');
-                ans /= 2;
-            }
-            reverse(all(temp));
-            cout << temp << '\n';
-            return;
+            ans = sm.size();
+            goto out;
         }
     }
-    for (int i = 0; i - 1 < d; i++)
+    for (int i = 0; i < d; i++)
     {
         if (sm.size() == 0)
         {
-            int ans = i;
-            string temp = "";
-            while (ans)
-            {
-                if (ans & 1)
-                    temp.push_back('1');
-                else
-                    temp.push_back('0');
-                ans /= 2;
-            }
-            reverse(all(temp));
-            cout << temp << '\n';
-            return;
+            ans = i;
+            goto out;
         }
         sm.pop_back();
     }
-    int ans = d;
-    reverse(all(sm));
     reverse(all(ss));
-    for (int t = 0; t < N; t++)
+    ans = d;
+    for (; 1; ans++)
     {
-        while (sm.size() > ss.size())
-            ss.push_back('0');
-        while (sm.size() < ss.size())
-            sm.push_back('0');
-        int carry = 0;
-        string newsm = "";
-        for (int i = 0; i < sm.size(); i++)
+        if (ans % d == 0)
         {
-            if (carry)
+            reverse(all(sm));
+            while (sm.size() > ss.size())
+                ss.push_back('0');
+            while (sm.size() < ss.size())
+                sm.push_back('0');
+            int carry = 0;
+            for (int i = 0; i < sm.size(); i++)
             {
-                if (sm[i] == '1' && ss[i] == '1')
-                    newsm.push_back('1'), carry = 1;
-                else if (sm[i] == '1' || ss[i] == '1')
-                    newsm.push_back('0');
-                else
-                    newsm.push_back('1'), carry = 0;
-            }
-            else
-            {
-                if (sm[i] == '1' && ss[i] == '1')
-                    newsm.push_back('0'), carry = 1;
-                else if (sm[i] == '1' || ss[i] == '1')
-                    newsm.push_back('1');
-                else
-                    newsm.push_back('0');
-            }
-        }
-        if (carry)
-            newsm.push_back('1');
-        reverse(all(newsm));
-        { // check----------------------------------------------
-            for (int i = 0; i-1 < d; i++)
-            {
-                if (newsm.size() == 0)
+                if (carry)
                 {
-                    string temp = "";
-                    while (ans)
-                    {
-                        if (ans & 1)
-                            temp.push_back('1');
-                        else
-                            temp.push_back('0');
-                        ans /= 2;
-                    }
-                    reverse(all(temp));
-                    cout << temp << '\n';
-                    return;
+                    if (sm[i] == '1' && ss[i] == '1')
+                        sm[i] = '1', carry = 1;
+                    else if (sm[i] == '1' || ss[i] == '1')
+                        sm[i] = '0';
+                    else
+                        sm[i] = '1', carry = 0;
                 }
-                ans++;
-                newsm.pop_back();
+                else
+                {
+                    if (sm[i] == '1' && ss[i] == '1')
+                        sm[i] = '0', carry = 1;
+                    else if (sm[i] == '1' || ss[i] == '1')
+                        sm[i] = '1';
+                    else
+                        sm[i] = '0';
+                }
             }
+            if (carry)
+                sm.push_back('1');
+            while (sm.size())
+            {
+                if (sm.back() == '1')
+                    break;
+                sm.pop_back();
+            }
+            reverse(all(sm));
         }
-        sm = newsm;
-        reverse(all(sm));
+        cnt[sm.size()]++;
+        if (cnt[sm.size()] > 5 && sm.size() >= d)
+        {
+            cout << "Infinite money!";
+            return;
+        }
+        if (sm.size() == 0)
+            goto out;
+        sm.pop_back();
     }
-    cout << "Infinite money!";
+out:
+    string temp = "";
+    while (ans)
+    {
+        if (ans & 1)
+            temp.push_back('1');
+        else
+            temp.push_back('0');
+        ans /= 2;
+    }
+    reverse(all(temp));
+    cout << temp << '\n';
+    return;
 }
 //-----------------------------------------------------------------------------------------
 signed main()

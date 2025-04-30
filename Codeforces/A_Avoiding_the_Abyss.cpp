@@ -15,43 +15,91 @@ using namespace std;
 
 const double eps = 1e-1;
 const int inf = 9e16 + 7;
-const int MOD = 1e9 + 7;
-int N = 1e9;
+const int MOD = 1e5 + 7;
+int N = 1e6;
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
     int xs, ys, xt, yt, xp, yp;
     cin >> xs >> ys >> xt >> yt >> xp >> yp;
-    if (xp > xs)
+    vector<pair<int, int>> vp;
+    if (xt > xs)
     {
-        cout << 3 << '\n';
-        cout << -N << ' ' << ys << '\n';
         if (yt > ys)
         {
-            cout << -N << ' ' << N << '\n';
-            cout << xt << ' ' << N << '\n';
+            if (xp > xs)
+            {
+                vp.push_back({-N, ys});
+                vp.push_back({-N, N});
+                if (xt > xp)
+                    vp.push_back({N, N});
+            }
+            else
+            {
+                vp.push_back({N, ys});
+                vp.push_back({N, N});
+                if (xt < xp)
+                    vp.push_back({-N, N});
+            }
         }
         else
         {
-            cout << -N << ' ' << -N << '\n';
-            cout << xt << ' ' << -N << '\n';
+            if (xp > xs)
+            {
+                vp.push_back({-N, ys});
+                vp.push_back({-N, -N});
+                if (xt > xp)
+                    vp.push_back({N, -N});
+            }
+            else
+            {
+                vp.push_back({N, ys});
+                vp.push_back({N, -N});
+                if (xt < xp)
+                    vp.push_back({-N, -N});
+            }
         }
     }
     else
     {
-        cout << 3 << '\n';
-        cout << N << ' ' << ys << '\n';
         if (yt > ys)
         {
-            cout << N << ' ' << N << '\n';
-            cout << xt << ' ' << N << '\n';
+            if (xp > xs)
+            {
+                vp.push_back({-N, ys});
+                vp.push_back({-N, N});
+                if (xt > xp)
+                    vp.push_back({N, N});
+            }
+            else
+            {
+                vp.push_back({N, ys});
+                vp.push_back({N, N});
+                if (xt < xp)
+                    vp.push_back({-N, N});
+            }
         }
         else
         {
-            cout << N << ' ' << -N << '\n';
-            cout << xt << ' ' << -N << '\n';
+            if (xp > xs)
+            {
+                vp.push_back({-N, ys});
+                vp.push_back({-N, -N});
+                if (xt > xp)
+                    vp.push_back({N, -N});
+            }
+            else
+            {
+                vp.push_back({N, ys});
+                vp.push_back({N, -N});
+                if (xt < xp)
+                    vp.push_back({-N, -N});
+            }
         }
     }
+    cout << vp.size() << '\n';
+    for (auto it : vp)
+        cout << it.fi << ' ' << it.sc << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()

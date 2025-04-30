@@ -16,18 +16,8 @@ using namespace std;
 const double eps = 1e-1;
 const int inf = 9e16 + 7;
 const int MOD = 1e10 + 7;
-const int N = 1e5 + 10;
+int N = 2e10 + 10;
 //-----------------------------------------------------------------------------------------
-int is_seven(int n)
-{
-    while (n)
-    {
-        if (n % 10 == 7)
-            return 1;
-        n /= 10;
-    }
-    return 0;
-}
 int arr[] = {9,
              99,
              999,
@@ -37,39 +27,80 @@ int arr[] = {9,
              9999999,
              99999999,
              999999999,
-             9999999999};
-map<int, int> mp;
-int x;
-int ok(int n, vector<int> cnt)
-{
-    if (mp.find(n) != mp.end())
-        return mp[n];
-    if (is_seven(n))
-        return 0;
-    int ans = 7;
-    for (int i = 0; i < 10; i++)
-        if (n + arr[i] <= x && cnt[i] <= 6)
-        {
-            cnt[i]++;
-            ans = min(ans, ok(n + arr[i], cnt) + 1);
-        }
-    return mp[n] = ans;
-}
+             9999999999,
+             99999999999};
 //-----------------------------------------------------------------------------------------
+int ok(int n)
+{
+    while (n)
+    {
+        if (n % 10 == 7)
+            return 1;
+        n /= 10;
+    }
+    return 0;
+}
 void solve(void)
 {
     int n;
     cin >> n;
-    int t = n;
-    x = 10;
-    while (t)
+    if (ok(n))
     {
-        t /= 10;
-        x *= 10;
+        cout << 0 << '\n';
+        return;
     }
-    vector<int> cnt(10, 0);
-    cout << ok(n, cnt) << '\n';
-    mp.clear();
+    for (int a = 0; a < 10; a++)
+        if (ok(n + arr[a]))
+        {
+            cout << 1 << '\n';
+            return;
+        }
+    for (int b = 0; b < 10; b++)
+        for (int a = 0; a < 10; a++)
+            if (ok(n + arr[a] + arr[b]))
+            {
+                cout << 2 << '\n';
+                return;
+            }
+    for (int c = 0; c < 10; c++)
+        for (int b = 0; b < 10; b++)
+            for (int a = 0; a < 10; a++)
+                if (ok(n + arr[a] + arr[b] + arr[c]))
+                {
+                    cout << 3 << '\n';
+                    return;
+                }
+    for (int d = 0; d < 10; d++)
+        for (int c = 0; c < 10; c++)
+            for (int b = 0; b < 10; b++)
+                for (int a = 0; a < 10; a++)
+                    if (ok(n + arr[a] + arr[b] + arr[c] + arr[d]))
+                    {
+                        cout << 4 << '\n';
+                        return;
+                    }
+    for (int e = 0; e < 10; e++)
+        for (int d = 0; d < 10; d++)
+            for (int c = 0; c < 10; c++)
+                for (int b = 0; b < 10; b++)
+                    for (int a = 0; a < 10; a++)
+                        if (ok(n + arr[a] + arr[b] + arr[c] + arr[d] + arr[e]))
+                        {
+                            cout << 5 << '\n';
+                            return;
+                        }
+    for (int f = 0; f < 10; f++)
+        for (int e = 0; e < 10; e++)
+            for (int d = 0; d < 10; d++)
+                for (int c = 0; c < 10; c++)
+                    for (int b = 0; b < 10; b++)
+                        for (int a = 0; a < 10; a++)
+                            if (ok(n + arr[a] + arr[b] + arr[c] + arr[d] + arr[e] + arr[f]))
+                            {
+                                cout << 6 << '\n';
+                                return;
+                            }
+    cout << 7 << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
