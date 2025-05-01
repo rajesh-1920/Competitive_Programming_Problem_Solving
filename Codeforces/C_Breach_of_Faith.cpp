@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  10.03.2025
+// Date  :  01.05.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -22,44 +22,43 @@ void solve(void)
 {
     int n;
     cin >> n;
-    priority_queue<int> pq;
+    vector<int> v(2 * n), ans(2 * n + 1);
     set<int> st;
-    for (int i = 0; i < 2 * n; i++)
+    for (auto &it : v)
     {
-        int x;
-        cin >> x;
-        pq.push(x);
-        st.insert(x);
+        cin >> it;
+        st.insert(it);
     }
-    vector<int> v(2 * n + 1);
-    for (int i = 1; i < 2 * n + 1; i += 2)
+    sort(all(v));
+    int s = 0, t = 1;
+    for (int i = 0; i < n; i++)
     {
-        v[i] = pq.top();
-        pq.pop();
+        s -= v[i], s += v[i + n];
+        ans[t] = v[i + n];
+        ans[t + 1] = v[i];
+        t += 2;
     }
-    for (int i = 2; i < 2 * n + 1; i += 2)
-    {
-        v[i] = pq.top();
-        pq.pop();
-    }
-    int s = 0;
     for (int i = 1; i < 2 * n + 1; i++)
+    {
+        if (st.find(s) == st.end())
+        {
+            ans[0] = s;
+            break;
+        }
+        t = s;
+        int need;
         if (i & 1)
-            s += v[i];
+            t -= v[i], need = v[i] - t;
         else
-            s -= v[i];
-    v[0] = s;
-    if (v[0] == v[1])
-        for (int i = 2; i + 1 < 2 * n + 1; i += 2)
-            if (v[i] != v[1] && v[i + 1] != v[0] && v[i - 1] != v[0])
-            {
-                swap(v[i], v[0]);
-                break;
-            }
-    if (v[0] == v[1] && v[2 * n] != v[0])
-        swap(v[0], v[2 * n]);
-
-    for (auto it : v)
+            t += v[i], need = t - v[i];
+        if (st.find(need) == st.end() && need > 0)
+        {
+            ans[0] = v[i];
+            v[i] = need;
+            break;
+        }
+    }
+    for (auto it : ans)
         cout << it << ' ';
     cout << '\n';
 }
