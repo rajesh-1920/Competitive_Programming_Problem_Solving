@@ -48,58 +48,7 @@ void solve(void)
     {
         cout << 0 << '\n';
         return;
-    }
-    for (int a = 0; a < 10; a++)
-        if (ok(n + arr[a]))
-        {
-            cout << 1 << '\n';
-            return;
-        }
-    for (int b = 0; b < 10; b++)
-        for (int a = 0; a < 10; a++)
-            if (ok(n + arr[a] + arr[b]))
-            {
-                cout << 2 << '\n';
-                return;
-            }
-    for (int c = 0; c < 10; c++)
-        for (int b = 0; b < 10; b++)
-            for (int a = 0; a < 10; a++)
-                if (ok(n + arr[a] + arr[b] + arr[c]))
-                {
-                    cout << 3 << '\n';
-                    return;
-                }
-    for (int d = 0; d < 10; d++)
-        for (int c = 0; c < 10; c++)
-            for (int b = 0; b < 10; b++)
-                for (int a = 0; a < 10; a++)
-                    if (ok(n + arr[a] + arr[b] + arr[c] + arr[d]))
-                    {
-                        cout << 4 << '\n';
-                        return;
-                    }
-    for (int e = 0; e < 10; e++)
-        for (int d = 0; d < 10; d++)
-            for (int c = 0; c < 10; c++)
-                for (int b = 0; b < 10; b++)
-                    for (int a = 0; a < 10; a++)
-                        if (ok(n + arr[a] + arr[b] + arr[c] + arr[d] + arr[e]))
-                        {
-                            cout << 5 << '\n';
-                            return;
-                        }
-    for (int f = 0; f < 10; f++)
-        for (int e = 0; e < 10; e++)
-            for (int d = 0; d < 10; d++)
-                for (int c = 0; c < 10; c++)
-                    for (int b = 0; b < 10; b++)
-                        for (int a = 0; a < 10; a++)
-                            if (ok(n + arr[a] + arr[b] + arr[c] + arr[d] + arr[e] + arr[f]))
-                            {
-                                cout << 6 << '\n';
-                                return;
-                            }
+    } 
     cout << 7 << '\n';
 }
 //-----------------------------------------------------------------------------------------

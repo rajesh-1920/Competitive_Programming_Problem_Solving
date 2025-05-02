@@ -22,33 +22,15 @@ void solve(void)
 {
     int n;
     cin >> n;
-    vector<int> v(2 * n), ans(2 * n + 1);
-    set<int> st;
-    for (auto &it : v)
+    int ans = 1;
+    int t = 1;
+    for (int i = 2; i <= n; i++)
     {
-        cin >> it;
-        st.insert(it);
-    }
-    sort(all(v));
-    ans[0] = v.back();
-    v.pop_back();
-    reverse(all(v));
-    for (int i = 0, t = 2; i < n; i++, t += 2)
-    {
-        ans[t] = v[i];
-        if (i + n < v.size())
-            ans[t + 1] = v[i + n];
-    }
-    int s = 0;
-    for (int i = 2; i < 2 * n + 1; i++)
+        ans += t;
         if (i & 1)
-            s += ans[i];
-        else
-            s -= ans[i];
-    ans[1] = ans[0] - s;
-    for (auto it : ans)
-        cout << it << ' ';
-    cout << '\n';
+            t++;
+    }
+    cout << ans << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
