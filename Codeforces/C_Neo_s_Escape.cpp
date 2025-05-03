@@ -22,9 +22,16 @@ void solve(void)
 {
     int n;
     cin >> n;
-    vector<int> v(n);
-    for (auto &it : v)
+    vector<int> v;
+    for (int i = 0, it; i < n; i++)
+    {
         cin >> it;
+        if (v.empty())
+            v.push_back(it);
+        else if (v.back() != it)
+            v.push_back(it);
+    }
+    n = v.size();
     if (n == 1)
     {
         cout << 1 << '\n';
@@ -46,7 +53,7 @@ void solve(void)
             up = 0;
         }
     }
-    if (dw&&v[n-1]>v[])
+    if (dw && v[n - 1] > v[n - 2])
         ans++;
     cout << ans << '\n';
 }
