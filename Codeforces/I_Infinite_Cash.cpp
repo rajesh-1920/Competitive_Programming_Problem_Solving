@@ -87,14 +87,14 @@ void solve(void)
             }
             reverse(all(sm));
         }
+        if (sm.size() == 0)
+            goto out;
         cnt[sm.size()]++;
         if (cnt[sm.size()] > 5 && sm.size() >= d)
         {
             cout << "Infinite money!";
             return;
         }
-        if (sm.size() == 0)
-            goto out;
         sm.pop_back();
     }
 out:
