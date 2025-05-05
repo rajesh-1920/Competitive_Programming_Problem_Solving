@@ -23,23 +23,6 @@ void solve(void)
 
     long long n, k;
     cin >> n >> k;
-    long long a, b;
-    for (long long i = 0; i < n * k; i++)
-    {
-        cin >> a;
-    }
-    for (long long i = 0; i < n * k; i++)
-    {
-        cin >> b;
-    }
-    if (n == 1)
-    {
-        cout << k << endl;
-    }
-    else
-    {
-        cout << 1LL * pow(2, k) << endl;
-    }
 }
 //-----------------------------------------------------------------------------------------
 signed main()
