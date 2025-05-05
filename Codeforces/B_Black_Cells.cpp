@@ -16,35 +16,78 @@ using namespace std;
 const double eps = 1e-1;
 const int inf = 1e18 + 7;
 const int MOD = 1e9 + 7;
-const int N = 1e5 + 10;
+const int N = 2e3 + 10;
 //-----------------------------------------------------------------------------------------
+vector<int> tt[N];
+void build(vector<int> &v)
+{
+    for (int i = 0; i <= v.size(); i++)
+    {
+        tt[i].clear();
+        if (i == v.size())
+        {
+            for (int j = 0; j < v.size(); j++)
+                tt[i].push_back(v[j]);
+            tt[i].push_back(tt[i].back() + 1);
+        }
+        else if (i == 0)
+        {
+            tt[i].push_back(v[i] - 1);
+            for (int j = 0; j < v.size(); j++)
+                tt[i].push_back(v[j]);
+        }
+        else
+        {
+            for (int j = 0; j < v.size(); j++)
+            {
+                if (i == j)
+                {
+                    if (tt[i].size() & 1)
+                        tt[i].push_back(tt[i].back() + 1);
+                    else
+                        tt[i].push_back(v[j] - 1);
+                }
+                tt[i].push_back(v[j]);
+            }
+        }
+        // for (auto it : tt[i])
+        //     cout << it << ' ';
+        // cout << '\n';
+    }
+}
 bool ok(vector<int> &v, int val)
 {
-    int cnt = 0, pos = 0;
-    for (int i = 1; i < v.size(); i++)
+    if (v.size() & 1)
     {
-        if (v[i] - v[i - 1] > val)
+        for (int i = 0; i <= v.size(); i++)
         {
-            if (cnt)
-                return false;
-            cnt = 1;
-            pos = i;
-        }
-    }
-    if (cnt)
-    {
-        if (v.size() & 1)
-        {
-            if (pos == 1 || pos == v.size() - 1)
-                return true;
-            int x = v[pos] - v[pos - 1];
-            x /= 2;
-            if (v[pos] - (v[pos - 1] + x) <= val)
+            int fl = 1;
+            for (int j = 1; j < tt[i].size(); j += 2)
+            {
+                if (tt[i][j] == tt[i][j - 1] || tt[i][j] - tt[i][j - 1] > val)
+                {
+                    // if (val == 2)
+                    // {
+                    //     dbg(i);
+                    // }
+                    fl = 0;
+                    break;
+                }
+            }
+            if (fl)
                 return true;
         }
         return false;
     }
-    return true;
+    else
+    {
+        for (int i = 1; i < v.size(); i += 2)
+        {
+            if (v[i] == v[i - 1] || v[i] - v[i - 1] > val)
+                return false;
+        }
+        return true;
+    }
 }
 void solve(void)
 {
@@ -54,6 +97,8 @@ void solve(void)
     for (auto &it : v)
         cin >> it;
     sort(all(v));
+    if (n & 1)
+        build(v);
     int ans = inf, l = 1, r = inf;
     while (l <= r)
     {
