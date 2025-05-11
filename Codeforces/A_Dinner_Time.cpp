@@ -20,24 +20,18 @@ const int N = 1e5 + 10;
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    int n;
-    cin >> n;
-    vector<int> v(n);
-    for (auto &it : v)
-        cin >> it;
-    int ans = inf;
-    for (int i = 1; i < n; i++)
+    int n,m,p,q;
+    cin >> n>>m>>p>>q;
+    vector<int>v(n,0);
+    for(int i=0;i<n;i++)
     {
-        if (v[i] >= v[i - 1])
-        {
-            int need = v[i] - v[i - 1];
-            need += 2;
-            ans = min(need / 2, ans);
-        }
-        else
-            ans = 0;
+        if(i%p==0)
+        {v[i]=q;m-=q;}
     }
-    cout << ans << '\n';
+    if(m)
+    cout<<"NO\n";
+    else
+    cout<<"YES\n";
 }
 //-----------------------------------------------------------------------------------------
 signed main()
