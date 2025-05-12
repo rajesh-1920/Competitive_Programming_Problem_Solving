@@ -20,12 +20,19 @@ const int N = 1e5 + 10;
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    int n, m, p;
-    cin >> n >> m >> p;
-    if (n + m == p || n + p == m || m + p == n)
-        cout << "YES\n";
-    else
-        cout << "NO\n";
+    int n;
+    cin >> n;
+    vector<int> v(n);
+    for (auto &it : v)
+        cin >> it;
+    int mx = 0;
+    for (int i = 0; i < n; i++)
+    {
+        int t = n - i - 1;
+        if (t % 2 == 0)
+            mx = max(mx, v[i]);
+    }
+    cout << mx << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
