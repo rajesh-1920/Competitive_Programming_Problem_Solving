@@ -40,39 +40,50 @@ void solve(void)
         cnt++;
     }
     if (k == 0 && cnt == s.size())
-    {
         ans = cnt * (cnt + 1) / 2;
-    }
-    while (i < s.size() && j < s.size())
+    else if (k == 0)
     {
-        if (c1 < k)
+        int cnt = 0;
+        for (int i = 0; i < s.size(); i++)
         {
-            if (s[j] == '1')
-            {
-                c1++;
-                q.erase(j);
-            }
-            j++;
-        }
-        if (c1 == k)
-        {
-            int next = *q.begin();
-            cnt += next - j;
-            // dbg(cnt);
-            ans += (1 + (cnt * (cnt + 1) / 2));
-            // dbg(ans);
-            cnt = 0;
-            i++;
-            c1--;
-            while (i < s.size())
-            {
-                if (s[i] == '1')
-                    break;
+            if (s[i] == '1')
+                ans += (cnt * (cnt + 1) / 2), cnt = 0;
+            else
                 cnt++;
-                i++;
-            }
         }
     }
+    else
+        while (i < s.size() && j < s.size())
+        {
+            if (c1 < k)
+            {
+                if (s[j] == '1')
+                {
+                    c1++;
+                    q.erase(j);
+                }
+                j++;
+            }
+            if (c1 == k)
+            {
+                int next = *q.begin();
+                cnt += next - j;
+                // dbg(c1);
+                // dbg(cnt);
+                // dbg(j);
+                ans += (1 + (cnt * (cnt + 1) / 2));
+                cnt = 0;
+                i++;
+                c1--;
+                while (i < s.size())
+                {
+                    if (s[i] == '1')
+                        break;
+                    cnt++;
+                    i++;
+                }
+            }
+        }
     cout << ans << '\n';
 }
 //-----------------------------------------------------------------------------------------
