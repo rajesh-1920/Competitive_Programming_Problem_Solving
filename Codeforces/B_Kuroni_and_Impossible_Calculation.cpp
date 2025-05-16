@@ -20,29 +20,21 @@ const int N = 1e5 + 10;
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    int n, od = 0, ev = inf, s = 0;
-    cin >> n;
+    int n, m;
+    cin >> n >> m;
     vector<int> v(n);
     for (auto &it : v)
-    {
         cin >> it;
-        s += it;
-        if (it & 1)
-            od++;
-        else
-            ev = min(ev, it);
-    }
-    sort(rall(v));
-    if (ev == inf || od == 0)
-        cout << v[0] << '\n';
-    else if (n <= 2)
-        cout << s << '\n';
-    else
+    int ans = 0;
+    if (n < 1000)
     {
-        if (v[0] % 2 == 0)
-            ev--;
-        cout << s - ev << '\n';
+        ans = 1;
+        for (int i = 0; i < n; i++)
+            for (int j = i + 1; j < n; j++)
+                ans = (ans * (max(v[i] - v[j], v[j] - v[i]))) % m;
+        ans %= m;
     }
+    cout << ans << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -51,7 +43,7 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    cin >> test;
+    // cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";
