@@ -20,30 +20,39 @@ const int N = 1e5 + 10;
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    int n;
-    cin >> n;
-    vector<int> v(n);
-    for (auto &it : v)
-        cin >> it;
-    int t = 0;
-    for (int i = 0; i + 1 < n; i++)
+    string s;
+    cin >> s;
+    reverse(all(s));
+    int hate = 0, fl = -1;
+    for (int i = 0; i < s.size();)
     {
-        if (v[i] == 0)
+        if (s[i] >= '5')
         {
-            t = 1;
-            if (v[i + 1] == 0)
+            s[i] = '0';
+            fl = i;
+            i++;
+            while (i < s.size())
             {
-                cout << "YES\n";
-                return;
+                if (s[i] != '9')
+                    break;
+                s[i] = '0';
+                i++;
             }
+            if (i == s.size())
+                s.push_back('1');
+            else
+                s[i] = s[i] + 1;
         }
-        if (v[i + 1] == 0)
-            t = 1;
+        else
+            i++;
     }
-    if (t)
-        cout << "NO\n";
-    else
-        cout << "YES\n";
+    while (fl >= 0)
+    {
+        s[fl] = '0';
+        fl--;
+    }
+    reverse(all(s));
+    cout << s << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
