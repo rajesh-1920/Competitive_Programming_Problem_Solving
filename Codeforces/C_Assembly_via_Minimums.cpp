@@ -29,53 +29,22 @@ void solve(void)
         cin >> x;
         mp[x]++;
     }
-    vector<int> v(n, inf);
+    vector<int> v;
+    while (v.size() < n)
+    {
+        if (mp.empty())
+        {
+            v.push_back(inf);
+            continue;
+        }
+        int t = (*mp.begin()).fi;
+        v.push_back(t);
+        if (mp[t] <= n - v.size())
+            mp.erase(t);
+        else
+            mp[t] = mp[t] - (n - v.size());
+    }
 
-    for (int i = n - 1; i >= 0; i--)
-    {
-        if (mp.size() == 0)
-            break;
-        for (auto it : mp)
-        {
-            if (it.sc == i)
-            {
-                v[i] = it.fi;
-                mp.erase(it.fi);
-                break;
-            }
-        }
-    }
-    for (int i = n - 1; i >= 0; i--)
-    {
-        if (mp.size() == 0)
-            break;
-        if (v[i] == inf)
-        {
-            int mx = 0, t = inf, vl = 0;
-            for (auto it : mp)
-            {
-                if (it.sc == i)
-                {
-                    v[i] = it.fi;
-                    t = it.fi;
-                    break;
-                }
-                if (mx < it.sc)
-                {
-                    mx = it.sc;
-                    vl = it.fi;
-                }
-            }
-            if (t == inf)
-            {
-                v[i] = vl;
-                mp[vl] = mp[vl] - i;
-            }
-            else
-                mp.erase(t);
-        }
-    }
-    reverse(all(v));
     for (auto it : v)
         cout << it << ' ';
     cout << '\n';
