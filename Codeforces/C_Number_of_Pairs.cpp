@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  19.02.2025
+// Date  :  18.05.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -23,29 +23,15 @@ void solve(void)
     int n, l, r;
     cin >> n >> l >> r;
     vector<int> v(n);
-    list<int> temp;
     for (auto &it : v)
-    {
         cin >> it;
-        temp.push_back(it);
-    }
+    sort(all(v));
     int ans = 0;
-    temp.sort();
     for (int i = 0; i < n; i++)
     {
-        temp.erase(find(all(temp), v[i]));
-        int x = l - v[i];
-        int y = r - v[i];
-        auto it1 = lower_bound(all(temp), x);
-        auto it2 = upper_bound(all(temp), y);
-        if (it2 == temp.begin())
-            continue;
-        if (*it1 > y)
-            continue;
-        it2--;
-        if (*it2 < x)
-            continue;
-        ans += distance(it1, it2) + 1;
+        int t1 = upper_bound(v.begin() + i + 1, v.end(), (r - v[i])) - v.begin();
+        int t2 = lower_bound(v.begin() + i + 1, v.end(), (l - v[i])) - v.begin();
+        ans += (max(0LL, t1 - t2));
     }
     cout << ans << '\n';
 }
