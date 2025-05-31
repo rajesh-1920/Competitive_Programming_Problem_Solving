@@ -23,6 +23,7 @@ void solve(void)
     int n, k;
     string s;
     cin >> n >> k >> s;
+
     vector<int> v(n + 2);
     for (int i = 1; i <= n; i++)
         cin >> v[i];
@@ -30,20 +31,28 @@ void solve(void)
     for (int i = 0; i <= n + 1; i++)
         if (s[i] == '0')
             v[i] = -inf;
+
     int fl = 1;
-    int l = 0;
     for (int i = 1; i <= n; i++)
     {
         if (v[i] == -inf)
         {
-            int lcont = 0, rcont = 0;
+            int lcont = 0, rcont = 0, mx = 0;
+            int l;
+            for (int j = i - 1;; j--)
+                if (v[j] == -inf)
+                {
+                    l = j;
+                    break;
+                }
             for (int j = l; j < i; j++)
             {
                 lcont += v[j];
+                mx = max(mx, lcont);
                 lcont = max(lcont, 0LL);
             }
-            l = i;
-            if (lcont > k)
+
+            if (mx > k)
                 continue;
             int r;
             for (int j = i + 1;; j++)
@@ -52,13 +61,16 @@ void solve(void)
                     r = j;
                     break;
                 }
+            mx = 0;
             for (int j = r; j > i; j--)
             {
                 rcont += v[j];
+                mx = max(mx, rcont);
                 rcont = max(rcont, 0LL);
             }
-            if (rcont > k)
+            if (mx > k)
                 continue;
+
             fl = 0;
             v[i] = k - lcont - rcont;
             break;
@@ -66,14 +78,27 @@ void solve(void)
     }
     if (fl)
     {
-        int lcont = 0;
+        int lcont = 0, mx = 0;
         for (int j = 1; j <= n; j++)
         {
             lcont += v[j];
+            mx = max(mx, lcont);
             lcont = max(lcont, 0LL);
         }
-        if (lcont == k)
+        if (lcont == k && mx <= k)
             fl = 0;
+    }
+    else
+    {
+        int lcont = 0, mx = 0;
+        for (int j = 1; j <= n; j++)
+        {
+            lcont += v[j];
+            mx = max(mx, lcont);
+            lcont = max(lcont, 0LL);
+        }
+        if (mx > k)
+            fl = 1;
     }
     if (fl)
         cout << "No\n";
