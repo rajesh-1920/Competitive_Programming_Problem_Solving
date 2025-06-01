@@ -14,7 +14,7 @@ using namespace std;
 #define rall(s) s.rbegin(), s.rend()
 
 const double eps = 1e-1;
-const int inf = 1e13 + 7;
+const int inf = 1e15 + 7;
 const int MOD = 1e9 + 7;
 const int N = 1e5 + 10;
 //-----------------------------------------------------------------------------------------
@@ -76,30 +76,17 @@ void solve(void)
             break;
         }
     }
-    if (fl)
+    int lcont = 0, mx = 0;
+    for (int j = 1; j <= n; j++)
     {
-        int lcont = 0, mx = 0;
-        for (int j = 1; j <= n; j++)
-        {
-            lcont += v[j];
-            mx = max(mx, lcont);
-            lcont = max(lcont, 0LL);
-        }
-        if (lcont == k && mx <= k)
-            fl = 0;
+        lcont += v[j];
+        mx = max(mx, lcont);
+        lcont = max(lcont, 0LL);
     }
-    else
-    {
-        int lcont = 0, mx = 0;
-        for (int j = 1; j <= n; j++)
-        {
-            lcont += v[j];
-            mx = max(mx, lcont);
-            lcont = max(lcont, 0LL);
-        }
-        if (mx > k)
-            fl = 1;
-    }
+    if (mx > k)
+        fl = 1;
+    else if (mx == k)
+        fl = 0;
     if (fl)
         cout << "No\n";
     else
