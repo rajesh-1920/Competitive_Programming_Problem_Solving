@@ -21,10 +21,10 @@ const int N = 1e5 + 10;
 void solve(void)
 {
     int a1, b1, a2, b2;
-    cin >> a1 >> b1 >> a2 >> b2;
-    if (b1 >= b2)
+    cin >> a1 >> a2 >> b1 >> b2;
+    if (a1 >= b2 && b1 >= b2)
         cout << "Gellyfish\n";
-    else if (b1 >= b2)
+    else if (a1 >= a2 && b1 >= a2)
         cout << "Gellyfish\n";
     else
         cout << "Flower\n";

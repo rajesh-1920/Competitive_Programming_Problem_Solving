@@ -31,13 +31,33 @@ void solve(void)
         else
             g = __gcd(g, it);
     }
+
     int cnt = 0;
     for (auto it : v)
         if (it == g)
             cnt++;
     int ans = n - cnt;
     if (g > 1 && cnt == 0)
-        ans++;
+    {
+        set<int> st;
+        for (int i = 0; i < n; i++)
+            for (int j = i + 1; j < n; j++)
+                st.insert(__gcd(v[i], v[j]));
+
+        if (st.find(g) != st.end())
+            ans = n;
+        else
+        {
+            set<int> temp;
+            for (int i = 0; i < n; i++)
+                for (auto it : st)
+                    temp.insert(__gcd(v[i], it));
+            if (temp.find(g) != temp.end())
+                ans = n + 1;
+            else
+                ans = n + 2;
+        }
+    }
     cout << ans << '\n';
 }
 //-----------------------------------------------------------------------------------------
