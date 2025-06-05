@@ -55,7 +55,25 @@ void solve(void)
             if (temp.find(g) != temp.end())
                 ans = n + 1;
             else
-                ans = n + 2;
+            {
+                set<int> tm;
+                for (int i = 0; i < n; i++)
+                    for (auto it : temp)
+                        tm.insert(__gcd(v[i], it));
+                if (tm.find(g) != tm.end())
+                    ans = n + 2;
+                else
+                {
+                    set<int> tt;
+                    for (int i = 0; i < n; i++)
+                        for (auto it : tm)
+                            tt.insert(__gcd(v[i], it));
+                    if (tt.find(g) != tt.end())
+                        ans = n + 3;
+                    else
+                        ans = n + 4;
+                }
+            }
         }
     }
     cout << ans << '\n';
