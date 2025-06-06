@@ -37,8 +37,10 @@ void solve(void)
         if (it == g)
             cnt++;
     int ans = n - cnt;
-    if (g > 1 && cnt == 0)
+    // dbg(g);
+    if (cnt == 0)
     {
+        // dbg(g);
         set<int> st;
         for (int i = 0; i < n; i++)
             for (int j = i + 1; j < n; j++)
@@ -63,16 +65,7 @@ void solve(void)
                 if (tm.find(g) != tm.end())
                     ans = n + 2;
                 else
-                {
-                    set<int> tt;
-                    for (int i = 0; i < n; i++)
-                        for (auto it : tm)
-                            tt.insert(__gcd(v[i], it));
-                    if (tt.find(g) != tt.end())
-                        ans = n + 3;
-                    else
-                        ans = n + 4;
-                }
+                    ans = n + 3;
             }
         }
     }

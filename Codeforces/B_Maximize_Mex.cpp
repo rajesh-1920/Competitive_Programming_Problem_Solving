@@ -6,7 +6,7 @@
 using namespace std;
 //----------------------------(definition section)-----------------------------------------
 #define dbg(x) cout << #x << " = " << x << '\n'
-#define int long long int
+// #define int long long int
 #define fi first
 #define sc second
 
@@ -14,42 +14,57 @@ using namespace std;
 #define rall(s) s.rbegin(), s.rend()
 
 const double eps = 1e-1;
-const int inf = 9e16 + 7;
+// const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
 const int N = 1e5 + 10;
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    int n;
-    cin >> n;
-    vector<int> ev, odd;
-    while (n--)
+    int n, m;
+    cin >> n >> m;
+    set<int> st;
+    multiset<int> temp;
+    for (int i = 0; i <= n; i++)
+        st.insert(i);
+    for (int i = 0; i < n; i++)
     {
         int x;
         cin >> x;
-        if (x & 1)
-            odd.push_back(x);
+        if (st.find(x) != st.end())
+            st.erase(x);
         else
-            ev.push_back(x);
+            temp.insert(x);
     }
-    sort(all(ev)), sort(all(odd));
-    int ans = 0;
-    if (ev.empty())
-        ans = odd.back();
-    else if (odd.empty())
-        ans = ev.back();
-    else
+    set<int> ss;
+    for (auto it : st)
     {
-        for (auto it : ev)
-            ans += it;
-        ev.pop_back();
-        ans += odd.back(), odd.pop_back();
-        if (!odd.empty())
-            ans += odd.back() - 1, odd.pop_back();
-        for (auto it : odd)
-            ans += (it - 1);
+        int t = it % m, fl = 1, x = it;
+        while (t <= it && x >= t)
+        {
+            if (temp.find(t) != temp.end())
+            {
+                temp.erase(temp.find(t)), fl = 0;
+                break;
+            }
+            if (temp.find(x) != temp.end())
+            {
+                temp.erase(temp.find(x)), fl = 0;
+                break;
+            }
+            t += m;
+            x -= m;
+        }
+        if (fl)
+        {
+            cout << it << '\n';
+            return;
+        }
+        else
+            ss.insert(it);
     }
-    cout << ans << '\n';
+    for (auto it : ss)
+        st.erase(it);
+    cout << (*st.begin()) << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
