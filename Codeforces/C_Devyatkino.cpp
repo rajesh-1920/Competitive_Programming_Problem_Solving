@@ -45,7 +45,7 @@ int ok(int n)
     if (is_seven(n))
         ans = min(ans, 0LL);
     if (ans > 1)
-        for (int i1 = 0; i1 < 9; i1++)
+        for (int i1 = 0; i1 < 8; i1++)
         {
             if (is_seven(n + arr[i1]))
                 ans = min(ans, 1LL);
@@ -55,22 +55,22 @@ int ok(int n)
                     if (is_seven(n + arr[i1] + arr[i2]))
                         ans = min(ans, 2LL);
                     if (ans > 3)
-                        for (int i3 = 0; i3 < 7; i3++)
+                        for (int i3 = 0; i3 < 8; i3++)
                         {
                             if (is_seven(n + arr[i1] + arr[i2] + arr[i3]))
                                 ans = min(ans, 3LL);
                             if (ans > 4)
-                                for (int i4 = 0; i4 < 6; i4++)
+                                for (int i4 = 0; i4 < 8; i4++)
                                 {
                                     if (is_seven(n + arr[i1] + arr[i2] + arr[i3] + arr[i4]))
                                         ans = min(ans, 4LL);
                                     if (ans > 5)
-                                        for (int i5 = 0; i5 < 5; i5++)
+                                        for (int i5 = 0; i5 < 7; i5++)
                                         {
                                             if (is_seven(n + arr[i1] + arr[i2] + arr[i3] + arr[i4] + arr[i5]))
                                                 ans = min(ans, 5LL);
                                             if (ans > 6)
-                                                for (int i6 = 0; i6 < 4; i6++)
+                                                for (int i6 = 0; i6 < 6; i6++)
                                                 {
                                                     if (is_seven(n + arr[i1] + arr[i2] + arr[i3] + arr[i4] + arr[i5] + arr[i6]))
                                                         ans = min(ans, 6LL);
