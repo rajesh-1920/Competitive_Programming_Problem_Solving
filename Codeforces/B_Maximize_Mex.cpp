@@ -6,7 +6,7 @@
 using namespace std;
 //----------------------------(definition section)-----------------------------------------
 #define dbg(x) cout << #x << " = " << x << '\n'
-// #define int long long int
+#define int long long int
 #define fi first
 #define sc second
 
@@ -23,7 +23,7 @@ void solve(void)
     int n, m;
     cin >> n >> m;
     set<int> st;
-    multiset<int> temp;
+    map<int, int> mp;
     for (int i = 0; i <= n; i++)
         st.insert(i);
     for (int i = 0; i < n; i++)
@@ -32,27 +32,23 @@ void solve(void)
         cin >> x;
         if (st.find(x) != st.end())
             st.erase(x);
-        else
-            temp.insert(x);
+        else if (x <= n)
+            mp[x]++;
     }
     set<int> ss;
     for (auto it : st)
     {
-        int t = it % m, fl = 1, x = it;
-        while (t <= it && x >= t)
+        int fl = 1, x;
+        for (auto itt : mp)
         {
-            if (temp.find(t) != temp.end())
+            if (itt.fi > it)
+                break;
+            if ((it - itt.fi) % m == 0)
             {
-                temp.erase(temp.find(t)), fl = 0;
+                fl = 0;
+                x = itt.fi;
                 break;
             }
-            if (temp.find(x) != temp.end())
-            {
-                temp.erase(temp.find(x)), fl = 0;
-                break;
-            }
-            t += m;
-            x -= m;
         }
         if (fl)
         {
@@ -60,7 +56,12 @@ void solve(void)
             return;
         }
         else
+        {
             ss.insert(it);
+            mp[x]--;
+            if (mp[x] == 0)
+                mp.erase(x);
+        }
     }
     for (auto it : ss)
         st.erase(it);
