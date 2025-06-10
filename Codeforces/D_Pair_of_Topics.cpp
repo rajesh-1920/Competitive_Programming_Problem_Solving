@@ -41,25 +41,13 @@ void solve(void)
         cin >> it;
     for (int i = 0; i < n; i++)
         a[i] = a[i] - b[i];
-    int ans = 0, cnt = 0;
+    int ans = 0;
     sort(all(a));
-    // for (auto it : a)
-    //     cout << it << ' ';
-    // cout << '\n';
-    for (int i = 0; i < n; i++)
-        st.insert(a[i]);
-    for (int i = 0; i < n; i++)
+    st.insert(-a.back());
+    for (int i = n - 2; i >= 0; i--)
     {
-        // cout << a[i] << ' ';
-        int t = 0;
-        if (a[i] < 0)
-            t = st.order_of_key((-a[i]) + 1);
-        else
-            t = st.order_of_key((a[i]) + 1);
-        // dbg(t);
-        // dbg(*st.find_by_order(t));
-        t = st.size() - t;
-        ans += t;
+        ans += st.order_of_key(a[i]);
+        st.insert(-a[i]);
     }
     cout << ans;
 }
