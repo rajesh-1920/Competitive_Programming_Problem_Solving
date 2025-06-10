@@ -16,7 +16,7 @@ using namespace std;
 const double eps = 1e-1;
 const int inf = 9e16 + 7;
 const int MOD = 998244353;
-const int N = 1e5 + 10;
+const int N = 2e5 + 10;
 //-----------------------------------------------------------------------------------------
 inline int normal(int a, int m)
 {
@@ -58,6 +58,7 @@ inline int moddiv(int a, int b, int m)
     return normal(modmul(a, binexpo(b, m - 2, m), m), m);
 }
 //-----------------------------------------------------------------------------------------
+int fact[N];
 void solve(void)
 {
     int n;
@@ -65,43 +66,46 @@ void solve(void)
     vector<int> v(n);
     for (auto &it : v)
         cin >> it;
-    vector<int> one(n), three(n), two(n + 1, 0), nxt(n);
-    int ans = 0, cnt = 0, no = -1, nth = -1, tw = -1;
-    for (int i = n - 1; i >= 0; i--)
-    {
-        three[i] = nth;
-        one[i] = no;
-        nxt[i] = tw;
+    int c1 = inf, c3 = -1;
+    for (int i = 0; i < n; i++)
         if (v[i] == 1)
-            no = i;
+        {
+            c1 = i;
+            break;
+        }
+    for (int i = n - 1; i >= 0; i--)
         if (v[i] == 3)
-            nth = i;
+        {
+            c3 = i;
+            break;
+        }
+    int c2 = 0, cnt = 0;
+    for (int i = c1 + 1; i < c3; i++)
         if (v[i] == 2)
-        {
+            c2++, cnt++;
+        else
             cnt++;
-            tw = i;
-        }
-        two[i] = cnt;
-    }
-    int st = one[0];
-    if (v[0] == 1)
-        st = 0;
-    while (st != -1)
+    int ans = 0;
+    if (cnt && c2)
     {
-        int nx = nxt[st];
-        int tst = -1;
-        if (nx != -1)
-            tst = three[st];
-        while (tst != -1)
+        ans = normal(c2, MOD);
+        cnt--;
+        for (int i = 1; i <= cnt; i++)
+        // ans = modadd(ans, (moddiv(fact[cnt], modmul(fact[i], fact[cnt - i], MOD), MOD)), MOD);
         {
-            cnt = two[st] - two[tst + 1];
-            ans = modadd(modsub(binexpo(2, cnt, MOD), 1, MOD), ans, MOD);
-            tst = three[tst];
+            ans = ans + (fact[cnt] / (fact[i] * fact[cnt - i]));
+            dbg(cnt);
+            dbg(ans);
         }
-        st = one[st];
     }
-    ans = normal(ans, MOD);
     cout << ans << '\n';
+}
+void fac()
+{
+    fact[0] = 1;
+    for (int i = 1; i < 10; i++)
+        // fact[i] = normal(modmul(i, fact[i - 1], MOD), MOD);
+        fact[i] = i * fact[i - 1];
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -111,6 +115,7 @@ signed main()
     cin.tie(NULL);
     int test = 1, T;
     cin >> test;
+    fac();
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";

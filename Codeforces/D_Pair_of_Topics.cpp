@@ -25,7 +25,7 @@ using namespace __gnu_pbds;
 template <typename T>
 using ordered_set = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_statistics_node_update>; // multiple value
 // using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>; // single
-// ordered_set<ll> st; //must use ll
+ordered_set<ll> st; // must use ll
 // ll pos = st.order_of_key(5);
 // ll val = *st.find_by_order(2);
 //-----------------------------------------------------------------------------------------
@@ -39,14 +39,27 @@ void solve(void)
     vector<ll> b(n);
     for (auto &it : b)
         cin >> it;
-
-    ordered_set<ll> st;
-    st.insert(b[n - 1] - a[n - 1]);
-    int ans = 0;
-    for (int i = n - 2; i >= 0; i--)
+    for (int i = 0; i < n; i++)
+        a[i] = a[i] - b[i];
+    int ans = 0, cnt = 0;
+    sort(all(a));
+    // for (auto it : a)
+    //     cout << it << ' ';
+    // cout << '\n';
+    for (int i = 0; i < n; i++)
+        st.insert(a[i]);
+    for (int i = 0; i < n; i++)
     {
-        ans += st.order_of_key(a[i] - b[i]);
-        st.insert(b[i] - a[i]);
+        // cout << a[i] << ' ';
+        int t = 0;
+        if (a[i] < 0)
+            t = st.order_of_key((-a[i]) + 1);
+        else
+            t = st.order_of_key((a[i]) + 1);
+        // dbg(t);
+        // dbg(*st.find_by_order(t));
+        t = st.size() - t;
+        ans += t;
     }
     cout << ans;
 }
