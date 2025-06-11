@@ -42,7 +42,7 @@ void solve(void)
     for (int i = 0; i < n; i++)
         a[i] = a[i] - b[i];
     int ans = 0;
-    sort(all(a));
+    sort(rall(a));
     st.insert(-a.back());
     for (int i = n - 2; i >= 0; i--)
     {
