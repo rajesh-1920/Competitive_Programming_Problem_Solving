@@ -39,7 +39,7 @@ void solve(void)
     int ans = 1, i = 0, t = next[0], fl = 0;
     while (true)
     {
-        multiset<int> st;
+        set<int> st;
         for (; i < t; i++)
         {
             if (next[i] == n)
@@ -54,16 +54,13 @@ void solve(void)
         // dbg(st.size());
         if (fl)
         {
-            if (st.size())
+            for (; i < n; i++)
             {
-                for (; i < n; i++)
-                {
-                    if (st.find(v[i]) != st.end())
-                        st.erase(st.find(v[i]));
-                }
-                if (st.empty())
-                    ans++;
+                if (st.find(v[i]) != st.end())
+                    st.erase(st.find(v[i]));
             }
+            if (st.empty())
+                ans++;
             break;
         }
         ans++;
