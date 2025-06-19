@@ -18,57 +18,88 @@ const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
 const int N = 1e5 + 10;
 //-----------------------------------------------------------------------------------------
+vector<int> v;
+map<pair<int, int>, int> mp;
+int ok(string &s1, string &s2, int &n2, int n, int i)
+{
+    if (i == v.size())
+        return inf;
+    if (mp.find({n, i}) != mp.end())
+        return mp[{n, i}];
+    string sn = to_string(n);
+    int cnt = 0;
+    for (int i = 0; i < s1.size(); i++)
+    {
+        if (s1[s1.size() - i - 1] == sn[s1.size() - i - 1])
+            cnt++;
+        if (s2[s1.size() - i - 1] == sn[s1.size() - i - 1])
+            cnt++;
+    }
+    cnt = min(cnt, ok(s1, s2, n2, n, i + 1));
+    if (n + v[i] <= n2)
+        cnt = min(cnt, ok(s1, s2, n2, n + v[i], i + 1));
+    return mp[{n, i}] = cnt;
+}
 void solve(void)
 {
     int n1, n2;
-    string s1, s2, t;
     cin >> n1 >> n2;
+    string s1, s2;
     s1 = to_string(n1);
     s2 = to_string(n2);
-    t = s1;
-    int fl = 0, fg = 0;
-    for (int i = 0; i < s1.size(); i++)
-    {
-        if (fl)
-            t[i] = '*';
-        else
-        {
-            int t1 = s1[i] - '0', t2 = s2[i] - '0';
-            if (t1 + 1 == t2)
-            {
-                if (i + 1 < s1.size())
-                    if (s1[i + 1] == '9')
-                        t[i] = s2[i];
+    cout << ok(s1, s2, n2, n1, 0) << '\n';
+    // t = s1;
+    // int fl = 0, fg = 0;
+    // for (int i = 0; i < s1.size(); i++)
+    // {
+    //     if (fl)
+    //         t[i] = '*';
+    //     else
+    //     {
+    //         int t1 = s1[i] - '0', t2 = s2[i] - '0';
+    //         if (t1 + 1 == t2)
+    //         {
+    //             if (i + 1 < s1.size())
+    //                 if (s1[i + 1] == '9')
+    //                     t[i] = s2[i];
 
-                if (t1 + 1 < t2)
-                {
-                    t[i] = '*';
-                    fl = 1;
-                }
-            }
-        }
-        dbg(t);
-        int ans = 0;
-        for (int i = 0; i < t.size(); i++)
-            if (t[i] == s1[i])
-                ans++;
-        for (int i = 0; i < t.size(); i++)
-            if (t[i] == s2[i])
-                ans++;
-        cout << ans << '\n';
-    }
-    //-----------------------------------------------------------------------------------------
-    signed main()
+    //             if (t1 + 1 < t2)
+    //             {
+    //                 t[i] = '*';
+    //                 fl = 1;
+    //             }
+    //         }
+    //     }
+    //     dbg(t);
+    //     int ans = 0;
+    //     for (int i = 0; i < t.size(); i++)
+    //         if (t[i] == s1[i])
+    //             ans++;
+    //     for (int i = 0; i < t.size(); i++)
+    //         if (t[i] == s2[i])
+    //             ans++;
+    //     cout << ans << '\n';
+    // }
+}
+//-----------------------------------------------------------------------------------------
+signed main()
+{
+    // cout << fixed << showpoint << setprecision(10);
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    int test = 1, T;
+    cin >> test;
+    int xx = 1;
+    for (int i = 0; i < 10; i++)
     {
-        // cout << fixed << showpoint << setprecision(10);
-        ios_base::sync_with_stdio(false);
-        cin.tie(NULL);
-        int test = 1, T;
-        cin >> test;
-        for (T = 1; T <= test; T++)
-        {
-            // cout << "Case " << T << ": ";
-            solve();
-        }
-        return 0;
+        for (int j = 0; j < 10; j++)
+            v.push_back(xx);
+        xx *= 10;
     }
+    for (T = 1; T <= test; T++)
+    {
+        // cout << "Case " << T << ": ";
+        solve();
+    }
+    return 0;
+}
