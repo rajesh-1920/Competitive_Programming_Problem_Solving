@@ -44,42 +44,67 @@ void solve(void)
 {
     int n1, n2;
     cin >> n1 >> n2;
-    string s1, s2;
+    string s1, s2, t;
     s1 = to_string(n1);
     s2 = to_string(n2);
-    cout << ok(s1, s2, n2, n1, 0) << '\n';
-    // t = s1;
-    // int fl = 0, fg = 0;
-    // for (int i = 0; i < s1.size(); i++)
-    // {
-    //     if (fl)
-    //         t[i] = '*';
-    //     else
-    //     {
-    //         int t1 = s1[i] - '0', t2 = s2[i] - '0';
-    //         if (t1 + 1 == t2)
-    //         {
-    //             if (i + 1 < s1.size())
-    //                 if (s1[i + 1] == '9')
-    //                     t[i] = s2[i];
-
-    //             if (t1 + 1 < t2)
-    //             {
-    //                 t[i] = '*';
-    //                 fl = 1;
-    //             }
-    //         }
-    //     }
-    //     dbg(t);
-    //     int ans = 0;
-    //     for (int i = 0; i < t.size(); i++)
-    //         if (t[i] == s1[i])
-    //             ans++;
-    //     for (int i = 0; i < t.size(); i++)
-    //         if (t[i] == s2[i])
-    //             ans++;
-    //     cout << ans << '\n';
-    // }
+    // cout << ok(s1, s2, n2, n1, 0) << '\n';
+    t = s1;
+    int fl = 0, fg = 0;
+    for (int i = 0; i < s1.size(); i++)
+    {
+        if (fl)
+            t[i] = '*';
+        else
+        {
+            int t1 = s1[i] - '0', t2 = s2[i] - '0';
+            if (t1 + 1 == t2)
+            {
+                int c1 = 0, c2 = 0;
+                for (int j = i + 1; j < s1.size(); j++)
+                    if (s1[j] == '9')
+                        c1++;
+                    else
+                        break;
+                for (int j = i + 1; j < s1.size(); j++)
+                    if (s2[j] == '0')
+                        c2++;
+                    else
+                        break;
+                if (c1 <= c2)
+                {
+                    for (int j = i + 1; j < s1.size(); j++)
+                        if (s1[j] == '9')
+                            t[j] = '9', i = j;
+                        else
+                            break;
+                }
+                else
+                {
+                    t[i] = s2[i];
+                    for (int j = i + 1; j < s1.size(); j++)
+                        if (s2[j] == '0')
+                            t[j] = '0', i = j;
+                        else
+                            break;
+                }
+                fl = 1;
+            }
+            else if (t1 + 1 < t2)
+            {
+                t[i] = '*';
+                fl = 1;
+            }
+        }
+    }
+    // dbg(t);
+    int ans = 0;
+    for (int i = 0; i < t.size(); i++)
+        if (t[i] == s1[i])
+            ans++;
+    for (int i = 0; i < t.size(); i++)
+        if (t[i] == s2[i])
+            ans++;
+    cout << ans << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()

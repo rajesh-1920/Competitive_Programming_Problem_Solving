@@ -40,14 +40,20 @@ void solve(void)
     for (auto &it : b)
         cin >> it;
     for (int i = 0; i < n; i++)
-        a[i] = a[i] - b[i];
-    int ans = 0;
-    sort(rall(a));
-    st.insert(-a.back());
-    for (int i = n - 2; i >= 0; i--)
     {
-        ans += st.order_of_key(a[i]);
-        st.insert(-a[i]);
+        a[i] = a[i] - b[i];
+        st.insert(a[i]);
+    }
+    // for (auto it : st)
+    //     cout << it << ' ';
+    // cout << '\n';
+    ll ans = 0;
+    for (int i = 0; i < n; i++)
+    {
+        st.erase(st.upper_bound(a[i]));
+        st.insert(-a[i] + 1);
+        ans += st.size() - st.order_of_key(-a[i] + 1) - 1;
+        st.erase(st.upper_bound(-a[i] + 1));
     }
     cout << ans;
 }
