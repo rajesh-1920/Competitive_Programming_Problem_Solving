@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  14.02.2025
+// Date  :  16.06.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -18,31 +18,40 @@ const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
 const int N = 2e5 + 10;
 //-----------------------------------------------------------------------------------------
-vector<int> v(N), dp(N);
-int n;
-int ok(int i)
+int dp[N][2];
+int ok(int n, int fl, vector<int> &v)
 {
-    if (i > n)
+    if (n == v.size())
         return 0;
-    if (dp[i] != -inf)
-        return dp[i];
+    if (dp[n][fl] != -inf)
+        return dp[n][fl];
     int ans = -inf;
-    if (i + 1 <= n)
+    if (fl == 0)
     {
-        ans = max(ans, ok(i + 2) + (v[i] + v[i + 1]));
-        ans = max(ans, ok(i + 2) - (v[i] + v[i + 1]));
+        ans = max(ans, (ok(n + 1, 0, v)) + v[n]);
+        if (n + 1 < v.size())
+            ans = max(ans, (ok(n + 1, 1, v)) - v[n]);
     }
-    ans = max(ans, ok(i + 1) + (v[i]));
-    return dp[i] = ans;
+    else
+    {
+        ans = max(ans, (ok(n + 1, 0, v)) - v[n]);
+        if (n + 1 < v.size())
+            ans = max(ans, (ok(n + 1, 1, v)) + v[n]);
+    }
+    // cout << n << ' ' << ans << '\n';
+    return dp[n][fl] = ans;
 }
 void solve(void)
 {
-    for (int i = 0; i < N; i++)
-        dp[i] = -inf;
+    int n;
     cin >> n;
-    for (int i = 1; i <= n; i++)
+    vector<int> v(n);
+    for (int i = 0; i < n; i++)
+    {
         cin >> v[i];
-    cout << ok(1) << '\n';
+        dp[i][0] = dp[i][1] = -inf;
+    }
+    cout << ok(0, 0, v) << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
