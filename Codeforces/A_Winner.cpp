@@ -42,7 +42,7 @@ void solve(void)
     for (auto it : v)
     {
         cnt[it.fi] += it.sc;
-        if (cnt[it.fi] == mx && st.find(it.fi) != st.end())
+        if (cnt[it.fi] >= mx && st.find(it.fi) != st.end())
         {
             cout << it.fi << '\n';
             return;
