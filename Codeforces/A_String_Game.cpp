@@ -6,46 +6,46 @@
 using namespace std;
 //----------------------------(definition section)-----------------------------------------
 #define dbg(x) cout << #x << " = " << x << '\n'
+// #define int long long int
 #define fi first
 #define sc second
+
+#define all(s) s.begin(), s.end()
+#define rall(s) s.rbegin(), s.rend()
+
+const double eps = 1e-1;
+const int inf = 9e16 + 7;
+const int MOD = 1e9 + 7;
+const int N = 1e5 + 10;
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    int n;
-    cin >> n;
-    vector<int> d(n);
-    for (auto &it : d)
+    string s, p;
+    cin >> s >> p;
+    vector<int> v(s.size());
+    for (auto &it : v)
         cin >> it;
-    vector<pair<int, int>> vp(n);
-    for (auto &it : vp)
-        cin >> it.fi >> it.sc;
-
-    vector<int> next(n), pore_barbe(n, 0);
-    int mn = vp.back().sc;
-    for (int i = n - 1; i >= 0; i--)
+    int ans = 0, l = 0, r = s.size();
+    while (l <= r)
     {
-        next[i] = mn = min(mn, vp[i].sc);
-        if (i + 1 < n)
-            pore_barbe[i] = pore_barbe[i + 1];
-        pore_barbe[i] += (d[i] == 1);
-    }
+        int m = (l + r) / 2;
+        set<int> st;
+        for (int i = 0; i < m; i++)
+            st.insert(v[i] - 1);
 
-    int curr = 0;
-    for (int i = 0; i < n; i++)
-    {
-        if (d[i] == -1)
-            d[i] = (curr + 1 + pore_barbe[i] <= next[i]);
-        if (d[i] == 1)
-            curr++;
-        if (!(vp[i].fi <= curr && curr <= vp[i].sc))
+        int i = 0, j = 0;
+        while (j < p.size() && i < s.size())
         {
-            cout << -1 << '\n';
-            return;
+            if (st.find(i) == st.end() && s[i] == p[j])
+                j++;
+            i++;
         }
+        if (j == p.size())
+            ans = max(ans, m), l = m + 1;
+        else
+            r = m - 1;
     }
-    for (auto it : d)
-        cout << it << ' ';
-    cout << '\n';
+    cout << ans << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -54,7 +54,7 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    cin >> test;
+    // cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";
