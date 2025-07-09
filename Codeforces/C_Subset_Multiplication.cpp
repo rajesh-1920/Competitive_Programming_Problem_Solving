@@ -25,16 +25,33 @@ void solve(void)
     vector<int> v(n);
     for (auto &it : v)
         cin >> it;
-    set<int> st;
+    int lc = 1;
     for (int i = 1; i < n; i++)
+        lc = max(lc, (v[i - 1]) / (__gcd(v[i], v[i - 1])));
+    for (int i = lc;; i += lc)
     {
-        int gc = __gcd(v[i], v[i - 1]);
-        st.insert(v[i - 1] / gc);
+        int temp = v.back();
+        int fl = 1;
+        for (int j = n - 2; j >= 0; j--)
+        {
+            int yy = v[j];
+            if (temp % yy && (yy % i == 0))
+                yy /= i;
+            if (yy)
+            {
+                if (temp % yy)
+                    fl = 0;
+            }
+            else
+                fl = 0;
+            temp = yy;
+        }
+        if (fl)
+        {
+            cout << i << '\n';
+            return;
+        }
     }
-    int t = 1;
-    for (auto it : st)
-        t *= it;
-    cout << t << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
