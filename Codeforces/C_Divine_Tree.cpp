@@ -31,7 +31,7 @@ void solve(void)
     for (int i = 1; i <= n; i++)
         st.insert(i);
     vector<int> ans;
-    while (m>0)
+    while (st.size())
     {
         int t = st.size();
         t--;
@@ -48,7 +48,7 @@ void solve(void)
     }
     for (auto it : st)
         ans.push_back(it);
-    cout << ans.size() - 1 << '\n';
+    cout << ans[0] << '\n';
     for (int i = 1; i < ans.size(); i++)
         cout << ans[i - 1] << ' ' << ans[i] << '\n';
 }
