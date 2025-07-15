@@ -24,17 +24,18 @@ void solve(void)
     int mn = vp.back().sc;
     for (int i = n - 1; i >= 0; i--)
     {
-        next[i] = mn = min(mn, vp[i].sc);
+        if (i)
+            next[i - 1] = mn = min(mn, vp[i].sc);
         if (i + 1 < n)
             pore_barbe[i] = pore_barbe[i + 1];
         pore_barbe[i] += (d[i] == 1);
     }
 
     int curr = 0;
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i + 1 < n; i++)
     {
         if (d[i] == -1)
-            d[i] = (curr + 1 + pore_barbe[i] <= next[i]);
+            d[i] = (curr + 1 + pore_barbe[i] <= next[i] && curr + 1 <= vp[i].sc);
         if (d[i] == 1)
             curr++;
         if (!(vp[i].fi <= curr && curr <= vp[i].sc))
@@ -42,6 +43,20 @@ void solve(void)
             cout << -1 << '\n';
             return;
         }
+    }
+    if (d[n - 1] == -1)
+    {
+        if (curr < vp[n - 1].sc)
+            d[n - 1] = 1, curr++;
+        else
+            d[n - 1] = 0;
+    }
+    else if (d[n - 1] == 1)
+        curr++;
+    if (!(vp[n - 1].fi <= curr && curr <= vp[n - 1].sc))
+    {
+        cout << -1 << '\n';
+        return;
     }
     for (auto it : d)
         cout << it << ' ';
