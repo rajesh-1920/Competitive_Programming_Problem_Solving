@@ -39,10 +39,10 @@ int arr[] = {9,
              99999999,
              999999999,
              9999999999};
-map<pair<int, pair<int, int>>, int> mp;
+// map<pair<int, pair<int, int>>, int> mp;
 int ok(int n, int ind, int cnt)
 {
-    if (cnt > 7 || ind > 9)
+    /*if (cnt > 7 || ind > 9)
         return inf;
     if (is_seven(n))
         return cnt;
@@ -53,7 +53,22 @@ int ok(int n, int ind, int cnt)
     {
         ans = min(ans, ok(n + arr[ind], ind, cnt + 1));
     }
-    return mp[{n, {ind, cnt}}] = ans;
+    return mp[{n, {ind, cnt}}] = ans;*/
+    int ans = 7;
+    if (is_seven(n))
+        ans = 0;
+    for (int i = 0; i < 10; i++)
+    {
+        int x = n;
+        for (int j = 0; j < 7; j++)
+        {
+            x += arr[i];
+            if (is_seven(x))
+                ans = min(ans, j + 1);
+            // dbg(n + arr[i]);
+        }
+    }
+    return ans;
 }
 //-----------------------------------------------------------------------------------------
 void solve(void)
