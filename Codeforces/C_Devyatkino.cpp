@@ -39,55 +39,29 @@ int arr[] = {9,
              99999999,
              999999999,
              9999999999};
-int ok(int n)
+map<pair<int, pair<int, int>>, int> mp;
+int ok(int n, int ind, int cnt)
 {
-    int ans = 7;
+    if (cnt > 7 || ind > 9)
+        return inf;
     if (is_seven(n))
-        ans = min(ans, 0LL);
-    if (ans > 1)
-        for (int i1 = 0; i1 < 8; i1++)
-        {
-            if (is_seven(n + arr[i1]))
-                ans = min(ans, 1LL);
-            if (ans > 2)
-                for (int i2 = 0; i2 < 8; i2++)
-                {
-                    if (is_seven(n + arr[i1] + arr[i2]))
-                        ans = min(ans, 2LL);
-                    if (ans > 3)
-                        for (int i3 = 0; i3 < 8; i3++)
-                        {
-                            if (is_seven(n + arr[i1] + arr[i2] + arr[i3]))
-                                ans = min(ans, 3LL);
-                            if (ans > 4)
-                                for (int i4 = 0; i4 < 8; i4++)
-                                {
-                                    if (is_seven(n + arr[i1] + arr[i2] + arr[i3] + arr[i4]))
-                                        ans = min(ans, 4LL);
-                                    if (ans > 5)
-                                        for (int i5 = 0; i5 < 7; i5++)
-                                        {
-                                            if (is_seven(n + arr[i1] + arr[i2] + arr[i3] + arr[i4] + arr[i5]))
-                                                ans = min(ans, 5LL);
-                                            if (ans > 6)
-                                                for (int i6 = 0; i6 < 6; i6++)
-                                                {
-                                                    if (is_seven(n + arr[i1] + arr[i2] + arr[i3] + arr[i4] + arr[i5] + arr[i6]))
-                                                        ans = min(ans, 6LL);
-                                                }
-                                        }
-                                }
-                        }
-                }
-        }
-    return ans;
+        return cnt;
+    if (mp.find({n, {ind, cnt}}) != mp.end())
+        return mp[{n, {ind, cnt}}];
+    int ans = ok(n, ind + 1, cnt);
+    for (int i = 0; i < 7; i++)
+    {
+        ans = min(ans, ok(n + arr[ind], ind, cnt + 1));
+    }
+    return mp[{n, {ind, cnt}}] = ans;
 }
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
     int n;
     cin >> n;
-    cout << ok(n) << '\n';
+    cout << ok(n, 0, 0) << '\n';
+    // mp.clear();
 }
 //-----------------------------------------------------------------------------------------
 signed main()

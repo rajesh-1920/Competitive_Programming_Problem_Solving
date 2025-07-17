@@ -57,7 +57,7 @@ inline int moddiv(int a, int b, int m)
     return normal(modmul(a, binexpo(b, m - 2, m), m), m);
 }
 //-----------------------------------------------------------------------------------------
-const int N = 1e5 + 6;
+const int N = 1e5 + 10;
 void solve(void)
 {
     int n, k;
@@ -65,9 +65,10 @@ void solve(void)
     vector<int> v(N, 1);
     for (int j = k; j < N; j++)
     {
-        int suru = j - k + 1;
-        int nibo = j / k - 1;
-        v[j] += moddiv(modmul(nibo + 1, modsub(2 * suru, nibo * k, MOD), MOD), 2, MOD);
+        // int suru = j - k + 1;
+        // int nibo = j / k - 1;
+        // v[j] += moddiv(modmul(nibo + 1, modsub(2 * suru, nibo * k, MOD), MOD), 2, MOD);
+        v[j] = modadd(v[j - 1], v[j - k], MOD);
     }
     v[0] = 0;
     for (int i = 1; i < N; i++)
