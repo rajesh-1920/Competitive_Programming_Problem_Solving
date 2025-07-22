@@ -46,7 +46,7 @@ void solve(void)
     sort(all(v), cmp);
     for (int i = 0; i < n / 2; i++)
         ans += abs(v[i].fi - v[i + n / 2].fi) + abs(v[i].sc.fi - v[i + n / 2].sc.fi);
-    if (temp > ans)
+    if (temp >= ans)
         sort(all(v));
     for (int i = 0; i < n / 2; i++)
         cout << v[i].sc.sc << ' ' << v[i + n / 2].sc.sc << '\n';
