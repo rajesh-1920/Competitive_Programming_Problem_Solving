@@ -20,32 +20,38 @@ const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
 void solve(void)
 {
-    int n;
-    cin >> n;
-    int cnt = n * n - 1;
-    int lr = 0, rr = n - 1, lc = 0, rc = n - 1;
-    vector<vector<int>> v(n, vector<int>(n));
-    while (lr <= rr && lc <= rc)
+    int n, d;
+    cin >> n >> d;
+    vector<int> v(n);
+    for (auto &it : v)
+        cin >> it;
+
+    int ans = 0;
+    int i = 0, j = 0, prej = -1;
+
+    while (i < n)
     {
-        for (int i = rc; i >= lc; i--)
-            v[lr][i] = cnt--;
-        for (int i = lr + 1; i <= rr; i++)
-            v[i][lc] = cnt--;
-        if (rr == lr)
-            break;
-        for (int i = lc + 1; i <= rc; i++)
-            v[rr][i] = cnt--;
-        for (int i = rr - 1; i > lr; i--)
-            v[i][rc] = cnt--;
-        lr++, rr--, lc++, rc--;
+        while (j < n)
+        {
+            if (v[j] - v[i] > d)
+                break;
+            j++;
+        }
+        int t = j - i;
+        if (v[j - 1] - v[i] <= d && prej != j)
+        {
+            ans += (t) * (t - 1) * (t - 2) / 6;
+            if (i < prej)
+            {
+                t = prej - i;
+                ans -= (t) * (t - 1) * (t - 2) / 6;
+            }
+            prej = j;
+        }
+        i++;
     }
 
-    for (auto it : v)
-    {
-        for (auto ii : it)
-            cout << ii << ' ';
-        cout << '\n';
-    }
+    cout << ans << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -54,7 +60,7 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    cin >> test;
+    // cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";
