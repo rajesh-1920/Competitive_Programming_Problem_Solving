@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  22.04.2025
+// Date  :  30.05.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -20,46 +20,52 @@ const int N = 1e5 + 10;
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    int n, m;
-    string s1, s2;
-    cin >> n >> m >> s1 >> s2;
-    while (s1.size() > 1)
+    int n;
+    string s;
+    cin >> n >> s;
+    map<char, int> mp;
+    set<int> st;
+    for (int i = 0; i < n; i++)
+        mp[s[i]]++;
+    char ch = (*mp.begin()).fi;
+    for (int i = 0; i < n; i++)
+        if (s[i] == ch)
+            st.insert(-i);
+
+    string ans = "";
+    int fl = 0;
+    for (int i = 0; i < n; i++)
     {
-        if (s1.back() != s2.back())
+        if (fl == 1)
         {
-            s2.push_back(s1.back());
-            s1.pop_back();
+            if (s[i] == ch)
+            {
+                if (st.find(-i) != st.end())
+                    ans += s[i];
+            }
+            else
+                ans += s[i];
         }
         else
-            break;
-    }
-    while (s2.size() > 1)
-    {
-        if (s1.back() != s2.back())
         {
-            s1.push_back(s2.back());
-            s2.pop_back();
-        }
-        else
-            break;
-    }
-    for (int i = 0; i + 1 < s1.size(); i++)
-    {
-        if (s1[i] == s1[i + 1])
-        {
-            cout << "NO\n";
-            return;
+            if (s[i] == ch)
+            {
+                ans += s[i];
+                mp[ch]--;
+            }
+            else if (fl == 0)
+            {
+                mp[ch]--;
+                ans += ch;
+                st.erase(st.begin());
+                i--;
+                fl = 1;
+            }
+            if (mp[ch] == 0)
+                fl = 1;
         }
     }
-    for (int i = 0; i + 1 < s2.size(); i++)
-    {
-        if (s2[i] == s2[i + 1])
-        {
-            cout << "NO\n";
-            return;
-        }
-    }
-    cout << "YES\n";
+    cout << ans << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()

@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  22.04.2025
+// Date  :  30.05.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -14,37 +14,36 @@ using namespace std;
 #define rall(s) s.rbegin(), s.rend()
 
 const double eps = 1e-1;
-const int inf = 9e16 + 7;
+const int inf = 9e9 + 7;
 const int MOD = 1e9 + 7;
 const int N = 1e5 + 10;
 //-----------------------------------------------------------------------------------------
+map<pair<int, int>, int> mp;
+int ok(int a1, int a2, int &b1, int &b2)
+{
+    if (a1 == b1 && a2 == b2)
+        return 0;
+    if (a2 > b2)
+        return inf;
+    if (mp.find({a1, a2}) != mp.end())
+        return mp[{a1, a2}];
+
+    int ans = inf;
+    if (a1 + 3 >= b1)
+        ans = min(ans, ok(a1 - 1, a2, b1, b2) + 1);
+    ans = min(ans, ok(a1 + 1, a2 + 1, b1, b2) + 1);
+    return mp[{a1, a2}] = ans;
+}
 void solve(void)
 {
-    int n;
-    string s;
-    cin >> n >> s;
-    string s1 = "FBFFBFFBFBFFBFFBFBFFBFFBFBFFBFFB";
-    for (int i = 0; i + n < s1.size(); i++)
-    {
-        int t = 0, fl = 1;
-        for (int j = i; j < s1.size(); j++)
-        {
-            if (s[t] != s1[j])
-            {
-                fl = 0;
-                break;
-            }
-            t++;
-            if (t == s.size())
-                break;
-        }
-        if (fl)
-        {
-            cout << "YES\n";
-            return;
-        }
-    }
-    cout << "NO\n";
+    int a1, a2, b1, b2;
+    cin >> a1 >> a2 >> b1 >> b2;
+    int t = ok(a1, a2, b1, b2);
+    if (t >= inf)
+        t = -1;
+    cout << t << '\n';
+    mp[{1, 1}] = 1;
+    mp.clear();
 }
 //-----------------------------------------------------------------------------------------
 signed main()
