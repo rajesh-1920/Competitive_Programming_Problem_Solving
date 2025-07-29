@@ -16,13 +16,26 @@ using namespace std;
 const double eps = 1e-1;
 const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
-const int N = 1e5 + 10;
+const int N = 1e3 + 10;
 //------------------------------(solve)----------------------------------------------------
+vector<int> v[N], vis(N), temp;
+void dfs(int n)
+{
+    vis[n] = 1;
+    for (auto it : v[n])
+    {
+        if (vis[it] == 0)
+            dfs(it);
+    }
+    temp.push_back(n + 1);
+}
+
 void solve(void)
 {
     int n;
     cin >> n;
-    vector<int> v[n];
+    for (int i = 0; i < n; i++)
+        v[i].clear(), vis[i] = 0;
     for (int i = 0; i < n; i++)
     {
         string s;
@@ -33,35 +46,36 @@ void solve(void)
                 v[i].push_back(j);
         }
     }
-    vector<int> temp, vis(n + 5, 0);
-    queue<int> q;
-    q.push(0);
-    vis[0] = 1;
-    temp.push_back(1);
-    while (q.size())
-    {
-        int t = q.front();
-        q.pop();
-        for (auto it : v[t])
-        {
-            if (vis[it] == 0)
-            {
-                vis[it] = 1;
-                temp.push_back(it + 1);
-                q.push(it);
-            }
-        }
-    }
+    temp.clear();
+    dfs(0);
+    // queue<int> q;
+    // q.push(0);
+    // vis[0] = 1;
+    // temp.push_back(1);
+    // while (q.size())
+    // {
+    //     int t = q.front();
+    //     q.pop();
+    //     for (auto it : v[t])
+    //     {
+    //         if (vis[it] == 0)
+    //         {
+    //             vis[it] = 1;
+    //             temp.push_back(it + 1);
+    //             q.push(it);
+    //         }
+    //     }
+    // }
     if (temp.size() != n)
         cout << "No\n";
     else
     {
         cout << "Yes\n";
-        reverse(all(temp));
+        //reverse(all(temp));
         for (int i = 1; i < n; i++)
             cout << temp[i] << ' ' << temp[i - 1] << '\n';
     }
-    // cout << '\n';
+    cout << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
