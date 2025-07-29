@@ -22,51 +22,46 @@ void solve(void)
 {
     int n;
     cin >> n;
-    vector<int> v(n), ans;
-    for (auto &it : v)
-        cin >> it;
-    string s = "";
-    s.push_back('L');
-    ans.push_back(v[0]);
-    int l = 1, r = n - 1;
-    while (l <= r)
+    vector<int> v[n];
+    for (int i = 0; i < n; i++)
     {
-        if (l == r)
+        string s;
+        cin >> s;
+        for (int j = 0; j < n; j++)
         {
-            s.push_back('L');
-            break;
+            if (s[j] != '0')
+                v[i].push_back(j);
         }
-        // dbg(v[l]);
-        // dbg(v[r]);
-        if (ans.back() > v[l])
-        {
-            if (v[r] > v[l])
-            {
-                s.push_back('L'), s.push_back('R');
-                ans.push_back(v[l]), ans.push_back(v[r]);
-            }
-            else
-            {
-                s.push_back('R'), s.push_back('L');
-                ans.push_back(v[r]), ans.push_back(v[l]);
-            }
-        }
-        else
-        {
-            if (v[r] > v[l])
-            {
-                ans.push_back(v[r]), ans.push_back(v[l]);
-                s.push_back('R'), s.push_back('L');
-            }
-            else
-            {
-                ans.push_back(v[l]), ans.push_back(v[r]);
-                s.push_back('L'), s.push_back('R');
-            }
-        }
-        r--, l++;
     }
-    cout << s << '\n';
+    vector<int> temp, vis(n + 5, 0);
+    queue<int> q;
+    q.push(0);
+    vis[0] = 1;
+    temp.push_back(1);
+    while (q.size())
+    {
+        int t = q.front();
+        q.pop();
+        for (auto it : v[t])
+        {
+            if (vis[it] == 0)
+            {
+                vis[it] = 1;
+                temp.push_back(it + 1);
+                q.push(it);
+            }
+        }
+    }
+    if (temp.size() != n)
+        cout << "No\n";
+    else
+    {
+        cout << "Yes\n";
+        reverse(all(temp));
+        for (int i = 1; i < n; i++)
+            cout << temp[i] << ' ' << temp[i - 1] << '\n';
+    }
+    // cout << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
