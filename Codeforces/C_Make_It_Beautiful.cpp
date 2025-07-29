@@ -16,44 +16,53 @@ using namespace std;
 const double eps = 1e-1;
 const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
-const int N = 1e3 + 10;
+const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
-vector<int> v[N], vis(N), temp;
-void dfs(int n)
-{
-    vis[n] = 1;
-    for (auto it : v[n])
-    {
-        if (vis[it] == 0)
-            dfs(it);
-    }
-    temp.push_back(n + 1);
-}
 void solve(void)
 {
-    int n;
-    cin >> n;
-    for (int i = 0; i < n; i++)
-        v[i].clear(), vis[i] = 0;
+    int n, k;
+    cin >> n >> k;
+    vector<int> v(62, 0);
     for (int i = 0; i < n; i++)
     {
-        string s;
-        cin >> s;
-        for (int j = 0; j < n; j++)
-            if (s[j] != '0')
-                v[i].push_back(j);
+        int x, ii = 0;
+        cin >> x;
+        while (x)
+        {
+            if (x & 1)
+                v[ii]++;
+            ii++;
+            x /= 2;
+        }
     }
-    temp.clear();
-    dfs(0);
-    if (temp.size() != n)
-        cout << "No\n";
-    else
+    int s = 1;
+    for (int i = 0; i < 62; i++)
     {
-        cout << "Yes\n";
-        for (int i = 1; i < n; i++)
-            cout << temp[i] << ' ' << temp[i - 1] << '\n';
+        if (v[i] < n)
+        {
+            int t = n - v[i];
+            int need = s * t;
+            if (need <= k)
+            {
+                k -= need;
+                v[i] = n;
+            }
+            else
+            {
+                v[i] += k / s;
+                // dbg(k / s);
+                break;
+            }
+        }
+        s *= 2;
     }
-    cout << '\n';
+    int ans = 0;
+    for (int i = 0; i < 62; i++)
+    {
+        // cout << v[i] << ' ';
+        ans += v[i];
+    }
+    cout << ans << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()

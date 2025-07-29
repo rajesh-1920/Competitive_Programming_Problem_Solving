@@ -16,44 +16,16 @@ using namespace std;
 const double eps = 1e-1;
 const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
-const int N = 1e3 + 10;
+const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
-vector<int> v[N], vis(N), temp;
-void dfs(int n)
-{
-    vis[n] = 1;
-    for (auto it : v[n])
-    {
-        if (vis[it] == 0)
-            dfs(it);
-    }
-    temp.push_back(n + 1);
-}
 void solve(void)
 {
-    int n;
-    cin >> n;
-    for (int i = 0; i < n; i++)
-        v[i].clear(), vis[i] = 0;
-    for (int i = 0; i < n; i++)
-    {
-        string s;
-        cin >> s;
-        for (int j = 0; j < n; j++)
-            if (s[j] != '0')
-                v[i].push_back(j);
-    }
-    temp.clear();
-    dfs(0);
-    if (temp.size() != n)
-        cout << "No\n";
-    else
-    {
-        cout << "Yes\n";
-        for (int i = 1; i < n; i++)
-            cout << temp[i] << ' ' << temp[i - 1] << '\n';
-    }
-    cout << '\n';
+    int n, x, y;
+    cin >> n >> x >> y;
+    int t = n - (n / x) + (n / lcm(x, y));
+    int tt = (n / y) - (n / lcm(x, y));
+    int ans = (n * (n + 1) / 2) - (t * (t + 1) / 2) - (tt * (tt + 1) / 2);
+    cout << ans << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()

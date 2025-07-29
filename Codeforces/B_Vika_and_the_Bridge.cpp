@@ -16,44 +16,46 @@ using namespace std;
 const double eps = 1e-1;
 const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
-const int N = 1e3 + 10;
+const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
-vector<int> v[N], vis(N), temp;
-void dfs(int n)
-{
-    vis[n] = 1;
-    for (auto it : v[n])
-    {
-        if (vis[it] == 0)
-            dfs(it);
-    }
-    temp.push_back(n + 1);
-}
 void solve(void)
 {
-    int n;
-    cin >> n;
-    for (int i = 0; i < n; i++)
-        v[i].clear(), vis[i] = 0;
+    int n, x;
+    cin >> n >> x;
+    vector<int> v(n), cnt(x + 5, -1);
+    for (auto &it : v)
+        cin >> it;
+    priority_queue<int> st[x + 5];
     for (int i = 0; i < n; i++)
     {
-        string s;
-        cin >> s;
-        for (int j = 0; j < n; j++)
-            if (s[j] != '0')
-                v[i].push_back(j);
+        int t = i - cnt[v[i]] - 1;
+        cnt[v[i]] = i;
+        st[v[i]].push(t);
     }
-    temp.clear();
-    dfs(0);
-    if (temp.size() != n)
-        cout << "No\n";
-    else
+    int ans = n;
+    for (int i = 1; i <= x; i++)
     {
-        cout << "Yes\n";
-        for (int i = 1; i < n; i++)
-            cout << temp[i] << ' ' << temp[i - 1] << '\n';
+        if (!st[i].empty())
+        {
+            int t = st[i].top();
+            st[i].push(n - cnt[i] - 1);
+            t = st[i].top();
+            st[i].pop();
+            st[i].push(t / 2);
+            ans = min(ans, st[i].top());
+
+            // {
+            //     while (st[i].size())
+            //     {
+            //         cout << st[i].top() << ' ';
+            //         st[i].pop();
+            //     }
+            //     cout << '\n';
+            //     cout << '\n';
+            // }
+        }
     }
-    cout << '\n';
+    cout << ans << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
