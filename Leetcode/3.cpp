@@ -15,12 +15,24 @@ class Solution
 #define all(s) s.begin(), s.end()
 #define rall(s) s.rbegin(), s.rend()
 
-    const double eps = 1e-1;
-    const int inf = 9e15 + 7;
-    const int MOD = 1e9 + 7;
-    const int N = 1e9 + 10;
-
 public:
+    int lengthOfLongestSubstring(string s)
+    {
+        int ans = 0, i = 0, j = 0;
+        vector<int> mp(100000, 0);
+        while (i < s.size() && j < s.size())
+        {
+            mp[s[i]]++;
+            while (mp[s[i]] > 1)
+            {
+                mp[s[j]]--;
+                j++;
+            }
+            i++;
+            ans = max(ans, i - j);
+        }
+        return ans;
+    }
 };
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -29,6 +41,9 @@ signed main()
     cin.tie(NULL);
     {
         Solution aa;
+        string s;
+        cin >> s;
+        cout << aa.lengthOfLongestSubstring(s) << '\n';
     }
     return 0;
 }

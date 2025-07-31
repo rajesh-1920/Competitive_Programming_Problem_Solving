@@ -21,6 +21,30 @@ class Solution
     const int N = 1e9 + 10;
 
 public:
+    int reverse(int x)
+    {
+        int ans = 0;
+        if (x < 0)
+        {
+            x = -x;
+            while (x > 0)
+            {
+                if (ans > (INT_MAX) / 10)
+                    return 0;
+                ans = ans * 10 + x % 10;
+                x /= 10;
+            }
+            return -ans;
+        }
+        while (x > 0)
+        {
+            if (ans > (INT_MAX) / 10)
+                return 0;
+            ans = ans * 10 + x % 10;
+            x /= 10;
+        }
+        return ans;
+    }
 };
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -29,6 +53,9 @@ signed main()
     cin.tie(NULL);
     {
         Solution aa;
+        int x;
+        cin >> x;
+        cout << aa.reverse(x) << '\n';
     }
     return 0;
 }
