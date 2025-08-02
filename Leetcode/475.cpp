@@ -18,7 +18,7 @@ public:
         sort(heaters.begin(), heaters.end());
         for (auto &it : houses)
         {
-            auto pos1 = lower_bound(all(heaters), it);
+            auto pos1 = lower_bound(heaters.begin(),heaters.end(), it);
             if (pos1 != heaters.end())
             {
                 int ds1 = (*pos1) - it;
