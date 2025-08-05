@@ -50,9 +50,6 @@ void build(vector<int> &v)
                 tt[i].push_back(v[j]);
             }
         }
-        // for (auto it : tt[i])
-        //     cout << it << ' ';
-        // cout << '\n';
     }
 }
 bool ok(vector<int> &v, int val)
@@ -66,10 +63,6 @@ bool ok(vector<int> &v, int val)
             {
                 if (tt[i][j] == tt[i][j - 1] || tt[i][j] - tt[i][j - 1] > val)
                 {
-                    // if (val == 2)
-                    // {
-                    //     dbg(i);
-                    // }
                     fl = 0;
                     break;
                 }
@@ -104,10 +97,7 @@ void solve(void)
     {
         int m = (r + l) / 2;
         if (ok(v, m))
-        {
-            ans = min(ans, m);
-            r = m - 1;
-        }
+            ans = min(ans, m), r = m - 1;
         else
             l = m + 1;
     }

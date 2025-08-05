@@ -20,32 +20,53 @@ const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
 void solve(void)
 {
-    int n;
-    cin >> n;
-    multiset<int> st;
-    int s = 0;
-    while (n--)
+    int n, q;
+    cin >> n >> q;
+    set<int> st;
+    vector<int> v(n + 1);
+    for (int i = 1; i <= n; i++)
+    {
+        cin >> v[i];
+        if (v[i] > 9)
+            st.insert(i);
+    }
+    while (q--)
     {
         int x;
         cin >> x;
-        s += x;
-        st.insert(x);
-        while (s < 0)
+        if (x == 2)
         {
-            s -= (*st.begin());
-            st.erase(st.begin());
+            int l;
+            cin >> l;
+            cout << v[l] << '\n';
+        }
+        else
+        {
+            int l, r;
+            cin >> l >> r;
+            auto it = st.lower_bound(l);
+            while (it != st.end() && *it <= r)
+            {
+                int s = 0, a = v[*it];
+                while (a)
+                    s += a % 10, a /= 10;
+                v[*it] = s;
+                if (v[*it] < 10)
+                    it = st.erase(it);
+                else
+                    it++;
+            }
         }
     }
-    cout << st.size() << '\n';
 }
-//----------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------
 signed main()
 {
     // cout << fixed << showpoint << setprecision(10);
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    // cin >> test;
+    cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";
