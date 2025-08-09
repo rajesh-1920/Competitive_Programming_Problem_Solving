@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  31.07.2025
+// Date  :  09.08.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -20,34 +20,39 @@ const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
 void solve(void)
 {
-    int n, k;
-    cin >> n >> k;
-    vector<pair<int, int>> v(n);
-    for (auto &it : v)
-        cin >> it.fi;
-    for (auto &it : v)
-        cin >> it.sc;
-    sort(all(v));
-    int ans = 0;
-    for (auto it : v)
-        ans += max(it.fi - it.sc, it.sc - it.fi);
-    int mn = INT_MAX;
-    for (int i = 1; i < n; i++)
+    int n, x;
+    cin >> n >> x;
+    vector<int> v(n);
+    set<pair<int, int>> pos;
+    map<int, int> mp;
+    for (int i = 0; i < n; i++)
     {
-        vector<int> temp = {v[i].fi, v[i].sc, v[i - 1].fi, v[i - 1].sc};
-        int x = max(v[i].fi - v[i].sc, v[i].sc - v[i].fi);
-        x += max(v[i - 1].fi - v[i - 1].sc, v[i - 1].sc - v[i - 1].fi);
-        sort(all(temp));
-        int mx = 0;
-        do
-        {
-            int t1 = max(temp[0] - temp[1], temp[1] - temp[0]);
-            int t2 = max(temp[2] - temp[3], temp[2] - temp[3]);
-            mx = max(mx, t1 + t2 - x);
-        } while (next_permutation(all(temp)));
-        mn = min(mx, mn);
+        cin >> v[i];
+        pos.insert({v[i], i});
+        mp[v[i]] = i;
     }
-    cout << ans + mn << '\n';
+    for (int i = 0; i < n; i++)
+    {
+        int t1 = (*pos.begin()).sc;
+        pos.erase(pos.begin());
+        if (t1 == i)
+            continue;
+        int tt = (*(--pos.end())).fi;
+        if (abs(v[i] - v[t1]) >= x)
+        {
+            pos.erase(pos.find({v[i], i}));
+            pos.insert({v[i], t1});
+            swap(v[i], v[t1]);
+        }
+        else if (abs(v[0] - v[t1]) >= x || abs(tt - v[t1]) >= x)
+            break;
+        else
+        {
+            cout << "NO\n";
+            return;
+        }
+    }
+    cout << "YES\n";
 }
 //-----------------------------------------------------------------------------------------
 signed main()
