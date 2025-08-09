@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  08.05.2025
+// Date  :  09.08.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -17,29 +17,34 @@ const double eps = 1e-1;
 const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
 const int N = 1e5 + 10;
-//-----------------------------------------------------------------------------------------
+//------------------------------(solve)----------------------------------------------------
+void dfs(int n, map<int, vector<int>> &mp, map<int, int> &vis, map<int, int> &depth)
+{
+    vis[n] = 1;
+    for (auto it : mp[n])
+    {
+        if (vis.find(n + it) == vis.end())
+        {
+            depth[n + it] = depth[n] + 1;
+            dfs(n + it, mp, vis, depth);
+        }
+    }
+}
 void solve(void)
 {
     int n;
     cin >> n;
-    set<int> st;
+    vector<int> v(n);
+    map<int, vector<int>> mp;
+    map<int, int> vis, depth;
     for (int i = 0; i < n; i++)
     {
-        int x;
-        cin >> x;
-        st.insert(x + i);
+        cin >> v[i];
+        mp[v[i] + i].push_back(i);
     }
-    while (!st.empty())
-    {
-        if (st.find(n) != st.end())
-        {
-            n += (n - 1);
-        }
-        else
-            break;
-    }
-
-    cout << n << '\n';
+    depth[n] = 1;
+    dfs(n, mp, vis, depth);
+    cout << (*(--depth.end())).fi << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
