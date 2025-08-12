@@ -17,7 +17,7 @@ using namespace std;
 // const int inf = 9e16 + 7;
 // const int MOD = 1e9 + 7;
 
-// //-----------------------------------------------------------------------------------------
+// //------------------------------------------(N queens)------------------------------------------
 // bool issafe(vector<string> &board, int &row, int &col)
 // {
 //     for (int i = 0; i < board.size(); i++)
@@ -72,12 +72,102 @@ using namespace std;
 //     }
 // }
 // //-----------------------------------------------------------------------------------------
-const int n = 1e7 + 10;
-int v[n]={1};
+//-----------------------------(Suduko)----------------------------------------------------
+
+bool issafe(int row, int col, int val, vector<vector<int>> &suduko)
+{
+    for (int i = 0; i < 9; i++)
+        if (suduko[i][col] == val || suduko[row][i] == val)
+            return false;
+    row = (row / 3) * 3;
+    col = (col / 3) * 3;
+    for (int i = 0; i < 3; i++)
+        for (int j = 0; j < 3; j++)
+            if (suduko[i + row][j + col] == val)
+                return false;
+    return true;
+}
+bool place(int row, int col, vector<vector<int>> &suduko)
+{
+    if (row == suduko.size())
+        return true;
+    if (suduko[row][col])
+    {
+        if (col == suduko.size() - 1)
+            return place(row + 1, 0, suduko);
+        else
+            return place(row, col + 1, suduko);
+    }
+
+    for (int i = 1; i <= 9; i++)
+    {
+        if (issafe(row, col, i, suduko))
+        {
+            suduko[row][col] = i;
+            bool fl = false;
+            if (col == 8)
+                fl |= place(row + 1, 0, suduko);
+            else
+                fl |= place(row, col + 1, suduko);
+            if (fl)
+                return true;
+            suduko[row][col] = 0;
+        }
+    }
+    return false;
+}
+
 void solve()
 {
-    cout << v[0] << '\n';
+    vector<vector<int>> suduko = {
+        {1, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 2, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 3, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 4, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 5, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 6, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 7, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 8, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 9}};
+
+    int cc = 0;
+    if (place(0, 0, suduko))
+    {
+        for (auto it : suduko)
+        {
+            int cnt = 0;
+            if (cc % 3 == 0)
+            {
+                for (int i = 0; i < 25; i++)
+                    cout << '-';
+                cout << '\n';
+            }
+            for (auto ii : it)
+            {
+                if (cnt % 3 == 0)
+                    cout << '|' << ' ';
+                cout << ii << ' ';
+                cnt++;
+                if (cnt == 9)
+                    cout << '|' << ' ';
+            }
+            cout << '\n';
+            cc++;
+            if (cc == 9)
+            {
+                for (int i = 0; i < 25; i++)
+                    cout << '-';
+                cout << '\n';
+            }
+        }
+    }
+    else
+    {
+        cout << "Solve not possible\n";
+    }
 }
+
+//-----------------------------(Suduko)----------------------------------------------------
 
 signed main()
 {
