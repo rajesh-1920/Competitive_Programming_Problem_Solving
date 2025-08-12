@@ -20,10 +20,37 @@ const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
 void solve(void)
 {
-    int n;
-    cin >> n;
-    // vector<int> v(n); for (auto &it : v) cin >> it;
-    // vector<vector<int>> v(110, vector<int>(110, 0));
+    int n, k;
+    cin >> n >> k;
+    set<int> st;
+    if (n == 1)
+        st.insert(1);
+    else if (k % 2 == 0)
+    {
+        st.insert(1);
+        st.insert(k);
+        st.insert(k + 1);
+    }
+    else
+    {
+        if (k != 1 && k != n)
+        {
+            st.insert(1);
+            st.insert(k - 1);
+            st.insert(k);
+            st.insert(k + 1);
+            st.insert(k + 2);
+        }
+        else
+        {
+            cout << -1 << '\n';
+            return;
+        }
+    }
+    cout << st.size() << '\n';
+    for (auto it : st)
+        cout << it << ' ';
+    cout << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
