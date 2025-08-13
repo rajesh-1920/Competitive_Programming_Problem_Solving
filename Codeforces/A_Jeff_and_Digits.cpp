@@ -20,26 +20,31 @@ const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
 void solve(void)
 {
-    int n, x;
-    cin >> n >> x;
-    vector<int> v(n), t;
-    for (auto &it : v)
-        cin >> it, t.emplace_back(it);
-    if (n >= 2 * x)
+    int n;
+    cin >> n;
+    int c5 = 0, c0 = 0;
+    while (n--)
     {
-        cout << "YES\n";
-        return;
+        int x;
+        cin >> x;
+        if (x == 0)
+            c0++;
+        else
+            c5++;
     }
-    sort(all(t));
-    for (int i = n - x; i < x; i++)
+    c5 = (c5 / 9) * 9;
+    if (c0 == 0)
+        cout << -1 << '\n';
+    else
     {
-        if (v[i] != t[i])
-        {
-            cout << "NO\n";
-            return;
-        }
+        if (c5 == 0)
+            c0 = 1;
+        while (c5--)
+            cout << 5;
+        while (c0--)
+            cout << 0;
+        cout << '\n';
     }
-    cout << "YES\n";
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -48,7 +53,7 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    cin >> test;
+    // cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";

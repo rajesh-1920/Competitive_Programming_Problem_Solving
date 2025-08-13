@@ -20,26 +20,39 @@ const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
 void solve(void)
 {
-    int n, x;
-    cin >> n >> x;
-    vector<int> v(n), t;
-    for (auto &it : v)
-        cin >> it, t.emplace_back(it);
-    if (n >= 2 * x)
+    int n;
+    cin >> n;
+    if (n <= 3)
     {
-        cout << "YES\n";
+        cout << "codeforce";
+        while (n--)
+            cout << 's';
         return;
     }
-    sort(all(t));
-    for (int i = n - x; i < x; i++)
+    int t = 1;
+    multiset<int> st;
+    while (st.size() < 10)
+        st.insert(1);
+    while (t < n)
     {
-        if (v[i] != t[i])
-        {
-            cout << "NO\n";
-            return;
-        }
+        int xx = *st.begin();
+        st.erase(st.begin());
+        st.insert(xx + 1);
+        t = t / xx;
+        t *= (xx + 1);
     }
-    cout << "YES\n";
+
+    string s = "codeforces";
+    t = 0;
+    string ans = "";
+    for (auto it : st)
+    {
+        int x = it;
+        while (x--)
+            ans.push_back(s[t]);
+        t++;
+    }
+    cout << ans << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -48,7 +61,7 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    cin >> test;
+    // cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";
