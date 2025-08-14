@@ -30,20 +30,36 @@ void solve(void)
         v[x].insert(y);
         v[y].insert(x);
     }
-    priority_queue<pair<int, int>> pq, pp;
+    multiset<int> st;
+    int mx = 0;
     for (int i = 1; i <= n; i++)
-        pq.push({v[i].size(), i});
-    int ans = pq.top().fi;
-    int t = pq.top().sc;
-
-    for (auto it : v[t])
-        v[it].erase(t);
+    {
+        int z = v[i].size();
+        mx = max(mx, z);
+        st.insert(v[i].size());
+    }
+    int ans = 0;
     for (int i = 1; i <= n; i++)
-        if (i != t)
-            pp.push({v[i].size(), i});
-    
-    t = pp.top().fi;
-    ans += (t - 1);
+    {
+        if (v[i].size() == mx)
+        {
+            int t = v[i].size();
+            st.erase(st.find(mx));
+            for (auto it : v[i])
+            {
+                st.erase(st.find(v[it].size()));
+                st.insert(v[it].size() - 1);
+            }
+            t += ((*--(st.end())) - 1);
+            for (auto it : v[i])
+            {
+                st.erase(st.find(v[it].size() - 1));
+                st.insert(v[it].size());
+            }
+            st.insert(mx);
+            ans = max(ans, t);
+        }
+    }
     cout << ans << '\n';
 }
 //-----------------------------------------------------------------------------------------
