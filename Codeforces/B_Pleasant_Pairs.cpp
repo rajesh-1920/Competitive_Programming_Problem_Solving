@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  12.05.2025
+// Date  :  10.08.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -17,32 +17,32 @@ const double eps = 1e-1;
 const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
 const int N = 1e5 + 10;
-//-----------------------------------------------------------------------------------------
+//------------------------------(solve)----------------------------------------------------
 void solve(void)
 {
     int n;
     cin >> n;
-    vector<int> v(n + 5);
-    set<pair<int, int>> ans;
-    for (int i = 1; i <= n; i++)
-        cin >> v[i];
+    vector<int> pos(2 * n + 10, -1), v(n + 1);
     for (int i = 1; i <= n; i++)
     {
-        for (int j = 1; j * v[i] <= 2 * n; j++)
+        cin >> v[i];
+        pos[v[i]] = i;
+    }
+    int ans = 0;
+    for (int i = 1; i <= n; i++)
+    {
+        for (int x = v[i]; x < 2 * n + 10; x += v[i])
         {
-            if (v[i] * j - i >= 0)
+            int t = x / v[i];
+            if (pos[t] != -1)
             {
-                int pos = v[i] * j - i;
-                if (pos > i && pos <= n)
-                {
-                    //dbg(pos);
-                    if (v[i] * v[pos] == i + pos)
-                        ans.insert({i, pos});
-                }
+                int j = pos[t];
+                if (i < j && v[i] * v[j] == i + j)
+                    ans++;
             }
         }
     }
-    cout << ans.size() << '\n';
+    cout << ans << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
