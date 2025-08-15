@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  22.04.2025
+// Date  :  15.08.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -16,55 +16,31 @@ using namespace std;
 const double eps = 1e-1;
 const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
-const int N = 1e5 + 10;
-//-----------------------------------------------------------------------------------------
-inline int normal(int a, int m)
+const int N = 1e6 + 10;
+//------------------------------(solve)----------------------------------------------------
+set<int> st;
+void ss()
 {
-    a = a - (a / m) * m;
-    if (a < 0)
-        a += m;
-    return a;
-}
-inline int modadd(int a, int b, int m)
-{
-    a = normal(a, m), b = normal(b, m);
-    return normal(a + b, m);
-}
-inline int modsub(int a, int b, int m)
-{
-    a = normal(a, m), b = normal(b, m);
-    return normal(a - b, m);
-}
-inline int modmul(int a, int b, int m)
-{
-    a = normal(a, m), b = normal(b, m);
-    return normal(a * b, m);
-}
-inline int binexpo(int a, int b, int m)
-{
-    int ans = 1;
-    a = normal(a, m);
-    while (b)
+    for (int i = 0; i <= 5000; i++)
     {
-        if (b & 1)
-            ans = modmul(ans, a, m);
-        a = modmul(a, a, m);
-        b >>= 1;
+        if (i * 2020 > N)
+            break;
+        for (int j = 0; j <= 5000; j++)
+        {
+            if (2020 * i + 2021 * j >= N)
+                break;
+            st.insert(2020 * i + 2021 * j);
+        }
     }
-    return normal(ans, m);
 }
-inline int moddiv(int a, int b, int m)
-{
-    return normal(modmul(a, binexpo(b, m - 2, m), m), m);
-}
-//-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    int n, x;
-    cin >> n >> x;
-    n--;
-    int ans = modadd(modmul(modsub(binexpo(2, n, MOD), 1, MOD), x, MOD), x, MOD);
-    cout << ans << '\n';
+    int n;
+    cin >> n;
+    if (st.find(n) != st.end())
+        cout << "YES\n";
+    else
+        cout << "NO\n";
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -74,6 +50,7 @@ signed main()
     cin.tie(NULL);
     int test = 1, T;
     cin >> test;
+    ss();
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";

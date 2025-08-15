@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  22.04.2025
+// Date  :  15.08.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -17,21 +17,29 @@ const double eps = 1e-1;
 const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
 const int N = 1e5 + 10;
-//-----------------------------------------------------------------------------------------
+//------------------------------(solve)----------------------------------------------------
 void solve(void)
 {
-    int n, m;
-    cin >> n >> m;
-    cout << "W";
-    for (int i = 1; i < m; i++)
-        cout << "B";
-    cout << '\n';
-    for (int j = 1; j < n; j++)
+    int a, b;
+    cin >> a >> b;
+    int ans = INT_MAX;
+    int cnt = 0;
+    for (int i = b; i <= b + 1000; i++)
     {
-        for (int i = 0; i < m; i++)
-            cout << "B";
-        cout << '\n';
+        if (i > 1)
+        {
+            int cc = 0, x = a;
+            while (x > 0)
+            {
+                x /= i;
+                cc++;
+            }
+            ans = min(ans, cnt + cc);
+        }
+        cnt++;
     }
+
+    cout << ans << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()

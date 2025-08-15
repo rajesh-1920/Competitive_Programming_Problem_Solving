@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  22.04.2025
+// Date  :  15.08.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -17,20 +17,39 @@ const double eps = 1e-1;
 const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
 const int N = 1e5 + 10;
-//-----------------------------------------------------------------------------------------
+//------------------------------(solve)----------------------------------------------------
 void solve(void)
 {
-    int n, a, b, c, d;
-    cin >> n >> a >> b >> c >> d;
-    for (int i = c - d; i <= c + d; i++)
+    int A, B, n;
+    cin >> A >> B >> n;
+    vector<pair<int, int>> v(n);
+    for (auto &it : v)
+        cin >> it.fi;
+    for (auto &it : v)
+        cin >> it.sc;
+
+    for (int i = 0; i < n; i++)
     {
-        if (i >= (a - b) * n && i <= (a + b) * n)
+        int t = v[i].sc / A;
+        if (v[i].sc % A)
+            t++;
+        B -= (v[i].fi * t);
+    }
+
+    for (int i = 0; i < n; i++)
+    {
+        B += v[i].fi;
+        if (B > 0)
         {
-            cout << "Yes\n";
+            cout << "YES\n";
             return;
         }
+        B -= v[i].fi;
     }
-    cout << "No\n";
+    if (B == 0)
+        cout << "YES\n";
+    else
+        cout << "NO\n";
 }
 //-----------------------------------------------------------------------------------------
 signed main()

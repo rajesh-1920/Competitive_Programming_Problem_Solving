@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  22.04.2025
+// Date  :  15.08.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -17,59 +17,15 @@ const double eps = 1e-1;
 const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
 const int N = 1e5 + 10;
-//-----------------------------------------------------------------------------------------
+//------------------------------(solve)----------------------------------------------------
 void solve(void)
 {
-    int n;
-    cin >> n;
-    vector<int> v, t;
-    while (n)
-    {
-        if (n & 1)
-            v.push_back(1);
-        else
-            v.push_back(0);
-        n >>= 1;
-        // cout << v.back() << ' ';
-    }
-    v.push_back(0);
-    v.push_back(0);
-    int ans = 0, f = 1, pos;
-    for (int i = 0; i < v.size(); i++)
-    {
-        if (v[i] == 1)
-        {
-            pos = i;
-            ans += f;
-            break;
-        }
-        f <<= 1;
-    }
-    for (int i = pos + 1; i < v.size(); i++)
-    {
-        if (v[i] == 1)
-        {
-            // dbg(ans);
-            cout << ans << '\n';
-            return;
-        }
-    }
-    f = 1;
-    for (int i = 0; i < v.size(); i++)
-    {
-        // cout << v[i] << ' ';
-        if (i == pos)
-        {
-            f <<= 1;
-            continue;
-        }
-        if (v[i] == 0)
-        {
-            ans += f;
-            break;
-        }
-    }
-    cout << ans << '\n';
+    int n, m;
+    cin >> n >> m;
+    if (n % 2 == m % 2)
+        cout << "Tonya\n";
+    else
+        cout << "Burenka\n";
 }
 //-----------------------------------------------------------------------------------------
 signed main()

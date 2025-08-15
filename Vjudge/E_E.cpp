@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  22.04.2025
+// Date  :  15.08.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -16,36 +16,25 @@ using namespace std;
 const double eps = 1e-1;
 const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
-const int N = 1e5 + 10;
-//-----------------------------------------------------------------------------------------
+const int N = 1e3 + 10;
+//------------------------------(solve)----------------------------------------------------
+vector<int> v(N, -1);
+int ok(int n, int &p6, int &p8, int &p12)
+{
+    if (n <= 0)
+        return 0;
+    if (v[n] != -1)
+        return v[n];
+    int ans = ok(n - 6, p6, p8, p12) + p6;
+    ans = min(ans, ok(n - 8, p6, p8, p12) + p8);
+    ans = min(ans, ok(n - 12, p6, p8, p12) + p12);
+    return v[n] = ans;
+}
 void solve(void)
 {
-    int n;
-    cin >> n;
-    if (n == 1)
-        cout << -1 << '\n';
-    else
-    {
-        int s = 3;
-        vector<int> v;
-        v.push_back(3);
-        for (int i = 1; i < n; i++)
-        {
-            if ((s + 2) % 3)
-            {
-                v.push_back(2);
-                s += 2;
-            }
-            else
-            {
-                v.push_back(3);
-                s += 3;
-            }
-        }
-        for (int i = n - 1; i >= 0; i--)
-            cout << v[i];
-        cout << '\n';
-    }
+    int n, p6, p8, p12;
+    cin >> n >> p6 >> p8 >> p12;
+    cout << ok(n, p6, p8, p12) << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -54,7 +43,7 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    cin >> test;
+    // cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";

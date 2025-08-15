@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  22.04.2025
+// Date  :  15.08.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -17,33 +17,48 @@ const double eps = 1e-1;
 const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
 const int N = 1e5 + 10;
-//-----------------------------------------------------------------------------------------
+//------------------------------(solve)----------------------------------------------------
 void solve(void)
 {
-    int n, k;
-    cin >> n >> k;
-    map<int, int> mp;
+    int n;
+    cin >> n;
     vector<int> v(n);
-    for (auto &it : v)
+    multiset<int> temp;
+    set<int> st;
+    for (int i = 0; i < n; i++)
     {
-        cin >> it;
-        mp[it % k]++;
+        cin >> v[i];
+        while (v[i] > n)
+            v[i] /= 2;
+        temp.insert(v[i]);
     }
-    int ans = 0;
-    for (int i = 1; i <= k; i++)
+    for (int i = 1; i <= n; i++)
     {
-        int t = k - i;
-        if (t < i)
-            break;
-        if (i == t)
-            ans += mp[i] / 2;
-        else
-            ans += min(mp[i], mp[t]);
+        st.insert(i);
+        if (temp.find(i) != temp.end())
+        {
+            temp.erase(temp.find(i));
+            st.erase(i);
+        }
     }
-    int t = mp[0];
-    t /= 2;
-    ans += t;
-    cout << ans * 2 << '\n';
+    while (st.size() && temp.size())
+    {
+        int t = *temp.begin();
+        temp.erase(temp.begin());
+        while (t)
+        {
+            if (st.find(t) != st.end())
+            {
+                st.erase(t);
+                break;
+            }
+            t /= 2;
+        }
+    }
+    if (st.size() == 0)
+        cout << "YES\n";
+    else
+        cout << "NO\n";
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -52,7 +67,7 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    // cin >> test;
+    cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";

@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  30.05.2025
+// Date  :  15.08.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -14,36 +14,32 @@ using namespace std;
 #define rall(s) s.rbegin(), s.rend()
 
 const double eps = 1e-1;
-const int inf = 9e9 + 7;
+const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
 const int N = 1e5 + 10;
-//-----------------------------------------------------------------------------------------
-map<pair<int, int>, int> mp;
-int ok(int a1, int a2, int &b1, int &b2)
-{
-    if (a1 == b1 && a2 == b2)
-        return 0;
-    if (a2 > b2)
-        return inf;
-    if (mp.find({a1, a2}) != mp.end())
-        return mp[{a1, a2}];
-
-    int ans = inf;
-    if (a1 + 3 >= b1)
-        ans = min(ans, ok(a1 - 1, a2, b1, b2) + 1);
-    ans = min(ans, ok(a1 + 1, a2 + 1, b1, b2) + 1);
-    return mp[{a1, a2}] = ans;
-}
+//------------------------------(solve)----------------------------------------------------
 void solve(void)
 {
-    int a1, a2, b1, b2;
-    cin >> a1 >> a2 >> b1 >> b2;
-    int t = ok(a1, a2, b1, b2);
-    if (t >= inf)
-        t = -1;
-    cout << t << '\n';
-    mp[{1, 1}] = 1;
-    mp.clear();
+    string s;
+    cin >> s;
+    int mx = -1;
+    for (int i = 0; i < s.size(); i++)
+    {
+        for (int j = i + 1; j < s.size(); j++)
+        {
+            for (int t = 0;; t++)
+            {
+                if (i + t >= j - t)
+                    break;
+                if (s[i + t] != s[j - t])
+                {
+                    mx = max(mx, (j - i + 1));
+                    break;
+                }
+            }
+        }
+    }
+    cout << mx << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()

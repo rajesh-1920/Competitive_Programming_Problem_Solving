@@ -57,6 +57,8 @@ void solve(void)
         if (k >= t)
         {
             ans += 2 * t;
+
+            
             k -= t;
             if (fl == 2)
                 ans++;
