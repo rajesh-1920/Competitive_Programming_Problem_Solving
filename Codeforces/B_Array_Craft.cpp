@@ -22,9 +22,25 @@ void solve(void)
 {
     int n, x, y;
     cin >> n >> x >> y;
-    vector<int> v(n, -1);
-    for (int i = y - 1; i < x; i++)
-        v[i] = 1;
+    vector<int> v(n, 1);
+
+    int t = y - 1;
+    if (y & 1)
+        t--;
+    while (t >= 0)
+    {
+        v[t] = -1;
+        t -= 2;
+    }
+    t = x;
+    if ((n - x) & 1)
+        t--;
+    while (t < n)
+    {
+        v[t] = -1;
+        t += 2;
+    }
+
     for (auto it : v)
         cout << it << ' ';
     cout << '\n';
