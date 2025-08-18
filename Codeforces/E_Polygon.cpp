@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  10.08.2025
+// Date  :  15.08.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -20,21 +20,30 @@ const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
 void solve(void)
 {
-    int n, ans = 1;
+    int n;
     cin >> n;
-    vector<int> v(n);
-    for (auto &it : v)
+    string s[n];
+    for (auto &it : s)
         cin >> it;
     for (int i = 0; i < n; i++)
     {
-        int x;
-        cin >> x;
-        if (v[i] > x)
-            ans += v[i] - x;
+        for (int j = 0; j < n; j++)
+        {
+            if (s[i][j] == '1')
+            {
+                if (i == n - 1 || j == n - 1)
+                    continue;
+                if (s[i][j + 1] != '1' && s[i + 1][j] != '1')
+                {
+                    cout << "NO\n";
+                    return;
+                }
+            }
+        }
     }
-    cout << ans << '\n';
+    cout << "YES\n";
 }
-//-------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------
 signed main()
 {
     // cout << fixed << showpoint << setprecision(10);
