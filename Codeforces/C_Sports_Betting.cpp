@@ -22,23 +22,45 @@ void solve(void)
 {
     int n;
     cin >> n;
-    map<int, int> mp;
+
     vector<int> v(n);
     for (auto &it : v)
-    {
         cin >> it;
-        mp[it]++;
-    }
+    sort(all(v));
+    map<int, int> mp;
+    int c2 = 0;
     for (auto it : v)
     {
-        if (mp[it] >= 4 || (mp[it - 1] >= 2 && (mp[it + 1] >= 2 || mp[it] > 1)) ||
-            (mp[it + 1] >= 2 && (mp[it - 1] >= 2 || mp[it] > 1)))
+        if (mp.empty())
+            mp[it]++;
+        else
+        {
+            if (it - (*(--mp.end())).fi > 1)
+            {
+                for (auto it : mp)
+                    if (it.sc > 1)
+                        c2++;
+                mp.clear();
+            }
+            mp[it]++;
+        }
+        if (c2 >= 2)
+            mp[it] = 4;
+        else
+            c2 = 0;
+        if (mp[it] >= 4)
         {
             cout << "Yes\n";
             return;
         }
     }
-    cout << "No\n";
+    for (auto it : mp)
+        if (it.sc > 1)
+            c2++;
+    if (c2 >= 2)
+        cout << "Yes\n";
+    else
+        cout << "No\n";
 }
 //-----------------------------------------------------------------------------------------
 signed main()
