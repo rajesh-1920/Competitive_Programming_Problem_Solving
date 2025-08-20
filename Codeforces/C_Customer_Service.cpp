@@ -81,11 +81,18 @@ void solve(void)
     // }
     // cout << '\n';
 
-    for (int i = 0; i < n; i++)
+    for (int i = n - 1; i >= 0; i--)
     {
-        if (sum[0][i] != i)
-            break;
-        ans++;
+        int x = i, j = 0, t = 0;
+        while (x >= 0 && j < n)
+        {
+            if (sum[x][j] != t)
+                break;
+            x--,j++;
+            t++;
+        }
+        //dbg(t);
+        ans = max(ans, t);
     }
     cout << ans << '\n';
 
