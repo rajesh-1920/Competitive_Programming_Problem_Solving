@@ -31,9 +31,11 @@ void solve(void)
     sort(all(v));
     int need_row = v.back();
     int hate = sum % need_row;
-    if (hate + k < need_row && hate)
+    while (hate + k < need_row && hate && (need_row - v.back()) <= 1000)
+    {
         need_row++;
-
+        hate = sum % need_row;
+    }
     int ans = (sum + k) / need_row;
     cout << min(ans, n) << '\n';
 }
