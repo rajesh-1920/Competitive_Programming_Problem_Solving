@@ -1,12 +1,12 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  07.01.2025
+// Date  :  15.08.2025
 
 #include <bits/stdc++.h>
 using namespace std;
-typedef long long int ll;
 //----------------------------(definition section)-----------------------------------------
 #define dbg(x) cout << #x << " = " << x << '\n'
+#define int long long int
 #define fi first
 #define sc second
 
@@ -14,26 +14,79 @@ typedef long long int ll;
 #define rall(s) s.rbegin(), s.rend()
 
 const double eps = 1e-1;
-const ll inf = 9e15 + 7;
-const ll MOD = 1e9 + 7;
-const ll N = 1e9 + 10;
-//-----------------------------------------------------------------------------------------
+const int inf = 9e16 + 7;
+const int MOD = 1e9 + 7;
+const int N = 1e5 + 10;
+//------------------------------(solve)----------------------------------------------------
 void solve(void)
 {
-    string s;
-    cin >> s;
-    for (ll i = 1; i < s.size(); i++)
+    string s1, s2;
+    cin >> s1 >> s2;
+    string a1, a2;
+    reverse(all(s1));
+    reverse(all(s2));
+    while (s1.size() < s2.size())
+        s1.push_back('0');
+    while (s1.size() > s2.size())
+        s2.push_back('0');
+    int c = 0;
+    for (int i = 0; i < s1.size(); i++)
     {
-        if (s[i] >= s[i - 1])
+        if (c == 1)
         {
-            cout << "No\n";
+            if (s1[i] == '1' && s2[i] == '1')
+                a1.push_back('1'), c = 1;
+            else if (s1[i] == '1' || s2[i] == '1')
+                a1.push_back('0'), c = 0;
+            else
+                a1.push_back('1'), c = 0;
+        }
+        else
+        {
+            if (s1[i] == '1' && s2[i] == '1')
+                a1.push_back('0'), c = 1;
+            else if (s1[i] == '1' || s2[i] == '1')
+                a1.push_back('1');
+            else
+                a1.push_back('0');
+        }
+        if (s1[i] == '1' || s2[i] == '1')
+            a2.push_back('1');
+        else
+            a2.push_back('0');
+    }
+    if (c)
+        a1.push_back('1'), a2.push_back('0');
+
+    string ans;
+    for (int i = 0; i < a1.size(); i++)
+    {
+        if (a2[i] == '0')
+        {
+            cout << "IMPOSSIBLE\n";
             return;
         }
+        if (a1[i] == '1')
+            ans.push_back('1');
+        else
+            ans.push_back('0');
     }
-    cout << "Yes\n";
+    // reverse(all(ans));
+    int t = 0, x = 0;
+    //cout << ans << '\n';
+    for (auto it : ans)
+    {
+        if (it == '1')
+            x += t;
+        if (t == 0)
+            t++;
+        else
+            t *= 2;
+    }
+    cout << x << '\n';
 }
 //-----------------------------------------------------------------------------------------
-int main()
+signed main()
 {
     // cout << fixed << showpoint << setprecision(10);
     ios_base::sync_with_stdio(false);

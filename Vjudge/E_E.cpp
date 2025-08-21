@@ -16,25 +16,36 @@ using namespace std;
 const double eps = 1e-1;
 const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
-const int N = 1e3 + 10;
+const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
-vector<int> v(N, -1);
-int ok(int n, int &p6, int &p8, int &p12)
-{
-    if (n <= 0)
-        return 0;
-    if (v[n] != -1)
-        return v[n];
-    int ans = ok(n - 6, p6, p8, p12) + p6;
-    ans = min(ans, ok(n - 8, p6, p8, p12) + p8);
-    ans = min(ans, ok(n - 12, p6, p8, p12) + p12);
-    return v[n] = ans;
-}
 void solve(void)
 {
-    int n, p6, p8, p12;
-    cin >> n >> p6 >> p8 >> p12;
-    cout << ok(n, p6, p8, p12) << '\n';
+    int n;
+    cin >> n;
+    vector<int> v(n);
+    int c0 = 0, c1 = 0, c2 = 0;
+    for (auto &it : v)
+    {
+        cin >> it;
+        if (it % 3 == 0)
+            c0++;
+        if (it % 3 == 1)
+            c1++;
+        if (it % 3 == 2)
+            c2++;
+    }
+    int x = n / 3;
+    int mn = 0;
+    while (c0 != x || c1 != x || c2 != x)
+    {
+        if (c0 > x)
+            mn++, c0--, c1++;
+        if (c1 > x)
+            mn++, c1--, c2++;
+        if (c2 > x)
+            mn++, c2--, c0++;
+    }
+    cout << mn << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -43,7 +54,7 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    // cin >> test;
+    cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";

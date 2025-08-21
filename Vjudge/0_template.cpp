@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  07.02.2025
+// Date  :  15.08.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -17,12 +17,17 @@ const double eps = 1e-1;
 const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
 const int N = 1e5 + 10;
-//-----------------------------------------------------------------------------------------
+//------------------------------(solve)----------------------------------------------------
 void solve(void)
 {
-    int n;
+    int n, m;
     cin >> n;
-    //vector<int> v(n);for (auto &it : v) cin >> it;
+    if (n > 0)
+        cout << "Positive\n";
+    else if (n < 0)
+        cout << "Negative\n";
+    else
+        cout << "Zero\n";
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -31,7 +36,7 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-   // cin >> test;
+    // cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";

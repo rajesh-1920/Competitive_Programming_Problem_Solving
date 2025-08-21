@@ -20,11 +20,38 @@ const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
 void solve(void)
 {
-    int n;
-    cin >> n;
-    for (int i = 1; i <= n; i++)
-        cout << i * 2 << ' ';
-    cout << '\n';
+    int d, x;
+    cin >> d >> x;
+    int t = 1;
+    for (int i = 0; i < d; i++)
+        t *= 2;
+    if (x < 0)
+        x = -x;
+    if (x >= (t * 2))
+        cout << "NO\n";
+    else
+    {
+        cout << "YES ";
+        if (x == 0)
+            cout << 0 << '\n';
+        else if (x & 1)
+            cout << d + 1 << '\n';
+        else
+        {
+            int ans = d;
+            for (int i = 1; i < 62; i++)
+            {
+                int tm = 1LL << i;
+                int tt = (x - tm);
+                if (tt % (tm * 2) == 0)
+                {
+                    cout << ans << '\n';
+                    return;
+                }
+                ans--;
+            }
+        }
+    }
 }
 //-----------------------------------------------------------------------------------------
 signed main()
