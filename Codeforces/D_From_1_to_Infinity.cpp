@@ -19,10 +19,8 @@ const int MOD = 1e9 + 7;
 const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
 
-int sum(int n)
+int sum_of_all_digits(int n)
 {
-    if (n < 0)
-        return 0;
     int res = 0, p = 1;
     while (p <= n)
     {
@@ -40,17 +38,17 @@ int sum_range(int a, int b)
 {
     if (a > b)
         return 0;
-    return sum(b) - sum(a - 1);
+    return sum_of_all_digits(b) - sum_of_all_digits(a - 1);
 }
 void solve(void)
 {
     int n;
     cin >> n;
     int ans = 0, d = 1;
-    while (n > 0)
+    while (n)
     {
         int left = pow(10, d - 1);
-        int total = 9 * left * d;
+        int total = (9 * left) * d;
         if (n >= total)
         {
             ans += sum_range(left, left * 10 - 1);
@@ -59,19 +57,12 @@ void solve(void)
         else
         {
             int m = n / d;
-            if (m > 0)
-            {
-                ans += sum_range(left, left + m - 1);
-                n -= m * d;
-            }
-            if (n > 0)
-            {
-                int tmp = left + m;
-                string s = to_string(tmp);
-                for (int i = 0; i < n; i++)
-                    ans += s[i] - '0';
-                n = 0;
-            }
+            ans += sum_range(left, left + m - 1);
+            n = n % d;
+            int tmp = left + m;
+            string s = to_string(tmp);
+            for (int i = 0; i < n; i++)
+                ans += s[i] - '0';
             break;
         }
         d++;

@@ -20,25 +20,32 @@ const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
 void solve(void)
 {
-    int n;
-    cin >> n;
-
-    vector<int> p3(25, 1);
-    for (int i = 1; i < p3.size(); i++)
-        p3[i] = p3[i - 1] * 3;
-
-    int ans = 0, i = 0;
-    while (n > 0)
+    int r;
+    cin >> r;
+    // vector<int> v(n); for (auto &it : v) cin >> it;
+    // vector<vector<int>> v(110, vector<int>(110, 0));
+    r *= 2;
+    for (int ii = 1; ii <= 30; ii++)
     {
-        int d = n % 3;
-        int cost = p3[i + 1];
-        if (i > 0)
-            cost += i * p3[i - 1];
-        ans += d * cost;
-        n /= 3;
-        i++;
+        set<vector<int>> st;
+        for (int i = 3; i < ii * 2; i++)
+        {
+            int c = sqrt(ii * 4 * ii - i * i);
+            for (int j = 1; j <= c; j++)
+            {
+                int tt = sqrt(i * i + j * j);
+                if (tt * tt == i * i + j * j)
+                {
+                    // cout << i << ' ' << j << ' ' << tt << '\n';
+                    vector<int> v = {i, j, tt};
+                    sort(all(v));
+                    st.insert(v);
+                }
+            }
+        }
+        // dbg(ii);
+        cout << ii << ' ' << st.size() << '\n';
     }
-    cout << ans << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
