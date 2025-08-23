@@ -20,21 +20,15 @@ const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
 void solve(void)
 {
-    int n, q;
     string s;
-    cin >> n >> q >> s;
-    vector<int> tm(n + 5, 0), sum(n + 5, 0);
-    for (int i = 0; i < n; i++)
-    {
-        tm[i] = s[i] - 'a'+1;
-        sum[i + 1] = sum[i] + tm[i];
-    }
-    while (q--)
-    {
-        int x, y;
-        cin >> x >> y;
-        cout << sum[y] - sum[x - 1] << '\n';
-    }
+    cin >> s;
+    set<char> st;
+    for (auto it : s)
+        st.insert(it);
+    if (st.size() & 1)
+        cout << "IGNORE HIM!\n";
+    else
+        cout << "CHAT WITH HER!\n";
 }
 //-----------------------------------------------------------------------------------------
 signed main()

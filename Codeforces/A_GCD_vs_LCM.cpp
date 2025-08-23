@@ -20,21 +20,9 @@ const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
 void solve(void)
 {
-    int n, q;
-    string s;
-    cin >> n >> q >> s;
-    vector<int> tm(n + 5, 0), sum(n + 5, 0);
-    for (int i = 0; i < n; i++)
-    {
-        tm[i] = s[i] - 'a'+1;
-        sum[i + 1] = sum[i] + tm[i];
-    }
-    while (q--)
-    {
-        int x, y;
-        cin >> x >> y;
-        cout << sum[y] - sum[x - 1] << '\n';
-    }
+    int n;
+    cin >> n;
+    cout << 1 << ' ' << n - 3 << ' ' << 1 << ' ' << 1 << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -43,7 +31,7 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    // cin >> test;
+    cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";
