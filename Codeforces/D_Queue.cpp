@@ -20,37 +20,25 @@ const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
 void solve(void)
 {
-    int n, k, x;
-    cin >> n >> k >> x;
-    vector<int> v(n);
-    for (auto &it : v)
-        cin >> it;
-    sort(all(v));
+    int n;
+    cin >> n;
     multiset<int> st;
-    int pre = v.front();
-    for (int i = 1; i < n; i++)
+    for (int i = 0; i < n; i++)
     {
-        if (v[i] - pre > x)
-        {
-            int t = (v[i] - pre) / x;
-            if ((v[i] - pre) % x == 0)
-                t--;
-            st.insert(t);
-        }
-        pre = v[i];
+        int x;
+        cin >> x;
+        st.insert(x);
     }
+    int i = 0;
     while (st.size())
     {
-        int t = *st.begin();
-        if (t <= k)
-        {
-            k -= t;
-            st.erase(st.begin());
-        }
-        else
+        if (st.lower_bound(i) == st.end())
             break;
+        int t = *(st.lower_bound(i));
+        st.erase(st.lower_bound(i));
+        i += t;
     }
-    cout << st.size() + 1 << '\n';
+    cout << n - st.size() << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
