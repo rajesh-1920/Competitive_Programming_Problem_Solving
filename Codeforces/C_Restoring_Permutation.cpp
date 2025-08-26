@@ -22,10 +22,41 @@ void solve(void)
 {
     int n;
     cin >> n;
-    vector<int> v(n); for (auto &it : v) cin >> it;
-    map<int,int>mp;
-    for(auto it:v){mp[it]++;if(mp[it]==2){cout<<"YES\n";return;}}
-    cout<<"NO\n";
+    vector<int> v(n), ans(2 * n, -1);
+    for (auto &it : v)
+        cin >> it;
+    set<int> st;
+    for (int i = 1; i <= 2 * n; i++)
+    {
+        st.insert(i);
+        if (i & 1)
+            ans[i] = v[i / 2];
+    }
+    for (auto it : v)
+        if (st.find(it) != st.end())
+            st.erase(it);
+        else
+        {
+            cout << -1 << '\n';
+            return;
+        }
+    int i = 1;
+    while (st.size())
+    {
+        if (st.upper_bound(ans[i]) == st.end())
+        {
+            cout << -1 << '\n';
+            return;
+        }
+        ans[i - 1] = *(st.upper_bound(ans[i]));
+        st.erase(st.upper_bound(ans[i]));
+        if (ans[i] < ans[i - 1])
+            swap(ans[i], ans[i - 1]);
+        i += 2;
+    }
+    for (auto it : ans)
+        cout << it << ' ';
+    cout << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
