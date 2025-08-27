@@ -16,49 +16,41 @@ using namespace std;
 const double eps = 1e-1;
 const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
-const int N = 1e6 + 10;
+const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
-int aa(int x, int y, vector<int> &v)
-{
-    if (x > y)
-        swap(x, y);
-    int ans = v[y];
-    if (x)
-        ans -= v[x - 1];
-    return ans;
-}
 void solve(void)
 {
-    int n;
-    string s;
-    cin >> n >> s;
-    vector<int> v(n);
-    for (int i = 0; i < n; i++)
+    int a, b;
+    cin >> a >> b;
+    if (a && b)
     {
-        v[i] = s[i] - '0';
-        if (i)
-            v[i] += v[i - 1];
+        a++;
+        while (a--)
+            cout << '<';
+        while (b--)
+            cout << "<>";
     }
-    int ans = 0, i = 0, j = 0;
-    while (true)
+    else if (a)
     {
-        ans += aa(i, j, v);
-        if (i == j && i + 1 < n)
-        {
-            int xi = aa(i + 1, j, v), xj = aa(i, j + 1, v);
-            if (xi < xj)
-                i++;
-            else
-                j++;
-        }
-        else if (i == j)
-            break;
-        else if (i > j)
-            j++;
+        if (a == 2)
+            cout << "<=<";
         else
-            i++;
+        {
+            for (int i = 0; i < a; i++)
+                cout << "<";
+            cout << "<>";
+            cout << "=<";
+        }
     }
-    cout << ans << '\n';
+    else
+    {
+        for (int i = 2; i < b; i++)
+            cout << "<";
+        cout << ">=";
+        for (int i = 1; i < b; i++)
+            cout << ">";
+    }
+    cout << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
