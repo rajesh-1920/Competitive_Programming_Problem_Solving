@@ -1,11 +1,11 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  21.08.2025
+// Date  :  27.08.2025
 
 #include <bits/stdc++.h>
 using namespace std;
 //----------------------------(definition section)-----------------------------------------
-#define dbg(x) cout << #x << " = " << x << '\n'
+#define dbg(x) cout << #x << " = " << x << '\n';
 #define int long long int
 #define fi first
 #define sc second
@@ -22,33 +22,30 @@ void solve(void)
 {
     int n, k;
     cin >> n >> k;
-    vector<int> v(n);
-    for (auto &it : v)
-        cin >> it;
-    if (k & 1)
+    priority_queue<int> pq;
+    for (int i = 0; i < 32; i++)
+        if (n & (1 << i))
+            pq.push(i);
+    while (pq.size() < k)
     {
-        for (auto it : v)
-            if (it & 1)
-                cout << it + k << ' ';
-            else
-                cout << it << ' ';
-        cout << '\n';
+        int t = pq.top();
+        if (t == 0)
+            break;
+        pq.pop();
+        pq.push(t - 1);
+        pq.push(t - 1);
     }
+    if (pq.size() != k)
+        cout << "NO\n";
     else
     {
-       int t=k+1;
-        for (auto it : v)
+        cout << "YES\n";
+        while (pq.size())
         {
-            if (it % t)
-            {
-                int pabo = k % t;
-                int need = t - it % t;
-                cout << it + (lcm(need, pabo)/gcd(need,pabo) * k) << ' ';
-            }
-            else
-                cout << it << ' ';
+            int t = pq.top();
+            pq.pop();
+            cout << (1LL << t) << ' ';
         }
-        cout << '\n';
     }
 }
 //-----------------------------------------------------------------------------------------
@@ -58,7 +55,7 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    cin >> test;
+    // cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";
