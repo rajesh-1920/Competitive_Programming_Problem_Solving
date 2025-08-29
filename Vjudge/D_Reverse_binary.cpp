@@ -20,29 +20,27 @@ const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
 void solve(void)
 {
-    int n, k;
-    string s;
-    cin >> n >> k >> s;
-    map<char, int> mp;
-    while (k--)
+    int n, x;
+    cin >> n >> x;
+    vector<int> v;
+    while (x)
     {
-        char ch;
-        cin >> ch;
-        mp[ch]++;
+        v.push_back(x % 2);
+        x /= 2;
     }
-    int ans = 0;
-    n = 0;
-    for (auto it : s)
+    while (v.size() < n)
+        v.push_back(0);
+    while (v.size() > n)
+        v.pop_back();
+    reverse(all(v));
+    int ans = 0, t = 1;
+    for (auto it : v)
     {
-        if (mp.find(it) == mp.end())
-        {
-            ans += (n * (n + 1) / 2);
-            n = 0;
-        }
-        else
-            n++;
+        //cout << it << ' ';
+        if (it)
+            ans += t;
+        t *= 2;
     }
-    ans += (n * (n + 1) / 2);
     cout << ans << '\n';
 }
 //-----------------------------------------------------------------------------------------

@@ -1,11 +1,11 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  15.08.2025
+// Date  :  27.08.2025
 
 #include <bits/stdc++.h>
 using namespace std;
 //----------------------------(definition section)-----------------------------------------
-#define dbg(x) cout << #x << " = " << x << '\n'
+#define dbg(x) cout << #x << " = " << x << '\n';
 #define int long long int
 #define fi first
 #define sc second
@@ -16,31 +16,27 @@ using namespace std;
 const double eps = 1e-1;
 const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
-const int N = 1e6 + 10;
+const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
-set<int> st;
-void ss()
-{
-    for (int i = 0; i <= 5000; i++)
-    {
-        if (i * 2020 > N)
-            break;
-        for (int j = 0; j <= 5000; j++)
-        {
-            if (2020 * i + 2021 * j >= N)
-                break;
-            st.insert(2020 * i + 2021 * j);
-        }
-    }
-}
 void solve(void)
 {
     int n;
     cin >> n;
-    if (st.find(n) != st.end())
-        cout << "YES\n";
-    else
-        cout << "NO\n";
+    if (n == 2)
+    {
+        cout << -1 << '\n';
+        return;
+    }
+    vector<vector<int>> v(n, vector<int>(n, 0));
+    for (int i = 0; i < n; i++)
+        v[i][0] = 1, v[i][i] = 1;
+
+    for (auto it : v)
+    {
+        for (auto ii : it)
+            cout << ii;
+        cout << '\n';
+    }
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -50,7 +46,6 @@ signed main()
     cin.tie(NULL);
     int test = 1, T;
     cin >> test;
-    ss();
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";

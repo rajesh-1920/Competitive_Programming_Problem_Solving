@@ -1,11 +1,11 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  15.08.2025
+// Date  :  27.08.2025
 
 #include <bits/stdc++.h>
 using namespace std;
 //----------------------------(definition section)-----------------------------------------
-#define dbg(x) cout << #x << " = " << x << '\n'
+#define dbg(x) cout << #x << " = " << x << '\n';
 #define int long long int
 #define fi first
 #define sc second
@@ -20,38 +20,12 @@ const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
 void solve(void)
 {
-    int d, x;
-    cin >> d >> x;
-    int t = 1;
-    for (int i = 0; i < d; i++)
-        t *= 2;
-    if (x < 0)
-        x = -x;
-    if (x >= (t * 2))
-        cout << "NO\n";
+    int n;
+    cin >> n;
+    if (n > 24)
+        cout << "YES\n";
     else
-    {
-        cout << "YES ";
-        if (x == 0)
-            cout << 0 << '\n';
-        else if (x & 1)
-            cout << d + 1 << '\n';
-        else
-        {
-            int ans = d;
-            for (int i = 1; i < 62; i++)
-            {
-                int tm = 1LL << i;
-                int tt = (x - tm);
-                if (tt % (tm * 2) == 0)
-                {
-                    cout << ans << '\n';
-                    return;
-                }
-                ans--;
-            }
-        }
-    }
+        cout << "NO\n";
 }
 //-----------------------------------------------------------------------------------------
 signed main()

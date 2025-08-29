@@ -16,34 +16,40 @@ using namespace std;
 const double eps = 1e-1;
 const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
-const int N = 1e5 + 10;
+const int N = 1e6 + 10;
 //------------------------------(solve)----------------------------------------------------
+set<int> pp;
+vector<int> lp(N, -1);
+void sieve()
+{
+    pp.insert(2);
+    for (int i = 3; i < N; i += 2)
+    {
+        if (lp[i] == -1)
+        {
+            pp.insert(i);
+            for (int j = i; j < N; j += 2 * i)
+                lp[j] = i;
+        }
+    }
+}
 void solve(void)
 {
-    int n, k;
-    string s;
-    cin >> n >> k >> s;
-    map<char, int> mp;
-    while (k--)
+    int n;
+    cin >> n;
+    int s = sqrtl(n);
+    for (int i = s - 10; i <= s + 10; i++)
     {
-        char ch;
-        cin >> ch;
-        mp[ch]++;
-    }
-    int ans = 0;
-    n = 0;
-    for (auto it : s)
-    {
-        if (mp.find(it) == mp.end())
+        if (i * i == n)
         {
-            ans += (n * (n + 1) / 2);
-            n = 0;
+            if (pp.find(i) != pp.end())
+            {
+                cout << "YES\n";
+                return;
+            }
         }
-        else
-            n++;
     }
-    ans += (n * (n + 1) / 2);
-    cout << ans << '\n';
+    cout << "NO\n";
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -52,7 +58,8 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    // cin >> test;
+    cin >> test;
+    sieve();
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";

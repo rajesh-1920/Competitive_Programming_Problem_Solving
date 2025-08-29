@@ -1,11 +1,11 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  15.08.2025
+// Date  :  27.08.2025
 
 #include <bits/stdc++.h>
 using namespace std;
 //----------------------------(definition section)-----------------------------------------
-#define dbg(x) cout << #x << " = " << x << '\n'
+#define dbg(x) cout << #x << " = " << x << '\n';
 #define int long long int
 #define fi first
 #define sc second
@@ -20,25 +20,36 @@ const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
 void solve(void)
 {
-    int a, b;
-    cin >> a >> b;
-    int ans = INT_MAX;
-    int cnt = 0;
-    for (int i = b; i <= b + 1000; i++)
-    {
-        if (i > 1)
-        {
-            int cc = 0, x = a;
-            while (x > 0)
-            {
-                x /= i;
-                cc++;
-            }
-            ans = min(ans, cnt + cc);
-        }
-        cnt++;
-    }
+    int n;
+    cin >> n;
+    set<int> st;
+    vector<int> v = {1,
+                     11,
+                     111,
+                     1111,
+                     11111,
+                     111111,
+                     1111111,
+                     11111111,
+                     111111111,
+                     1111111111,
+                     11111111111,
+                     111111111111,
+                     1111111111111,
+                     11111111111111};
+    for (auto it : v)
+        for (auto ii : v)
+            for (auto i : v)
+                st.insert(i + ii + it);
 
+    int ans = 3;
+    for (auto it : st)
+    {
+        n--;
+        ans = it;
+        if (n == 0)
+            break;
+    }
     cout << ans << '\n';
 }
 //-----------------------------------------------------------------------------------------
@@ -48,7 +59,7 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    cin >> test;
+    // cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";

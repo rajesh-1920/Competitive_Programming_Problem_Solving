@@ -20,30 +20,22 @@ const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
 void solve(void)
 {
-    int n, k;
-    string s;
-    cin >> n >> k >> s;
-    map<char, int> mp;
-    while (k--)
+    int n;
+    cin >> n;
+    // vector<int> v(n); for (auto &it : v) cin >> it;
+    // vector<vector<int>> v(110, vector<int>(110, 0));
+    map<int, int> mp;
+    for (int i = -0; i < n; i++)
     {
-        char ch;
-        cin >> ch;
-        mp[ch]++;
+        int x;
+        cin >> x;
+        mp[x] = i;
     }
-    int ans = 0;
-    n = 0;
-    for (auto it : s)
-    {
-        if (mp.find(it) == mp.end())
-        {
-            ans += (n * (n + 1) / 2);
-            n = 0;
-        }
-        else
-            n++;
-    }
-    ans += (n * (n + 1) / 2);
-    cout << ans << '\n';
+    cin >> n;
+    if (mp.find(n) != mp.end())
+        cout << mp[n] << '\n';
+    else
+        cout << -1 << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -52,7 +44,7 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    // cin >> test;
+    //cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";

@@ -1,11 +1,11 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  15.08.2025
+// Date  :  27.08.2025
 
 #include <bits/stdc++.h>
 using namespace std;
 //----------------------------(definition section)-----------------------------------------
-#define dbg(x) cout << #x << " = " << x << '\n'
+#define dbg(x) cout << #x << " = " << x << '\n';
 #define int long long int
 #define fi first
 #define sc second
@@ -20,32 +20,24 @@ const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
 void solve(void)
 {
-    int n;
-    cin >> n;
-    vector<int> v(n);
-    int c0 = 0, c1 = 0, c2 = 0;
-    for (auto &it : v)
+    string s1, s2;
+    cin >> s1 >> s2;
+    sort(all(s1));
+    sort(all(s2));
+    if (s1 == "AB" || s1 == "BC" || s1 == "CD" || s1 == "DE" || s1 == "AE")
     {
-        cin >> it;
-        if (it % 3 == 0)
-            c0++;
-        if (it % 3 == 1)
-            c1++;
-        if (it % 3 == 2)
-            c2++;
+        if (s2 == "AB" || s2 == "BC" || s2 == "CD" || s2 == "DE" || s2 == "AE")
+            cout << "Yes\n";
+        else
+            cout << "No\n";
     }
-    int x = n / 3;
-    int mn = 0;
-    while (c0 != x || c1 != x || c2 != x)
+    if (s1 == "AC" || s1 == "AD" || s1 == "BD" || s1 == "BE" || s1 == "CE")
     {
-        if (c0 > x)
-            mn++, c0--, c1++;
-        if (c1 > x)
-            mn++, c1--, c2++;
-        if (c2 > x)
-            mn++, c2--, c0++;
+        if (s2 == "AC" || s2 == "AD" || s2 == "BD" || s2 == "BE" || s2 == "CE")
+            cout << "Yes\n";
+        else
+            cout << "No\n";
     }
-    cout << mn << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -54,7 +46,7 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    cin >> test;
+    // cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";

@@ -1,11 +1,11 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  15.08.2025
+// Date  :  27.08.2025
 
 #include <bits/stdc++.h>
 using namespace std;
 //----------------------------(definition section)-----------------------------------------
-#define dbg(x) cout << #x << " = " << x << '\n'
+#define dbg(x) cout << #x << " = " << x << '\n';
 #define int long long int
 #define fi first
 #define sc second
@@ -22,10 +22,10 @@ void solve(void)
 {
     int n, m;
     cin >> n >> m;
-    if (n % 2 == m % 2)
-        cout << "Tonya\n";
+    if (n == 1 && m == 1)
+        cout << 0 << '\n';
     else
-        cout << "Burenka\n";
+        cout << (n + m - 2 + min(n, m)) << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
