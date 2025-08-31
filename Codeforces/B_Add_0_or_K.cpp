@@ -36,14 +36,12 @@ void solve(void)
     }
     else
     {
-       int t=k+1;
+        int t = k + 1;
         for (auto it : v)
         {
             if (it % t)
             {
-                int pabo = k % t;
-                int need = t - it % t;
-                cout << it + (lcm(need, pabo)/gcd(need,pabo) * k) << ' ';
+                cout << it + ((it % t) * k) << ' ';
             }
             else
                 cout << it << ' ';
