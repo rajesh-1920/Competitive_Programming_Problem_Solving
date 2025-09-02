@@ -20,30 +20,21 @@ using namespace std;
 //------------------------------(solve)----------------------------------------------------
 void dfs(int i, int j, vector<vector<int>> &v, vector<vector<bool>> &vis, int &st)
 {
-    // st.insert({i, j});
     st++;
     vis[i][j] = true;
     int t = v[i][j];
     if (!(t & 1))
-    {
         if ((!(v[i][j - 1] & (1 << 2))) && vis[i][j - 1] == false)
             dfs(i, j - 1, v, vis, st);
-    }
     if (!(t & (1 << 2)))
-    {
         if ((!(v[i][j + 1] & (1))) && vis[i][j + 1] == false)
             dfs(i, j + 1, v, vis, st);
-    }
     if (!(t & (1 << 1)))
-    {
         if ((!(v[i + 1][j] & (1 << 3))) && vis[i + 1][j] == false)
             dfs(i + 1, j, v, vis, st);
-    }
     if (!(t & (1 << 3)))
-    {
         if ((!(v[i - 1][j] & (1 << 1))) && vis[i - 1][j] == false)
             dfs(i - 1, j, v, vis, st);
-    }
 }
 void solve(void)
 {
