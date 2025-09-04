@@ -20,22 +20,139 @@ const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
 void solve(void)
 {
-    int n, x;
+    int n;
     cin >> n;
-    int c0 = 0, c1 = 0, c2 = 0, ans = 0;
-    while (n--)
+    vector<int> v(n);
+    for (auto &it : v)
+        cin >> it;
+
+    int ans = 0, p1 = 0, p2 = 0;
+    while (p2 < n)
     {
-        cin >> x;
-        if (x == 0)
-            c0++;
-        else if (x == 1)
-            c1++;
-        else if (x == 2)
-            c2++;
+        if (v[p2] == 2 && v[p1] == 1)
+        {
+            int lc0 = 0, mc0 = 0, rc0 = 0;
+            for (int i = p1 + 1; i < p2; i++)
+                if (v[i])
+                {
+                    mc0 = -1;
+                    break;
+                }
+                else
+                    mc0++;
+            if (mc0 == -1)
+            {
+                p1++;
+                continue;
+            }
+            for (int i = p2 + 1; i < n; i++)
+                if (v[i])
+                    break;
+                else
+                    rc0++;
+            for (int i = p1 - 1; i >= 0; i--)
+                if (v[i])
+                    break;
+                else
+                    lc0++;
+            if (mc0)
+                ans += (rc0 + 1) * (lc0 + 1);
+            else if (lc0)
+                ans += lc0 * (rc0 + 1);
+            else if (rc0)
+                ans += rc0 * (lc0 + 1);
+            p1++, p2++;
+        }
+        else if (v[p2] == 2 && p1 < p2)
+            p1++;
         else
-            ans += c1 * c2 * c0, c0 = c1 = c2 = 0;
+            p2++;
     }
-    ans += c1 * c2 * c0;
+
+    p1 = p2 = 0;
+    while (p2 < n)
+    {
+        if (v[p2] == 1 && v[p1] == 2)
+        {
+            int lc0 = 0, mc0 = 0, rc0 = 0;
+            for (int i = p1 + 1; i < p2; i++)
+                if (v[i])
+                {
+                    mc0 = -1;
+                    break;
+                }
+                else
+                    mc0++;
+            if (mc0 == -1)
+            {
+                p1++;
+                continue;
+            }
+            for (int i = p2 + 1; i < n; i++)
+                if (v[i])
+                    break;
+                else
+                    rc0++;
+            for (int i = p1 - 1; i >= 0; i--)
+                if (v[i])
+                    break;
+                else
+                    lc0++;
+            if (mc0)
+                ans += (rc0 + 1) * (lc0 + 1);
+            else if (lc0)
+                ans += lc0 * (rc0 + 1);
+            else if (rc0)
+                ans += rc0 * (lc0 + 1);
+            p1++, p2++;
+        }
+        else if (v[p2] == 1 && p1 < p2)
+            p1++;
+        else
+            p2++;
+    }
+    p1 = p2 = 0;
+    while (p2 < n)
+    {
+        if (v[p2] == 1 && v[p1] == 1 && p1 != p2)
+        {
+            int lc0 = 0, mc0 = 0, rc0 = 0;
+            for (int i = p1 + 1; i < p2; i++)
+                if (v[i])
+                {
+                    mc0 = -1;
+                    break;
+                }
+                else
+                    mc0++;
+            if (mc0 == -1)
+            {
+                p1++;
+                continue;
+            }
+            for (int i = p2 + 1; i < n; i++)
+                if (v[i])
+                    break;
+                else
+                    rc0++;
+            for (int i = p1 - 1; i >= 0; i--)
+                if (v[i])
+                    break;
+                else
+                    lc0++;
+            if (mc0)
+                ans += (rc0 + 1) * (lc0 + 1);
+            else if (lc0)
+                ans += lc0 * (rc0 + 1);
+            else if (rc0)
+                ans += rc0 * (lc0 + 1);
+            p1++, p2++;
+        }
+        else if (v[p2] == 1 && p1 < p2)
+            p1++;
+        else
+            p2++;
+    }
     cout << ans << '\n';
 }
 //-----------------------------------------------------------------------------------------
