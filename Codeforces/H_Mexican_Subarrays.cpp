@@ -31,7 +31,7 @@ void solve(void)
     {
         if (v[p2] == 2 && v[p1] == 1)
         {
-            int lc0 = 0, mc0 = 0, rc0 = 0;
+            int lc0 = 1, mc0 = 0, rc0 = 1;
             for (int i = p1 + 1; i < p2; i++)
                 if (v[i])
                 {
@@ -55,12 +55,9 @@ void solve(void)
                     break;
                 else
                     lc0++;
-            if (mc0)
-                ans += (rc0 + 1) * (lc0 + 1);
-            else if (lc0)
-                ans += lc0 * (rc0 + 1);
-            else if (rc0)
-                ans += rc0 * (lc0 + 1);
+            ans += rc0 * lc0;
+            if (mc0 == 0)
+                ans--;
             p1++, p2++;
         }
         else if (v[p2] == 2 && p1 < p2)
@@ -74,7 +71,7 @@ void solve(void)
     {
         if (v[p2] == 1 && v[p1] == 2)
         {
-            int lc0 = 0, mc0 = 0, rc0 = 0;
+            int lc0 = 1, mc0 = 0, rc0 = 1;
             for (int i = p1 + 1; i < p2; i++)
                 if (v[i])
                 {
@@ -98,12 +95,9 @@ void solve(void)
                     break;
                 else
                     lc0++;
-            if (mc0)
-                ans += (rc0 + 1) * (lc0 + 1);
-            else if (lc0)
-                ans += lc0 * (rc0 + 1);
-            else if (rc0)
-                ans += rc0 * (lc0 + 1);
+            ans += rc0 * lc0;
+            if (mc0 == 0)
+                ans--;
             p1++, p2++;
         }
         else if (v[p2] == 1 && p1 < p2)
@@ -116,7 +110,7 @@ void solve(void)
     {
         if (v[p2] == 1 && v[p1] == 1 && p1 != p2)
         {
-            int lc0 = 0, mc0 = 0, rc0 = 0;
+            int lc0 = 1, mc0 = 0, rc0 = 1;
             for (int i = p1 + 1; i < p2; i++)
                 if (v[i])
                 {
@@ -140,12 +134,9 @@ void solve(void)
                     break;
                 else
                     lc0++;
-            if (mc0)
-                ans += (rc0 + 1) * (lc0 + 1);
-            else if (lc0)
-                ans += lc0 * (rc0 + 1);
-            else if (rc0)
-                ans += rc0 * (lc0 + 1);
+            ans += rc0 * lc0;
+            if (mc0 == 0)
+                ans--;
             p1++, p2++;
         }
         else if (v[p2] == 1 && p1 < p2)
