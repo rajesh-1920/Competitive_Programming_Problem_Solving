@@ -6,7 +6,7 @@
 using namespace std;
 //----------------------------(definition section)-----------------------------------------
 #define dbg(x) cout << #x << " = " << x << '\n';
-#define int long long int
+// #define int long long int
 #define fi first
 #define sc second
 
@@ -23,7 +23,7 @@ void solve(void)
     int n, c0 = 0, c1 = 0, g = 0;
     cin >> n;
     vector<int> v(n);
-    set<int> st;
+    unordered_set<int> st;
     for (int i = 0; i < n; i++)
     {
         if (n % (i + 1) == 0)
@@ -37,48 +37,39 @@ void solve(void)
     }
     if (c0 == 0 || c1 == 0 || g > 1)
         cout << st.size() << '\n';
-    else if (n & 1)
-        cout << 1 << '\n';
     else
     {
-        int mx = 0;
-        for (int i = 0; i < (n / 2); i++)
-            mx = max(mx, (abs(v[i] - v[n / 2 + i])));
-        for (int i = 2; i * i <= mx + 5; i++)
+        unordered_set<int> ans;
+        for (auto it : st)
         {
-            if (mx % i == 0)
-            {
-                int fl = 1;
-                for (int j = 0; j < n / 2; j++)
+            int mx = 0;
+            for (int i = 0; i < it; i++)
+                for (int k = i; k + it < n; k += it)
+                    mx = max(mx, (abs(v[k] - v[k + it])));
+            if (mx == 0)
+                ans.insert(it);
+            for (int ii = 1; ii * ii <= mx; ii++)
+                if (mx % ii == 0)
                 {
-                    if (v[j] % i != v[n / 2 + j] % i)
+                    int fl = 1, f = 1;
+                    for (int i = 0; i < it; i++)
+                        for (int k = i; k + it < n; k += it)
+                        {
+                            if (v[k] % ii != v[k + it] % ii)
+                                fl = 0;
+                            if (v[k] % (mx / ii) != v[k + it] % (mx / ii))
+                                f = 0;
+                            if (f + fl == 0)
+                                break;
+                        }
+                    if ((fl && ii > 1) || (f && mx / ii > 1))
                     {
-                        fl = 0;
+                        ans.insert(it);
                         break;
                     }
                 }
-                if (fl)
-                {
-                    cout << 2 << '\n';
-                    return;
-                }
-                fl = 1;
-                for (int j = 0; j < n / 2; j++)
-                {
-                    if (v[j] % (mx / i) != v[n / 2 + j] % (mx / i))
-                    {
-                        fl = 0;
-                        break;
-                    }
-                }
-                if (fl)
-                {
-                    cout << 2 << '\n';
-                    return;
-                }
-            }
         }
-        cout << 1 << '\n';
+        cout << ans.size() << '\n';
     }
 }
 //-----------------------------------------------------------------------------------------
