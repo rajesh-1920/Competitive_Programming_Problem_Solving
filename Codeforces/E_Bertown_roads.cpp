@@ -33,24 +33,32 @@ void dfs(int n, int &t, vector<int> g[], vector<int> &vis, set<pair<int, int>> &
         dfs(it, t, g, vis, st, intime, ans);
     }
 }
-
+void dfs1(int n, stack<int> &stc, vector<int> g[], vector<int> &vis)
+{
+    vis[n] = 1;
+    for (auto it : g[n])
+    {
+        if (!vis[it])
+            dfs1(it, stc, g, vis);
+    }
+    stc.push(n);
+}
 void solve(void)
 {
     int n, m;
     cin >> n >> m;
     vector<int> g[n + 5], vis(n + 5, 0), intime(n + 5, 0);
-    set<pair<int, int>> st, stt;
+    set<pair<int, int>> st;
     for (int i = 0; i < m; i++)
     {
         int x, y;
         cin >> x >> y;
         st.insert({min(x, y), max(x, y)});
-        stt.insert({min(x, y), max(x, y)});
         g[x].push_back(y);
         g[y].push_back(x);
     }
     int t = 0;
-    vector<pair<int, int>> ans, anss;
+    vector<pair<int, int>> ans;
     dfs(1, t, g, vis, st, intime, ans);
     for (auto it : st)
     {
@@ -59,23 +67,36 @@ void solve(void)
         else
             ans.push_back({it.sc, it.fi});
     }
-    int mx = 0, p = 1;
-    for (int i = 1; i <= n; i++)
-        if (mx < intime[i])
-            mx = intime[i], p = i;
-
-    vector<int> gg[n + 5], viss(n + 5, 0), intimee(n + 5, 0);
+    vector<int> dic[n + 5], rev[n + 5], vi1(n + 5, 0), vi2(n + 5, 0);
     for (auto it : ans)
-        gg[it.fi].push_back(it.sc);
-    t = 0;
-    dfs(p, t, gg, viss, stt, intimee, anss);
-    // for (int i = 1; i <= n; i++)
-    //     cout << intimee[i] << ' ';
-    if (intimee[1] != mx)
-        cout << 0 << '\n';
-    else
-        for (auto it : ans)
-            cout << it.fi << ' ' << it.sc << '\n';
+    {
+        dic[it.fi].push_back(it.sc);
+        rev[it.sc].push_back(it.fi);
+    }
+    stack<int> stc, tttt;
+    for (int i = 1; i <= n; i++)
+    {
+        if (!vi1[i])
+            dfs1(i, stc, dic, vi1);
+    }
+    int cnt = 0;
+    while (!stc.empty())
+    {
+        int x = stc.top();
+        stc.pop();
+        if (!vi2[x])
+        {
+            cnt++;
+            dfs1(x, tttt, rev, vi2);
+        }
+        if (cnt > 1)
+        {
+            cout << 0 << '\n';
+            return;
+        }
+    }
+    for (auto it : ans)
+        cout << it.fi << ' ' << it.sc << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
