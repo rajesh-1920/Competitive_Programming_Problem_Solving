@@ -6,7 +6,7 @@
 using namespace std;
 //----------------------------(definition section)-----------------------------------------
 #define dbg(x) cout << #x << " = " << x << '\n';
-// #define int long long int
+#define int long long int
 #define fi first
 #define sc second
 
@@ -20,25 +20,14 @@ const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
 void solve(void)
 {
-    int n, c0 = 0, c1 = 0, g = 0;
+    int n;
     cin >> n;
-    vector<int> v(n);
-    unordered_set<int> st;
-    for (int i = 0; i < n; i++)
+    int ans = 1;
+    while (n)
     {
-        if (n % (i + 1) == 0)
-            st.insert(i + 1), st.insert(n / (i + 1));
-        cin >> v[i];
-    }
-    int ans = 0;
-    for (auto it : st)
-    {
-        int mx = 0;
-        for (int i = 0; i < it; i++)
-            for (int k = i; k + it < n; k += it)
-                mx = gcd(mx, (abs(v[k] - v[k + it])));
-        if (mx != 1)
-            ans++;
+        int t = n % 10 + 1;
+        n /= 10;
+        ans = ans * (t * (t + 1) / 2);
     }
     cout << ans << '\n';
 }
