@@ -18,28 +18,81 @@ const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
 const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
+struct stc
+{
+    int vl, l, r;
+    bool operator<(const stc &other) const
+    {
+        if (vl == other.vl)
+            return l < other.l;
+        return vl < other.vl;
+    }
+};
 void solve(void)
 {
     int n;
     string s;
     cin >> s >> n;
-    priority_queue<pair<char, int>> pq;
     int sz = s.size(), t = s.size() - 1;
+
+    set<int> st;
+    priority_queue<stc> pq;
     for (int i = 0; i < sz; i++)
-        pq.push({s[i], -i});
-    int cnt = 0;
+    {
+        st.insert(i);
+        if (i + 1 < n)
+        {
+            stc x;
+            x.l = -i, x.r = -i - 1;
+            if (s[i + 1] < s[i])
+                x.vl = 1;
+            else
+                x.vl = 0;
+            pq.push(x);
+        }
+    }
     while (n > sz)
     {
         sz += t;
         t--;
-        cnt++;
-    }
-    while (cnt)
-    {
-        s[-pq.top().sc] = '*';
+        stc x = pq.top();
         pq.pop();
-        cnt--;
+        int l = -x.l, r = -x.r;
+        if (x.vl)
+        {
+            s[l] = '*';
+            st.erase(l);
+            auto it = st.lower_bound(l);
+            if (it != st.begin())
+            {
+                it--;
+                l = *it;
+                x.l = -l;
+                if (s[l] > s[r])
+                    x.vl = 1;
+                else
+                    x.vl = 0;
+                pq.push(x);
+            }
+        }
+        else
+        {
+            s[r] = '*';
+            st.erase(r);
+            auto it = st.lower_bound(r);
+            if (it != st.end())
+            {
+                r = *it;
+                x.r = -r;
+                if (s[l] > s[r])
+                    x.vl = 1;
+                else
+                    x.vl = 0;
+                pq.push(x);
+            }
+        }
     }
+
     t = sz - n;
     int x = s.size() - 1;
     while (t)
