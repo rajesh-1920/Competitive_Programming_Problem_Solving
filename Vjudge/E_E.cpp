@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  27.08.2025
+// Date  :  28.08.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -20,23 +20,39 @@ const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
 void solve(void)
 {
-    string s1, s2;
-    cin >> s1 >> s2;
-    sort(all(s1));
-    sort(all(s2));
-    if (s1 == "AB" || s1 == "BC" || s1 == "CD" || s1 == "DE" || s1 == "AE")
+    int n, m;
+    cin >> n >> m;
+    vector<vector<int>> v(n, vector<int>(m));
+    for (auto &it : v)
+        for (auto &ii : it)
+            cin >> ii;
+
+    priority_queue<int> pq;
+    int c0 = 0, c1 = 0, c2 = 0, c3 = 0, c = n * m;
+    for (int j = 0; j + 1 < m; j++)
     {
-        if (s2 == "AB" || s2 == "BC" || s2 == "CD" || s2 == "DE" || s2 == "AE")
-            cout << "Yes\n";
-        else
-            cout << "No\n";
+
+        for (int i = 0; i < n; i++)
+        {
+            int x = v[i][j];
+            c0 += (x & (1)) != 0;
+            c1 += (x & (1 << 1)) != 0;
+            c2 += (x & (1 << 2)) != 0;
+            c3 += (x & (1 << 3)) != 0;
+        }
+        int y = min({c0, c1, c2, c3});
+        c0 -= y;
+        c1 -= y;
+        c2 -= y;
+        c3 -= y;
+        c -= y * y;
+        pq.push(y * y);
     }
-    if (s1 == "AC" || s1 == "AD" || s1 == "BD" || s1 == "BE" || s1 == "CE")
+    pq.push(c);
+    while (!pq.empty())
     {
-        if (s2 == "AC" || s2 == "AD" || s2 == "BD" || s2 == "BE" || s2 == "CE")
-            cout << "Yes\n";
-        else
-            cout << "No\n";
+        cout << pq.top() << ' ';
+        pq.pop();
     }
 }
 //-----------------------------------------------------------------------------------------
@@ -54,3 +70,6 @@ signed main()
     }
     return 0;
 }
+
+
+

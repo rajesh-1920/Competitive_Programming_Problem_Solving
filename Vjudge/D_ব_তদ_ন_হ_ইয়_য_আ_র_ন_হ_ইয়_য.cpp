@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  28.08.2025
+// Date  :  11.09.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -20,24 +20,29 @@ const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
 void solve(void)
 {
-    int n;
-    cin >> n;
-    int ans = inf, a = inf, b = inf;
+    int n, k;
+    cin >> n >> k;
+    multiset<int> st;
     while (n--)
     {
-        int x, y;
-        cin >> x >> y;
-        if (y == 11)
-            ans = min(ans, x), a = min(x, a), b = min(x, b);
-        if (y == 1)
-            b = min(x, b);
-        if (y == 10)
-            a = min(x, a);
+        int x;
+        cin >> x;
+        st.insert(x);
     }
-    ans = min(ans, a + b);
-    if (a == inf || b == inf)
-        ans = -1;
-    cout << ans << '\n';
+    int ans = 0;
+    while (k--)
+    {
+        while (st.size() && *st.begin() <= ans)
+            st.erase(st.begin());
+        if (st.size() == 0)
+            cout << 0 << '\n';
+        else
+        {
+            cout << *st.begin() - ans << '\n';
+            ans += *st.begin()-ans;
+            //dbg(ans);
+        }
+    }
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -46,7 +51,7 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    cin >> test;
+    // cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";

@@ -20,12 +20,23 @@ const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
 void solve(void)
 {
-    int n, m;
-    cin >> n >> m;
-    if (n == 1 && m == 1)
-        cout << 0 << '\n';
-    else
-        cout << (n + m - 2 + min(n, m)) << '\n';
+    int n, k;
+    string s;
+    cin >> n >> k >> s;
+    if (n == k * 2)
+    {
+        cout << "NO\n";
+        return;
+    }
+    for (int i = 0; i < k; i++)
+    {
+        if (s[i] != s[n - i - 1])
+        {
+            cout << "NO\n";
+            return;
+        }
+    }
+    cout << "YES\n";
 }
 //-----------------------------------------------------------------------------------------
 signed main()

@@ -22,35 +22,21 @@ void solve(void)
 {
     int n;
     cin >> n;
-    set<int> st;
-    vector<int> v = {1,
-                     11,
-                     111,
-                     1111,
-                     11111,
-                     111111,
-                     1111111,
-                     11111111,
-                     111111111,
-                     1111111111,
-                     11111111111,
-                     111111111111,
-                     1111111111111,
-                     11111111111111};
-    for (auto it : v)
-        for (auto ii : v)
-            for (auto i : v)
-                st.insert(i + ii + it);
-
-    int ans = 3;
-    for (auto it : st)
+    int t = n;
+    n /= 2;
+    int x = sqrt(n);
+    if (x * x == n && t % 2 == 0)
+        cout << "YES\n";
+    else
     {
-        n--;
-        ans = it;
-        if (n == 0)
-            break;
+        int xx = t;
+        t /= 4;
+        int x = sqrt(t);
+        if (x * x == t && xx % 4 == 0)
+            cout << "YES\n";
+        else
+            cout << "NO\n";
     }
-    cout << ans << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -59,7 +45,7 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    // cin >> test;
+    cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";

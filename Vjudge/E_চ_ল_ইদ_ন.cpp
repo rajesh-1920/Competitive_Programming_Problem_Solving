@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  28.08.2025
+// Date  :  11.09.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -22,22 +22,24 @@ void solve(void)
 {
     int n;
     cin >> n;
-    int ans = inf, a = inf, b = inf;
-    while (n--)
+    vector<int> v(n);
+    for (auto &it : v)
+        cin >> it;
+    set<pair<int, int>> st;
+
+    for (int t = 1; t <= 100; t++)
     {
-        int x, y;
-        cin >> x >> y;
-        if (y == 11)
-            ans = min(ans, x), a = min(x, a), b = min(x, b);
-        if (y == 1)
-            b = min(x, b);
-        if (y == 10)
-            a = min(x, a);
+        int co = 0;
+        for (auto it : v)
+        {
+            if (it > t + 1)
+                co += it - t - 1;
+            else if (it < t - 1)
+                co += t - it - 1;
+        }
+        st.insert({co, t});
     }
-    ans = min(ans, a + b);
-    if (a == inf || b == inf)
-        ans = -1;
-    cout << ans << '\n';
+    cout << (*(st.begin())).sc << ' ' << (*(st.begin())).fi << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -46,7 +48,7 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    cin >> test;
+    // cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";

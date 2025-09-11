@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  28.08.2025
+// Date  :  27.08.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -20,24 +20,17 @@ const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
 void solve(void)
 {
-    int n;
-    cin >> n;
-    int ans = inf, a = inf, b = inf;
-    while (n--)
-    {
-        int x, y;
-        cin >> x >> y;
-        if (y == 11)
-            ans = min(ans, x), a = min(x, a), b = min(x, b);
-        if (y == 1)
-            b = min(x, b);
-        if (y == 10)
-            a = min(x, a);
-    }
-    ans = min(ans, a + b);
-    if (a == inf || b == inf)
-        ans = -1;
-    cout << ans << '\n';
+    int n, k, m;
+    cin >> n >> k >> m;
+    vector<int> v(n, -1);
+    int c = 1;
+    for (int i = n - k; i < n; i++)
+        v[i] = c++;
+    for (int i = n - k - 1; i >= 0; i--)
+        v[i] = c++;
+    for (auto &it : v)
+        cout << it << ' ';
+    cout << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()

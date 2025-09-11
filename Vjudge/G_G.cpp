@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  27.08.2025
+// Date  :  28.08.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -18,28 +18,66 @@ const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
 const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
+bool cmp(pair<int, int> a, pair<int, int> b)
+{
+    if (a.fi == b.fi)
+        return a.sc > b.sc;
+    return a.fi < b.fi;
+}
 void solve(void)
 {
-    int n = 3;
-    vector<int> v(n);
-    for (auto &it : v)
-        cin >> it;
-    sort(all(v));
-    if (v[0] != v[1] && v[1] != v[2])
-        v[0]++, v[2]--;
-    else if (v[0] != v[1])
+    int n;
+    cin >> n;
+    vector<pair<int, int>> v;
+    for (int i = 0; i < n; i++)
     {
-        v[1]--, v[2]--;
-        if (v[1] != v[0])
-            v[0]++;
+        int x;
+        cin >> x;
+        vector<int> temp(x);
+        for (auto &it : temp)
+            cin >> it;
+        int l = 0, r = inf, need = inf;
+        while (l <= r)
+        {
+            int m = (l + r) / 2;
+            int tt = m, fl = 1;
+            for (auto it : temp)
+            {
+                if (tt <= it)
+                {
+                    fl = 0;
+                    break;
+                }
+                tt++;
+            }
+            if (fl)
+                need = min(need, m), r = m - 1;
+            else
+                l = m + 1;
+        }
+        v.push_back({need, x});
     }
-    else if (v[1] != v[2])
+    sort(all(v), cmp);
+    int l = 0, r = inf, ans = inf;
+    while (l <= r)
     {
-        v[1]++, v[0]++;
-        if (v[1] != v[2])
-            v[2]--;
+        int m = (l + r) / 2;
+        int tt = m, fl = 1;
+        for (auto it : v)
+        {
+            if (tt < it.fi)
+            {
+                fl = 0;
+                break;
+            }
+            tt += it.sc;
+        }
+        if (fl)
+            ans = min(ans, m), r = m - 1;
+        else
+            l = m + 1;
     }
-    cout << v[2] - v[1] + v[2] - v[0] + v[1] - v[0] << '\n';
+    cout << ans << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()

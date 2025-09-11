@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  28.08.2025
+// Date  :  27.08.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -22,22 +22,28 @@ void solve(void)
 {
     int n;
     cin >> n;
-    int ans = inf, a = inf, b = inf;
-    while (n--)
+    vector<int> v(n);
+    for (auto &it : v)
+        cin >> it;
+    sort(all(v));
+    if (v[0] == v[1])
     {
-        int x, y;
-        cin >> x >> y;
-        if (y == 11)
-            ans = min(ans, x), a = min(x, a), b = min(x, b);
-        if (y == 1)
-            b = min(x, b);
-        if (y == 10)
-            a = min(x, a);
+        cout << "Yes\n";
+        return;
     }
-    ans = min(ans, a + b);
-    if (a == inf || b == inf)
-        ans = -1;
-    cout << ans << '\n';
+    vector<int> st;
+    for (int i = 1; i < n; i++)
+        if (v[i] % v[0] == 0)
+            st.push_back(v[i]);
+
+    sort(all(st));
+    int x = 0;
+    for (auto it : st)
+        x = gcd(it, x);
+    if (x == v[0])
+        cout << "Yes\n";
+    else
+        cout << "No\n";
 }
 //-----------------------------------------------------------------------------------------
 signed main()

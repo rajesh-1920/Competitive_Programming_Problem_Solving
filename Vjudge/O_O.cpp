@@ -20,22 +20,28 @@ const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
 void solve(void)
 {
-    int n;
-    cin >> n;
-    int ans = inf, a = inf, b = inf;
-    while (n--)
+    int n, ans = 10;
+    string s;
+    cin >> n >> s;
+    for (int c = 2; c < 8; c++)
     {
-        int x, y;
-        cin >> x >> y;
-        if (y == 11)
-            ans = min(ans, x), a = min(x, a), b = min(x, b);
-        if (y == 1)
-            b = min(x, b);
-        if (y == 10)
-            a = min(x, a);
+        for (int i = 0; i + c <= n; i++)
+        {
+            int ca = 0, cb = 0, cc = 0;
+            for (int j = i; j < i + c; j++)
+            {
+                if (s[j] == 'a')
+                    ca++;
+                if (s[j] == 'b')
+                    cb++;
+                if (s[j] == 'c')
+                    cc++;
+            }
+            if (ca > cb && ca > cc)
+                ans = min(ans, c);
+        }
     }
-    ans = min(ans, a + b);
-    if (a == inf || b == inf)
+    if (ans == 10)
         ans = -1;
     cout << ans << '\n';
 }

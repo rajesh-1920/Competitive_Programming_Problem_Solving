@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  28.08.2025
+// Date  :  11.09.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -18,26 +18,43 @@ const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
 const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
+bool cmp(pair<int, int> a, pair<int, int> b)
+{
+    if (a.fi == b.fi)
+        return a.sc < b.sc;
+    return a.fi > b.fi;
+}
+bool cmp1(pair<int, int> a, pair<int, int> b)
+{
+    if (a.sc == b.sc)
+        return a.fi > b.fi;
+    return a.sc < b.sc;
+}
 void solve(void)
 {
     int n;
     cin >> n;
-    int ans = inf, a = inf, b = inf;
-    while (n--)
+    vector<pair<int, int>> v(n);
+    for (auto &it : v)
+        cin >> it.fi >> it.sc;
+    int ans = 0;
+    sort(all(v), cmp);
+    sort(v.begin() + (n / 2), v.end(), cmp1);
+    for (int i = 0; i < n; i++)
     {
-        int x, y;
-        cin >> x >> y;
-        if (y == 11)
-            ans = min(ans, x), a = min(x, a), b = min(x, b);
-        if (y == 1)
-            b = min(x, b);
-        if (y == 10)
-            a = min(x, a);
+        ans += v[i].fi * i + v[i].sc * (n - i - 1);
+        // dbg(v[i].fi);
     }
-    ans = min(ans, a + b);
-    if (a == inf || b == inf)
-        ans = -1;
-    cout << ans << '\n';
+    int a1 = ans;
+    sort(all(v), cmp1);
+    sort(v.begin() + (n / 2), v.end(), cmp);
+    ans = 0;
+    for (int i = 0; i < n; i++)
+    {
+        ans += v[i].fi * i + v[i].sc * (n - i - 1);
+        // dbg(v[i].fi);
+    }
+    cout << min(a1, ans) << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -46,7 +63,7 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    cin >> test;
+    // cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";

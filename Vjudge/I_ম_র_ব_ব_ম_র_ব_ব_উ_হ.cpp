@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  28.08.2025
+// Date  :  11.09.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -14,7 +14,7 @@ using namespace std;
 #define rall(s) s.rbegin(), s.rend()
 
 const double eps = 1e-1;
-const int inf = 9e16 + 7;
+const int inf = 1e18 + 7;
 const int MOD = 1e9 + 7;
 const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
@@ -22,21 +22,27 @@ void solve(void)
 {
     int n;
     cin >> n;
-    int ans = inf, a = inf, b = inf;
-    while (n--)
+    int ans = inf, l = 0, r = inf;
+    while (l <= r)
     {
-        int x, y;
-        cin >> x >> y;
-        if (y == 11)
-            ans = min(ans, x), a = min(x, a), b = min(x, b);
-        if (y == 1)
-            b = min(x, b);
-        if (y == 10)
-            a = min(x, a);
+        int m = l + (r - l) / 2;
+        int x = n, p = 0;
+        while (x > 0)
+        {
+            p += m;
+            if (p > (n / 2))
+                break;
+            x -= m;
+            if (x <= 0)
+                break;
+            x -= (x / 10);
+        }
+        if (p > (n / 2))
+            r = m - 1, ans = min(ans, m);
+        else
+            l = m + 1;
+        // dbg(ans);
     }
-    ans = min(ans, a + b);
-    if (a == inf || b == inf)
-        ans = -1;
     cout << ans << '\n';
 }
 //-----------------------------------------------------------------------------------------
@@ -46,7 +52,7 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    cin >> test;
+    // cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";

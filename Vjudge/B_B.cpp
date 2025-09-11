@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  27.08.2025
+// Date  :  28.08.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -20,14 +20,16 @@ const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
 void solve(void)
 {
-    int n, m;
-    cin >> n >> m;
-    // vector<int> v(n); for (auto &it : v) cin >> it;
-    // vector<vector<int>> v(110, vector<int>(110, 0));
-    if (n > 8 || n * m > 500)
-        cout << "NO\n";
-    else
-        cout << "YES\n";
+    int n, a, va, b, c, vc;
+    cin >> n >> a >> va >> c >> vc >> b;
+    int vb = va;
+    for (int i = a + 1; i <= b; i++)
+    {
+        if (vb == vc)
+            break;
+        vb++;
+    }
+    cout << vb << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
