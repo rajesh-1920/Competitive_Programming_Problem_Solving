@@ -57,10 +57,12 @@ void solve(void)
         pq.push({-sz[i], {depth[i], i}});
     vector<int> ans(n + 5, 0);
     set<int> st;
+    priority_queue<pair<int, int>> pp;
     while (k--)
     {
         ans[pq.top().sc.sc] = 1;
         st.insert(pq.top().sc.sc);
+        pp.push({-depth[pq.top().sc.sc], pq.top().sc.sc});
         pq.pop();
     }
     dfs1(1, -1, v, ans);
@@ -68,7 +70,20 @@ void solve(void)
     for (int i = 1; i <= n; i++)
         if (st.find(i) == st.end())
             an += ans[i];
-    cout << an << '\n';
+    int mx = an;
+    while (pq.size())
+    {
+        int t = pp.top().sc;
+        int x = pq.top().sc.sc;
+        pp.pop();
+        pq.pop();
+        pp.push({-depth[x], x});
+        an -= depth[t];
+        an += depth[x];
+        an -= sz[x];
+        mx = max(mx, an);
+    }
+    cout << mx << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
