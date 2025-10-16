@@ -18,45 +18,49 @@ const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
 const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
-bool ok(int t, vector<int> &v, int &k)
+bool ok(int n, int m, vector<pair<int, int>> &range, vector<int> &query)
 {
-    int n = v.size();
-    for (int i = 0; i < n; i++)
+    vector<int> v(n, 0);
+    for (int i = 0; i < m; i++)
+        v[query[i] - 1] = 1;
+    for (int i = 1; i < n; i++)
+        v[i] += v[i - 1];
+    for (auto it : range)
     {
-        int cnt = 0, tar = t;
-        vector<int> temp = v;
-        for (int j = i; j < n; j++)
-        {
-            if (tar > temp[j])
-            {
-                cnt += (tar - temp[j]);
-                tar--;
-                if (cnt > k)
-                    break;
-            }
-            else
-                return true;
-        }
+        int s = 0;
+        if (it.fi == 1)
+            s += v[it.sc - 1];
+        else
+            s += v[it.sc - 1] - v[it.fi - 2];
+        int len = (it.sc - it.fi + 1);
+        len = (len + 2) / 2;
+        if (s >= len)
+            return true;
     }
     return false;
 }
 void solve(void)
 {
-    int n, k;
-    cin >> n >> k;
-    vector<int> v(n);
-    for (auto &it : v)
-        cin >> it;
-    int mx = 1, l = 1, r = MOD;
+    int n, m, q;
+    cin >> n >> m;
+    vector<pair<int, int>> range(m);
+    for (int i = 0; i < m; i++)
+        cin >> range[i].fi >> range[i].sc;
+    cin >> q;
+    vector<int> query(q);
+    for (int i = 0; i < q; i++)
+        cin >> query[i];
+
+    int ans = -1, l = 1, r = q;
     while (l <= r)
     {
-        int m = (l + r) / 2;
-        if (ok(m, v, k))
-            mx = m, l = m + 1;
+        int mid = (l + r) / 2;
+        if (ok(n, mid, range, query))
+            ans = mid, r = mid - 1;
         else
-            r = m - 1;
+            l = mid + 1;
     }
-    cout << mx << '\n';
+    cout << ans << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()

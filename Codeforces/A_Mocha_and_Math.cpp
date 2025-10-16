@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  17.10.2025
+// Date  :  11.09.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -18,45 +18,18 @@ const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
 const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
-bool ok(int t, vector<int> &v, int &k)
-{
-    int n = v.size();
-    for (int i = 0; i < n; i++)
-    {
-        int cnt = 0, tar = t;
-        vector<int> temp = v;
-        for (int j = i; j < n; j++)
-        {
-            if (tar > temp[j])
-            {
-                cnt += (tar - temp[j]);
-                tar--;
-                if (cnt > k)
-                    break;
-            }
-            else
-                return true;
-        }
-    }
-    return false;
-}
 void solve(void)
 {
-    int n, k;
-    cin >> n >> k;
-    vector<int> v(n);
-    for (auto &it : v)
-        cin >> it;
-    int mx = 1, l = 1, r = MOD;
-    while (l <= r)
+    int n;
+    cin >> n;
+    int ans = (1LL << 40) - 1;
+    while (n--)
     {
-        int m = (l + r) / 2;
-        if (ok(m, v, k))
-            mx = m, l = m + 1;
-        else
-            r = m - 1;
+        int x;
+        cin >> x;
+        ans &= x;
     }
-    cout << mx << '\n';
+    cout << ans << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
