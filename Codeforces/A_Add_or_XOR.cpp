@@ -4,7 +4,7 @@
 
 #include <bits/stdc++.h>
 using namespace std;
-//----------------------------(definition section)-----------------------------------------
+//----------------------------(definition section)-------------------------------------------
 #define dbg(x) cout << #x << " = " << x << '\n'
 #define int long long int
 #define fi first
