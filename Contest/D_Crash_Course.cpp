@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  11.09.2025
+// Date  :  18.10.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -14,35 +14,26 @@ using namespace std;
 #define rall(s) s.rbegin(), s.rend()
 
 const double eps = 1e-1;
-const int inf = 1e18 + 7;
+const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
 const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
 void solve(void)
 {
     int n;
-    cin >> n;
-    int ans = inf, l = 1, r = inf;
-    while (l <= r)
+    string s;
+    cin >> n >> s;
+    if (s.back() == 'A')
     {
-        int m = l + (r - l) / 2;
-        int x = n, p = 0;
-        while (x > 0)
-        {
-            p += min(m, x);
-            if (2 * p >= n)
-                break;
-            x -= m;
-            if (x <= 0)
-                break;
-            x -= (x / 10);
-        }
-        if (2 * p >= n)
-            r = m - 1, ans = min(ans, m);
-        else
-            l = m + 1;
+        cout << "Alice\n";
+        return;
     }
-    cout << ans << '\n';
+    int b = 0, a = 0;
+    while (s.size() && s.back() == 'B')
+        b++, s.pop_back();
+    while (s.size() && s.back() == 'A')
+        a++, s.pop_back();
+    cout << (a > b ? "Alice\n" : "Bob\n");
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -51,10 +42,10 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    // cin >> test;
+    cin >> test;
     for (T = 1; T <= test; T++)
     {
-        // cout << "Case " << T << ": ";
+        cout << "Case #" << T << ": ";
         solve();
     }
     return 0;

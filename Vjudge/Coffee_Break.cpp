@@ -14,35 +14,37 @@ using namespace std;
 #define rall(s) s.rbegin(), s.rend()
 
 const double eps = 1e-1;
-const int inf = 1e18 + 7;
+const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
 const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
 void solve(void)
 {
-    int n;
-    cin >> n;
-    int ans = inf, l = 1, r = inf;
-    while (l <= r)
+    int h, m;
+    char ch;
+    cin >> h >> ch >> m;
+    string t1 = "00", t2 = "00";
+    while (true)
     {
-        int m = l + (r - l) / 2;
-        int x = n, p = 0;
-        while (x > 0)
+        if (m == 0 && h == 0)
         {
-            p += min(m, x);
-            if (2 * p >= n)
-                break;
-            x -= m;
-            if (x <= 0)
-                break;
-            x -= (x / 10);
+            t2 = t1 = "00";
+            break;
         }
-        if (2 * p >= n)
-            r = m - 1, ans = min(ans, m);
-        else
-            l = m + 1;
+        if (h > 9 && m > 9)
+        {
+            t1 = to_string(h);
+            t2 = to_string(m);
+            if (t1[0] == t1[1] && t1[0] == t2[0] && t1[0] == t2[1])
+                break;
+        }
+        m++;
+        if (m == 60)
+            m = 0, h++;
+        if (h == 24)
+            h = 0;
     }
-    cout << ans << '\n';
+    cout << t1 << ch << t2 << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -51,7 +53,7 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    // cin >> test;
+    cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";

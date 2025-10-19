@@ -14,35 +14,42 @@ using namespace std;
 #define rall(s) s.rbegin(), s.rend()
 
 const double eps = 1e-1;
-const int inf = 1e18 + 7;
+const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
 const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
+void ok(string s, int pos, set<string> &st)
+{
+    if (pos + 2 <= s.size() - 5)
+    {
+        string t = s.substr(pos, 2);
+        reverse(all(t));
+        st.insert(t);
+        ok(s, pos + 2, st);
+    }
+    if (pos + 3 <= s.size() - 5)
+    {
+        string t = s.substr(pos, 3);
+        reverse(all(t));
+        st.insert(t);
+        ok(s, pos + 3, st);
+    }
+}
 void solve(void)
 {
-    int n;
-    cin >> n;
-    int ans = inf, l = 1, r = inf;
-    while (l <= r)
+    string s;
+    cin >> s;
+    if (s.size() < 5)
     {
-        int m = l + (r - l) / 2;
-        int x = n, p = 0;
-        while (x > 0)
-        {
-            p += min(m, x);
-            if (2 * p >= n)
-                break;
-            x -= m;
-            if (x <= 0)
-                break;
-            x -= (x / 10);
-        }
-        if (2 * p >= n)
-            r = m - 1, ans = min(ans, m);
-        else
-            l = m + 1;
+        cout << 0 << '\n';
+        return;
     }
-    cout << ans << '\n';
+    reverse(all(s));
+    set<string> st;
+    ok(s, 0, st);
+    cout << st.size() << '\n';
+    for (auto it : st)
+        cout << it << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()

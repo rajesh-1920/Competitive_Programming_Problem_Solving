@@ -18,31 +18,22 @@ const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
 const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
-bool cmp(pair<pair<int, long double>, int> a, pair<pair<int, long double>, int> b)
+bool cmp(pair<long double, int> a, pair<long double, int> b)
 {
-    if (a.fi.fi == b.fi.fi)
-    {
-        if (a.fi.sc == b.fi.sc)
-            return a.sc < b.sc;
-        return a.fi.sc > b.fi.sc;
-    }
-    return a.fi.fi > b.fi.fi;
+    if (a.fi == b.fi)
+        return a.sc < b.sc;
+    return a.fi > b.fi;
 }
 void solve(void)
 {
     int n;
     cin >> n;
-    vector<pair<pair<int, long double>, int>> v;
+    vector<pair<long double, int>> v;
     for (int i = 1; i <= n; i++)
     {
-        int x, y;
+        long double x, y;
         cin >> x >> y;
-        y = x + y;
-        int t = x / y;
-        long double xx = x % y;
-        long double yy = y;
-        long double tt = (xx / yy);
-        v.push_back({{t, tt}, i});
+        v.push_back({x / (x + y), i});
     }
     sort(all(v), cmp);
     for (auto it : v)
@@ -51,7 +42,7 @@ void solve(void)
 //-----------------------------------------------------------------------------------------
 signed main()
 {
-    cout << fixed << showpoint << setprecision(10);
+    // cout << fixed << showpoint << setprecision(10);
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
