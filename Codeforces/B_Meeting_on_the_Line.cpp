@@ -28,17 +28,19 @@ void solve(void)
     for (auto &it : t)
         cin >> it;
     double l = 0, r = MOD;
-    while (cnt--)
+    while (cnt-- && l < r)
     {
-        double m1 = l + (r - l) / 3, m2 = r - (r - l) / 3;
+        double m1 = l + (r - l) / 2;
         double t1 = 0, t2 = 0;
         for (int i = 0; i < n; i++)
         {
-            t1 = max(t1, (t[i] + max(v[i] - m1, m1 - v[i])));
-            t2 = max(t2, (t[i] + max(v[i] - m2, m2 - v[i])));
+            if (v[i] >= m1)
+                t1 = max(t1, t[i] + v[i] - m1);
+            else
+                t2 = max(t2, t[i] + m1 - v[i]);
         }
         if (t1 < t2)
-            r = m2;
+            r = m1;
         else
             l = m1;
     }
