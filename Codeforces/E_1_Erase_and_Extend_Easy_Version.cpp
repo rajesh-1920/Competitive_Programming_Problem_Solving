@@ -23,7 +23,15 @@ void solve(void)
     int n, k;
     string s;
     cin >> n >> k >> s;
-    int p = n;
+    while (s.size() <= k)
+    {
+        while (s.back() > s[0])
+            s.pop_back();
+        s += s;
+    }
+    while (s.size() > k)
+        s.pop_back();
+    cout << s << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
