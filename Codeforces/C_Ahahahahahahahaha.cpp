@@ -1,11 +1,11 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  12.05.2025
+// Date  :  19.10.2025
 
 #include <bits/stdc++.h>
 using namespace std;
 //----------------------------(definition section)-----------------------------------------
-#define dbg(x) cout << #x << " = " << x << '\n'
+#define dbg(x) cout << #x << " = " << x << '\n';
 #define int long long int
 #define fi first
 #define sc second
@@ -17,70 +17,76 @@ const double eps = 1e-1;
 const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
 const int N = 1e5 + 10;
-//-----------------------------------------------------------------------------------------
+//------------------------------(solve)----------------------------------------------------
 void solve(void)
 {
-    int n, cnt = 0;
+    int n;
     cin >> n;
-    vector<int> v(n), ans;
-    for (auto &it : v)
-    {
-        cin >> it;
-        if (it)
-            cnt++;
-    }
-    if (cnt & 1)
-        cnt--;
-    int s = 0;
+    vector<int> v(n);
+    set<int> ev, od;
     for (int i = 0; i < n; i++)
     {
+        cin >> v[i];
         if (v[i])
-        {
-            if (cnt)
-            {
-                ans.push_back(1);
-                if (ans.size() & 1)
-                    s++;
-                else
-                    s--;
-            }
-        }
-        else
-            ans.push_back(0);
-    }
-    while (s)
-    {
-        int t = 0;
-        for (int i = ans.size() - 1; i >= 0; i--)
-        {
-            if (ans[i])
-            {
-                if (s - 2 * t - 1 == 0)
-                {
-                    ans.erase(ans.begin() + i);
-                    s = 0;
-                    break;
-                }
-
-                if (i & 1)
-                    t--;
-                else
-                    t++;
-            }
+            if (i & 1)
+                od.insert(i);
             else
+                ev.insert(i);
+    }
+    for (int i = 0; i < n; i++)
+    {
+        if (i + 1 < n && v[i] == v[i + 1])
+        {
+            if (ev.find(i) != ev.end())
+                ev.erase(i);
+            if (ev.find(i + 1) != ev.end())
+                ev.erase(i + 1);
+            if (od.find(i) != od.end())
+                od.erase(i);
+            if (od.find(i + 1) != od.end())
+                od.erase(i + 1);
+            i++;
+        }
+    }
+    while (ev.size() != od.size())
+    {
+        int pos;
+        if (ev.size() > od.size())
+            pos = *ev.begin();
+        else
+            pos = *od.begin();
+        vector<int> temp;
+        for (int i = 0; i < v.size(); i++)
+            if (i != pos)
+                temp.push_back(v[i]);
+        v = temp;
+        od.clear(), ev.clear();
+        for (int i = 0; i < v.size(); i++)
+        {
+            if (v[i])
+                if (i & 1)
+                    od.insert(i);
+                else
+                    ev.insert(i);
+        }
+        for (int i = 0; i < v.size(); i++)
+        {
+            if (i + 1 < v.size() && v[i] == v[i + 1])
             {
-                if (s - 2 * t == 0)
-                {
-                    ans.erase(ans.begin() + i);
-                    s = 0;
-                    break;
-                }
+                if (ev.find(i) != ev.end())
+                    ev.erase(i);
+                if (ev.find(i + 1) != ev.end())
+                    ev.erase(i + 1);
+                if (od.find(i) != od.end())
+                    od.erase(i);
+                if (od.find(i + 1) != od.end())
+                    od.erase(i + 1);
+                i++;
             }
         }
     }
-
-    cout << ans.size() << '\n';
-    for (auto it : ans)
+    cout << v.size() << '\n';
+    for (auto it : v)
         cout << it << ' ';
     cout << '\n';
 }
