@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  28.08.2025
+// Date  :  31.10.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -20,21 +20,28 @@ const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
 void solve(void)
 {
-    int n;
-    cin >> n;
-    int x = n / 2;
-    int sq = sqrtl(x);
-    if (sq * sq == x && n > 1 && n % 2 == 0)
-        cout << "YES\n";
-    else
+    int n, m;
+    cin >> n >> m;
+    multiset<int> st;
+    while (n--)
     {
-        x = n / 4;
-        sq = sqrtl(x);
-        if (x == sq * sq && n > 1 && n % 4 == 0)
-            cout << "YES\n";
-        else
-            cout << "NO\n";
+        int x;
+        cin >> x;
+        st.insert(x);
     }
+    vector<int> v(m);
+    for (auto &it : v)
+        cin >> it;
+    sort(all(v));
+    for (auto it : v)
+    {
+        if (st.upper_bound(it) != st.end())
+            st.erase(st.upper_bound(it));
+    }
+    if (st.size())
+        cout << "No\n";
+    else
+        cout << "Yes\n";
 }
 //-----------------------------------------------------------------------------------------
 signed main()

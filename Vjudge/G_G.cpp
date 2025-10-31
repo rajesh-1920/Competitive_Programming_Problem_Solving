@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  28.08.2025
+// Date  :  31.10.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -18,66 +18,48 @@ const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
 const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
-bool cmp(pair<int, int> a, pair<int, int> b)
-{
-    if (a.fi == b.fi)
-        return a.sc > b.sc;
-    return a.fi < b.fi;
-}
 void solve(void)
 {
-    int n;
-    cin >> n;
-    vector<pair<int, int>> v;
-    for (int i = 0; i < n; i++)
+    int x = 1, y, k;
+    cin >> y >> k;
+    int loop = 1e5, cnt = 0;
+    while (loop--)
     {
-        int x;
-        cin >> x;
-        vector<int> temp(x);
-        for (auto &it : temp)
-            cin >> it;
-        int l = 0, r = inf, need = inf;
-        while (l <= r)
+        if (cnt == k)
         {
-            int m = (l + r) / 2;
-            int tt = m, fl = 1;
-            for (auto it : temp)
-            {
-                if (tt <= it)
-                {
-                    fl = 0;
-                    break;
-                }
-                tt++;
-            }
-            if (fl)
-                need = min(need, m), r = m - 1;
-            else
-                l = m + 1;
+            cout << x << '\n';
+            return;
         }
-        v.push_back({need, x});
+        int g = gcd(x, y);
+        if (g > 1)
+            break;
+        x += g;
+        cnt++;
     }
-    sort(all(v), cmp);
-    int l = 0, r = inf, ans = inf;
-    while (l <= r)
+    if (gcd(x, y) == 1)
     {
-        int m = (l + r) / 2;
-        int tt = m, fl = 1;
-        for (auto it : v)
-        {
-            if (tt < it.fi)
-            {
-                fl = 0;
-                break;
-            }
-            tt += it.sc;
-        }
-        if (fl)
-            ans = min(ans, m), r = m - 1;
+        if (k <= y)
+            cout << k;
         else
-            l = m + 1;
+        {
+            k -= y;
+            cout << y * k + y << '\n';
+        }
+        return;
     }
-    cout << ans << '\n';
+    k -= cnt;
+    int g = gcd(x, y);
+    int t = y / g - 1;
+    if (k < t)
+    {
+        cout << x + (g * k) << '\n';
+        return;
+    }
+    else
+    {
+        k -= t;
+        cout << y * k + y << '\n';
+    }
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -86,7 +68,7 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    cin >> test;
+    // cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";
