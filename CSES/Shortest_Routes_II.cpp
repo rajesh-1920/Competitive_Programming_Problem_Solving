@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  31.10.2025
+// Date  :  13.11.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -17,41 +17,28 @@ const double eps = 1e-1;
 const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
 const int N = 1e5 + 10;
-//------------------------------(solve)----------------------------------------------------
-int ok(int n)
-{
-    if (n == 2)
-        return 1;
-    int ans = 0;
-    for (int i = 1; i <= 2*n; i++)
-    {
-        for (int j = i; j <= 2*n; j++)
-        {
-            int t = i * j;
-            if (t == i + j + (n - 2))
-            {
-                ans += (n - 1) * n;
-            }
-        }
-    }
-    return ans;
-}
+//------------------------------(solve)-----------------------------------------------------
 void solve(void)
 {
-    int n, p;
-    cin >> n >> p;
-    for (int i = 3; i <= n; i+=2)
+    int n, m, q;
+    cin >> n >> m >> q;
+    vector<vector<int>> v(n + 1, vector<int>(n + 1, inf));
+    for (int i = 0, x, y, z; i < m; i++)
     {
-        // if (i == 2)
-        //     cout << 1 % p << ' ';
-        // else if (i == 3)
-        //     cout << 6 % p << ' ';
-        // else if (i & 1)
-        //     cout << (i * (i - 1) * 2) % p << ' ';
-        // else
-        //     cout << (i * (i - 1)) % p << ' ';
-
-        cout << i << ' ' << ok(i) << '\n';
+        cin >> x >> y >> z;
+        v[x][y] = v[y][x] = min(v[x][y], z);
+    }
+    for (int i = 1; i <= n; i++)
+        v[i][i] = 0;
+    for (int k = 1; k <= n; k++)
+        for (int i = 1; i <= n; i++)
+            for (int j = 1; j <= n; j++)
+                v[i][j] = min(v[i][j], v[i][k] + v[k][j]);
+    while (q--)
+    {
+        int x, y;
+        cin >> x >> y;
+        cout << (v[x][y] == inf ? -1 : v[x][y]) << '\n';
     }
 }
 //-----------------------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  31.10.2025
+// Date  :  13.11.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -20,20 +20,49 @@ const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
 void solve(void)
 {
-    int n;
-    cin >> n;
-    vector<int> a(n), b(n);
-    multiset<pair<int, int>> sa, sb;
+    int n, m;
+    cin >> n >> m;
+    vector<vector<int>> v(n, vector<int>(m, 0));
+    for (auto &it : v)
+        for (auto &ii : it)
+            cin >> ii;
+    vector<int> row(n), col(m);
     for (int i = 0; i < n; i++)
     {
-        cin >> a[i] >> b[i];
-        sa.insert({a[i], i});
-        sb.insert({b[i], i});
+        int x = 0;
+        for (int j = 0; j < m; j++)
+            x ^= v[i][j];
+        row[i] = x;
+    }
+    for (int i = 0; i < m; i++)
+    {
+        int x = 0;
+        for (int j = 0; j < n; j++)
+            x ^= v[j][i];
+        col[i] = x;
     }
     int ans = 0;
-    while(sa.size)
-
-    cout<<ans<<'\n';
+    for (auto it : row)
+        ans += it;
+    for (auto it : col)
+        ans += it;
+    int mn = ans;
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < m; j++)
+        {
+            int x = ans - row[i] - col[j];
+            int c = col[j] ^ v[i][j];
+            int r = row[i] ^ v[i][j];
+            r ^= c;
+            mn = min(mn, x + r);
+            c = col[j] ^ v[i][j];
+            r = row[i] ^ v[i][j];
+            c ^= r;
+            mn = min(mn, x + c);
+        }
+    }
+    cout << mn << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -42,7 +71,7 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    // cin >> test;
+    cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";

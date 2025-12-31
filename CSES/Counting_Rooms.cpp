@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  19.10.2025
+// Date  :  13.11.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -16,51 +16,39 @@ using namespace std;
 const double eps = 1e-1;
 const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
-const int N = 2e5 + 10;
+const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
-void dfs(int n, int &fl, vector<int> &vis, vector<vector<int>> &v)
+void dfs(int i, int j, int &n, int &m, vector<string> &s)
 {
-    vis[n] = 1;
-    if (fl)
-        return;
-    for (auto it : v[n])
-    {
-        if (vis[it] == 1)
-            fl = 1;
-        if (fl)
-            return;
-        if (!vis[it])
-            dfs(it, fl, vis, v);
-    }
-    vis[n] = 2;
+    s[i][j] = '#';
+    if (i + 1 < n && s[i + 1][j] == '.')
+        dfs(i + 1, j, n, m, s);
+    if (i - 1 >= 0 && s[i - 1][j] == '.')
+        dfs(i - 1, j, n, m, s);
+    if (i + 1 < n && s[i + 1][j] == '.')
+        dfs(i + 1, j, n, m, s);
+    if (j - 1 >= 0 && s[i][j - 1] == '.')
+        dfs(i, j - 1, n, m, s);
+    if (j + 1 < m && s[i][j + 1] == '.')
+        dfs(i, j + 1, n, m, s);
 }
 void solve(void)
 {
-    int n, k;
-    cin >> n >> k;
-    // dbg(n);
-    vector<vector<int>> v(n + 1);
-    while (k--)
-    {
-        vector<int> temp(n);
-        for (auto &it : temp)
-            cin >> it;
-        for (int i = 2; i < n; i++)
-            v[temp[i - 1]].push_back(temp[i]);
-    }
-    vector<int> vis(n + 1, 0);
-    for (int i = 1; i <= n; i++)
-    {
-        int fl = 0;
-        if (!vis[i])
-            dfs(i, fl, vis, v);
-        if (fl)
-        {
-            cout << "NO\n";
-            return;
-        }
-    }
-    cout << "YES\n";
+    int n, m;
+    cin >> n >> m;
+    vector<string> s(n);
+    for (auto &it : s)
+        cin >> it;
+    vector<vector<int>> vis(n, vector<int>(m, 0));
+    int ans = 0;
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++)
+            if (s[i][j] == '.' && !vis[i][j])
+            {
+                ans++;
+                dfs(i, j, n, m, s);
+            }
+    cout << ans << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -69,7 +57,7 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    cin >> test;
+    // cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";

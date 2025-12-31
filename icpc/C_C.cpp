@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  19.10.2025
+// Date  :  13.11.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -16,51 +16,36 @@ using namespace std;
 const double eps = 1e-1;
 const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
-const int N = 2e5 + 10;
+const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
-void dfs(int n, int &fl, vector<int> &vis, vector<vector<int>> &v)
-{
-    vis[n] = 1;
-    if (fl)
-        return;
-    for (auto it : v[n])
-    {
-        if (vis[it] == 1)
-            fl = 1;
-        if (fl)
-            return;
-        if (!vis[it])
-            dfs(it, fl, vis, v);
-    }
-    vis[n] = 2;
-}
 void solve(void)
 {
-    int n, k;
-    cin >> n >> k;
-    // dbg(n);
-    vector<vector<int>> v(n + 1);
-    while (k--)
+    int x, y;
+    cin >> x >> y;
+    vector<pair<int, int>> v;
+    for (int i = 1; i * i <= y; i++)
     {
-        vector<int> temp(n);
-        for (auto &it : temp)
-            cin >> it;
-        for (int i = 2; i < n; i++)
-            v[temp[i - 1]].push_back(temp[i]);
+        if (y % i == 0)
+            v.push_back({i, y / i});
     }
-    vector<int> vis(n + 1, 0);
-    for (int i = 1; i <= n; i++)
+    for (auto it : v)
     {
-        int fl = 0;
-        if (!vis[i])
-            dfs(i, fl, vis, v);
-        if (fl)
+        int t1 = min(it.fi, it.sc) - 1;
+        if (t1 + t1 >= x && x >= t1)
         {
-            cout << "NO\n";
+            cout << min(it.fi, it.sc) << ' ' << max(it.fi, it.sc) << '\n';
+            cout << min(t1, x - t1) << ' ' << max(t1, x - t1) << '\n';
+            return;
+        }
+        t1 = max(it.fi, it.sc) + 1;
+        if (x >= t1 + t1)
+        {
+            cout << min(it.fi, it.sc) << ' ' << max(it.fi, it.sc) << '\n';
+            cout << min(t1, x - t1) << ' ' << max(t1, x - t1) << '\n';
             return;
         }
     }
-    cout << "YES\n";
+    cout << -1 << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()

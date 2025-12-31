@@ -1,11 +1,11 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  13.02.2025
+// Date  :  31.10.2025
 
 #include <bits/stdc++.h>
 using namespace std;
 //----------------------------(definition section)-----------------------------------------
-#define dbg(x) cout << #x << " = " << x << '\n'
+#define dbg(x) cout << #x << " = " << x << '\n';
 #define int long long int
 #define fi first
 #define sc second
@@ -16,38 +16,18 @@ using namespace std;
 const double eps = 1e-1;
 const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
-const int N = 1e6 + 10;
-//-----------------------------------------------------------------------------------------
+const int N = 1e5 + 10;
+//------------------------------(solve)----------------------------------------------------
 void solve(void)
 {
-    int n, ans = 1, mx = 0;
+    int n, ans = 0;
     cin >> n;
-    vector<int> mp(N, 0);
-    while (n--)
+    vector<int> v(n);
+    for (int i = 0; i < n; i++)
     {
-        int x;
-        cin >> x;
-        mp[x]++;
-        mx = max(mx, x);
-    }
-    for (int i = 2; i <= mx; i++)
-    {
-        int cnt = 0;
-        for (int j = i; j <= mx; j += i)
-        {
-            if (mp[j] > 1)
-            {
-                ans = max(ans, i);
-                break;
-            }
-            else if (mp[j])
-                cnt++;
-            if (cnt > 1)
-            {
-                ans = max(ans, i);
-                break;
-            }
-        }
+        cin >> v[i];
+        if (i && v[i] < v[i - 1])
+            ans += v[i - 1] - v[i], v[i] = v[i - 1];
     }
     cout << ans << '\n';
 }

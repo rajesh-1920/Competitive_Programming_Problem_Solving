@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  19.10.2025
+// Date  :  13.11.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -16,51 +16,41 @@ using namespace std;
 const double eps = 1e-1;
 const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
-const int N = 2e5 + 10;
+const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
-void dfs(int n, int &fl, vector<int> &vis, vector<vector<int>> &v)
-{
-    vis[n] = 1;
-    if (fl)
-        return;
-    for (auto it : v[n])
-    {
-        if (vis[it] == 1)
-            fl = 1;
-        if (fl)
-            return;
-        if (!vis[it])
-            dfs(it, fl, vis, v);
-    }
-    vis[n] = 2;
-}
 void solve(void)
 {
-    int n, k;
-    cin >> n >> k;
-    // dbg(n);
+    int n, m;
+    cin >> n >> m;
     vector<vector<int>> v(n + 1);
-    while (k--)
+    vector<int> in(n + 1, 0), ans;
+    for (int i = 0, x, y; i < m; i++)
     {
-        vector<int> temp(n);
-        for (auto &it : temp)
-            cin >> it;
-        for (int i = 2; i < n; i++)
-            v[temp[i - 1]].push_back(temp[i]);
+        cin >> x >> y;
+        v[x].push_back(y);
+        in[y]++;
     }
-    vector<int> vis(n + 1, 0);
+    queue<int> q;
     for (int i = 1; i <= n; i++)
+        if (in[i] == 0)
+            q.push(i);
+    while (!q.empty())
     {
-        int fl = 0;
-        if (!vis[i])
-            dfs(i, fl, vis, v);
-        if (fl)
+        int nd = q.front();
+        q.pop();
+        ans.push_back(nd);
+        for (auto it : v[nd])
         {
-            cout << "NO\n";
-            return;
+            in[it]--;
+            if (in[it] == 0)
+                q.push(it);
         }
     }
-    cout << "YES\n";
+    if (ans.size() != n)
+        cout << "IMPOSSIBLE\n";
+    else
+        for (auto it : ans)
+            cout << it << ' ';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -69,7 +59,7 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    cin >> test;
+    // cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";

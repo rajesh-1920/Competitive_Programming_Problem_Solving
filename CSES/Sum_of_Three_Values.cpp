@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  31.10.2025
+// Date  :  13.11.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -18,41 +18,42 @@ const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
 const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
-int ok(int n)
-{
-    if (n == 2)
-        return 1;
-    int ans = 0;
-    for (int i = 1; i <= 2*n; i++)
-    {
-        for (int j = i; j <= 2*n; j++)
-        {
-            int t = i * j;
-            if (t == i + j + (n - 2))
-            {
-                ans += (n - 1) * n;
-            }
-        }
-    }
-    return ans;
-}
 void solve(void)
 {
-    int n, p;
-    cin >> n >> p;
-    for (int i = 3; i <= n; i+=2)
-    {
-        // if (i == 2)
-        //     cout << 1 % p << ' ';
-        // else if (i == 3)
-        //     cout << 6 % p << ' ';
-        // else if (i & 1)
-        //     cout << (i * (i - 1) * 2) % p << ' ';
-        // else
-        //     cout << (i * (i - 1)) % p << ' ';
-
-        cout << i << ' ' << ok(i) << '\n';
-    }
+    int n, x;
+    cin >> n >> x;
+    vector<pair<int, int>> v(n);
+    for (int i = 0; i < n; i++)
+        cin >> v[i].fi, v[i].sc = i+1r;
+    sort(all(v));
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < n; j++)
+        {
+            if (i == j)
+                continue;
+            int l = 0, r = n - 1, t = x - v[i].fi - v[j].fi;
+            if (t <= 0)
+                break;
+            while (l <= r)
+            {
+                int m = (l + r) / 2;
+                if (v[m].fi > t)
+                    r = m - 1;
+                else
+                    l = m + 1;
+            }
+            for (int ii = max(0LL, l - 5); ii < n; ii++)
+            {
+                if (v[ii].fi > t)
+                    break;
+                if (v[ii].fi == t && ii != i && ii != j)
+                {
+                    cout << v[ii].sc << ' ' << v[i].sc << ' ' << v[j].sc << '\n';
+                    return;
+                }
+            }
+        }
+    cout << "IMPOSSIBLE\n";
 }
 //-----------------------------------------------------------------------------------------
 signed main()

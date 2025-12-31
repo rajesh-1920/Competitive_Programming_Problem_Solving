@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  19.10.2025
+// Date  :  13.11.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -16,51 +16,41 @@ using namespace std;
 const double eps = 1e-1;
 const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
-const int N = 2e5 + 10;
+const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
-void dfs(int n, int &fl, vector<int> &vis, vector<vector<int>> &v)
-{
-    vis[n] = 1;
-    if (fl)
-        return;
-    for (auto it : v[n])
-    {
-        if (vis[it] == 1)
-            fl = 1;
-        if (fl)
-            return;
-        if (!vis[it])
-            dfs(it, fl, vis, v);
-    }
-    vis[n] = 2;
-}
 void solve(void)
 {
     int n, k;
     cin >> n >> k;
-    // dbg(n);
-    vector<vector<int>> v(n + 1);
-    while (k--)
-    {
-        vector<int> temp(n);
-        for (auto &it : temp)
-            cin >> it;
-        for (int i = 2; i < n; i++)
-            v[temp[i - 1]].push_back(temp[i]);
-    }
-    vector<int> vis(n + 1, 0);
+    set<int> st;
     for (int i = 1; i <= n; i++)
+        st.insert(i);
+    int cnt = k + 1, p = 1 + k;
+    while (true)
     {
-        int fl = 0;
-        if (!vis[i])
-            dfs(i, fl, vis, v);
-        if (fl)
+        if (st.find(p) != st.end())
+            cout << p << ' ', st.erase(p);
+        if (st.empty())
+            break;
+        if (st.lower_bound(p + cnt) == st.end())
         {
-            cout << "NO\n";
-            return;
+            if (st.upper_bound(p) == st.end())
+            {
+                int t = *st.begin();
+                st.erase(t);
+                if (!st.empty())
+                    p = *st.begin();
+                else
+                    p = t;
+                st.insert(t);
+            }
+            else
+                p = *st.begin();
+            cnt <<= 1;
         }
+        else
+            p += cnt;
     }
-    cout << "YES\n";
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -69,7 +59,7 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    cin >> test;
+    // cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";

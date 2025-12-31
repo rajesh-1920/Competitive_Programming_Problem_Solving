@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  19.10.2025
+// Date  :  27.10.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -16,51 +16,29 @@ using namespace std;
 const double eps = 1e-1;
 const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
-const int N = 2e5 + 10;
+const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
-void dfs(int n, int &fl, vector<int> &vis, vector<vector<int>> &v)
-{
-    vis[n] = 1;
-    if (fl)
-        return;
-    for (auto it : v[n])
-    {
-        if (vis[it] == 1)
-            fl = 1;
-        if (fl)
-            return;
-        if (!vis[it])
-            dfs(it, fl, vis, v);
-    }
-    vis[n] = 2;
-}
 void solve(void)
 {
-    int n, k;
-    cin >> n >> k;
-    // dbg(n);
-    vector<vector<int>> v(n + 1);
-    while (k--)
+    string s;
+    cin >> s;
+    if (s.size() & 1)
     {
-        vector<int> temp(n);
-        for (auto &it : temp)
-            cin >> it;
-        for (int i = 2; i < n; i++)
-            v[temp[i - 1]].push_back(temp[i]);
+        cout << "NO\n";
+        return;
     }
-    vector<int> vis(n + 1, 0);
-    for (int i = 1; i <= n; i++)
+    set<int> pl, mn;
+    for (int i = 0; i < s.size(); i++)
+        s[i] == '+' ? pl.insert(i) : mn.insert(i);
+    while (pl.size() && mn.size())
     {
-        int fl = 0;
-        if (!vis[i])
-            dfs(i, fl, vis, v);
-        if (fl)
+        if (pl.size() & 1 || mn.size())
         {
             cout << "NO\n";
             return;
         }
+        int p = (*pl.begin());
     }
-    cout << "YES\n";
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -69,7 +47,7 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    cin >> test;
+    // cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";

@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  19.10.2025
+// Date  :  13.11.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -16,51 +16,39 @@ using namespace std;
 const double eps = 1e-1;
 const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
-const int N = 2e5 + 10;
+const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
-void dfs(int n, int &fl, vector<int> &vis, vector<vector<int>> &v)
+void dfs(int n, vector<int> &vis, vector<int> &tops, vector<vector<int>> &g)
 {
     vis[n] = 1;
-    if (fl)
-        return;
-    for (auto it : v[n])
-    {
-        if (vis[it] == 1)
-            fl = 1;
-        if (fl)
-            return;
+    for (auto it : g[n])
         if (!vis[it])
-            dfs(it, fl, vis, v);
-    }
-    vis[n] = 2;
+            dfs(it, vis, tops, g);
+    tops.push_back(n);
 }
 void solve(void)
 {
-    int n, k;
-    cin >> n >> k;
-    // dbg(n);
-    vector<vector<int>> v(n + 1);
-    while (k--)
+    int n;
+    cin >> n;
+    vector<vector<int>> g(n + 1);
+    for (int i = 1, u, v, x, y; i < n; i++)
     {
-        vector<int> temp(n);
-        for (auto &it : temp)
-            cin >> it;
-        for (int i = 2; i < n; i++)
-            v[temp[i - 1]].push_back(temp[i]);
+        cin >> u >> v >> x >> y;
+        if (x > y)
+            g[u].push_back(v);
+        else
+            g[v].push_back(u);
     }
-    vector<int> vis(n + 1, 0);
+    vector<int> ans, vis(n + 1, 0);
     for (int i = 1; i <= n; i++)
     {
-        int fl = 0;
         if (!vis[i])
-            dfs(i, fl, vis, v);
-        if (fl)
-        {
-            cout << "NO\n";
-            return;
-        }
+            dfs(i, vis, ans, g);
     }
-    cout << "YES\n";
+    reverse(all(ans));
+    for (auto it : ans)
+        cout << it << ' ';
+    cout << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()

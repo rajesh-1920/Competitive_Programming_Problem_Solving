@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  31.10.2025
+// Date  :  13.11.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -18,41 +18,49 @@ const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
 const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
-int ok(int n)
+void dfs(int n, vector<vector<pair<int, int>>> &v, vector<int> &mark, vector<int> &ans)
 {
-    if (n == 2)
-        return 1;
-    int ans = 0;
-    for (int i = 1; i <= 2*n; i++)
+    while (!v[n].empty())
     {
-        for (int j = i; j <= 2*n; j++)
+        auto it = v[n].back();
+        v[n].pop_back();
+        if (!mark[it.sc])
         {
-            int t = i * j;
-            if (t == i + j + (n - 2))
-            {
-                ans += (n - 1) * n;
-            }
+            mark[it.sc] = 1;
+            dfs(it.fi, v, mark, ans);
         }
     }
-    return ans;
+    ans.push_back(n);
 }
 void solve(void)
 {
-    int n, p;
-    cin >> n >> p;
-    for (int i = 3; i <= n; i+=2)
+    int n, m;
+    cin >> n >> m;
+    vector<vector<pair<int, int>>> v(n + 1);
+    vector<int> deg(n + 1, 0), mark(m, 0), ans;
+    for (int i = 0, x, y; i < m; i++)
     {
-        // if (i == 2)
-        //     cout << 1 % p << ' ';
-        // else if (i == 3)
-        //     cout << 6 % p << ' ';
-        // else if (i & 1)
-        //     cout << (i * (i - 1) * 2) % p << ' ';
-        // else
-        //     cout << (i * (i - 1)) % p << ' ';
-
-        cout << i << ' ' << ok(i) << '\n';
+        cin >> x >> y;
+        deg[x]++, deg[y]++;
+        v[x].push_back({y, i});
+        v[y].push_back({x, i});
     }
+    int cnt = 0;
+    for (int i = 1; i <= n; i++)
+        if (deg[i] & 1)
+            if (cnt)
+            {
+                cout << "IMPOSSIBLE\n";
+                return;
+            }
+            else
+                cnt++;
+    dfs(1, v, mark, ans);
+    if (ans.size() != m + 1)
+        cout << "IMPOSSIBLE\n";
+    else
+        for (auto it : ans)
+            cout << it << ' ';
 }
 //-----------------------------------------------------------------------------------------
 signed main()

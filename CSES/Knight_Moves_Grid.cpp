@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  19.10.2025
+// Date  :  31.10.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -16,51 +16,40 @@ using namespace std;
 const double eps = 1e-1;
 const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
-const int N = 2e5 + 10;
+const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
-void dfs(int n, int &fl, vector<int> &vis, vector<vector<int>> &v)
-{
-    vis[n] = 1;
-    if (fl)
-        return;
-    for (auto it : v[n])
-    {
-        if (vis[it] == 1)
-            fl = 1;
-        if (fl)
-            return;
-        if (!vis[it])
-            dfs(it, fl, vis, v);
-    }
-    vis[n] = 2;
-}
 void solve(void)
 {
-    int n, k;
-    cin >> n >> k;
-    // dbg(n);
-    vector<vector<int>> v(n + 1);
-    while (k--)
+    int n;
+    cin >> n;
+    vector<vector<int>> v(n, vector<int>(n, -1));
+    queue<pair<int, int>> q;
+    q.push({0, 0});
+    v[0][0] = 0;
+    int x[] = {2, 2, -2, -2, 1, 1, -1, -1};
+    int y[] = {1, -1, 1, -1, 2, -2, 2, -2};
+
+    while (!q.empty())
     {
-        vector<int> temp(n);
-        for (auto &it : temp)
-            cin >> it;
-        for (int i = 2; i < n; i++)
-            v[temp[i - 1]].push_back(temp[i]);
-    }
-    vector<int> vis(n + 1, 0);
-    for (int i = 1; i <= n; i++)
-    {
-        int fl = 0;
-        if (!vis[i])
-            dfs(i, fl, vis, v);
-        if (fl)
+        auto [xx, yy] = q.front();
+        q.pop();
+        for (int i = 0; i < 8; i++)
         {
-            cout << "NO\n";
-            return;
+            if (xx + x[i] >= n || xx + x[i] < 0 || yy + y[i] >= n || yy + y[i] < 0)
+                continue;
+            if (v[xx + x[i]][yy + y[i]] == -1)
+            {
+                v[xx + x[i]][yy + y[i]] = v[xx][yy] + 1;
+                q.push({xx + x[i], yy + y[i]});
+            }
         }
     }
-    cout << "YES\n";
+    for (auto it : v)
+    {
+        for (auto ii : it)
+            cout << ii << ' ';
+        cout << '\n';
+    }
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -69,7 +58,7 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    cin >> test;
+    // cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";

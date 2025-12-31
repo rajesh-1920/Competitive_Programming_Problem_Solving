@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  19.10.2025
+// Date  :  13.11.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -14,53 +14,38 @@ using namespace std;
 #define rall(s) s.rbegin(), s.rend()
 
 const double eps = 1e-1;
-const int inf = 9e16 + 7;
+const int inf = 9e17 + 7;
 const int MOD = 1e9 + 7;
-const int N = 2e5 + 10;
+const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
-void dfs(int n, int &fl, vector<int> &vis, vector<vector<int>> &v)
-{
-    vis[n] = 1;
-    if (fl)
-        return;
-    for (auto it : v[n])
-    {
-        if (vis[it] == 1)
-            fl = 1;
-        if (fl)
-            return;
-        if (!vis[it])
-            dfs(it, fl, vis, v);
-    }
-    vis[n] = 2;
-}
 void solve(void)
 {
-    int n, k;
-    cin >> n >> k;
-    // dbg(n);
-    vector<vector<int>> v(n + 1);
-    while (k--)
+    int n, m;
+    cin >> n >> m;
+    vector<vector<pair<int, int>>> g(n + 1);
+    for (int i = 0, x, y, z; i < m; i++)
     {
-        vector<int> temp(n);
-        for (auto &it : temp)
-            cin >> it;
-        for (int i = 2; i < n; i++)
-            v[temp[i - 1]].push_back(temp[i]);
+        cin >> x >> y >> z;
+        g[x].push_back({z, y});
+        g[y].push_back({z, y});
     }
-    vector<int> vis(n + 1, 0);
+    vector<int> dis(n + 1, inf), vis(n + 1, 0);
+    multiset<pair<int, int>> st;
+    dis[1] = 0;
+    st.insert({0, 1});
+    while (st.size())
+    {
+        int nd = st.begin()->sc;
+        st.erase(st.begin());
+        if (vis[nd])
+            continue;
+        vis[nd] = 1;
+        for (auto it : g[nd])
+            if (dis[it.sc] > dis[nd] + it.fi)
+                st.insert({dis[it.sc] = dis[nd] + it.fi, it.sc});
+    }
     for (int i = 1; i <= n; i++)
-    {
-        int fl = 0;
-        if (!vis[i])
-            dfs(i, fl, vis, v);
-        if (fl)
-        {
-            cout << "NO\n";
-            return;
-        }
-    }
-    cout << "YES\n";
+        cout << dis[i] << ' ';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -69,7 +54,7 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    cin >> test;
+    // cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";

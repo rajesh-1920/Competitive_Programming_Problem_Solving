@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  19.10.2025
+// Date  :  31.10.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -16,51 +16,26 @@ using namespace std;
 const double eps = 1e-1;
 const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
-const int N = 2e5 + 10;
+const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
-void dfs(int n, int &fl, vector<int> &vis, vector<vector<int>> &v)
+vector<string> ok(int n)
 {
-    vis[n] = 1;
-    if (fl)
-        return;
-    for (auto it : v[n])
-    {
-        if (vis[it] == 1)
-            fl = 1;
-        if (fl)
-            return;
-        if (!vis[it])
-            dfs(it, fl, vis, v);
-    }
-    vis[n] = 2;
+    if (n == 1)
+        return {"0", "1"};
+    vector<string> res, temp = ok(n - 1);
+    for (auto it : temp)
+        res.push_back("0" + it);
+    for (int i = temp.size() - 1; i >= 0; i--)
+        res.push_back("1" + temp[i]);
+    return res;
 }
 void solve(void)
 {
-    int n, k;
-    cin >> n >> k;
-    // dbg(n);
-    vector<vector<int>> v(n + 1);
-    while (k--)
-    {
-        vector<int> temp(n);
-        for (auto &it : temp)
-            cin >> it;
-        for (int i = 2; i < n; i++)
-            v[temp[i - 1]].push_back(temp[i]);
-    }
-    vector<int> vis(n + 1, 0);
-    for (int i = 1; i <= n; i++)
-    {
-        int fl = 0;
-        if (!vis[i])
-            dfs(i, fl, vis, v);
-        if (fl)
-        {
-            cout << "NO\n";
-            return;
-        }
-    }
-    cout << "YES\n";
+    int n;
+    cin >> n;
+    vector<string> v = ok(n);
+    for (auto it : v)
+        cout << it << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -69,7 +44,7 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    cin >> test;
+    // cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";

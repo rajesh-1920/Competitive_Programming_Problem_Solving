@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  19.10.2025
+// Date  :  13.11.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -14,53 +14,38 @@ using namespace std;
 #define rall(s) s.rbegin(), s.rend()
 
 const double eps = 1e-1;
-const int inf = 9e16 + 7;
+const int inf = 1e18 + 7;
 const int MOD = 1e9 + 7;
-const int N = 2e5 + 10;
+const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
-void dfs(int n, int &fl, vector<int> &vis, vector<vector<int>> &v)
+int ok(int tt, int &t, vector<int> &v)
 {
-    vis[n] = 1;
-    if (fl)
-        return;
-    for (auto it : v[n])
+    int s = 0;
+    for (auto it : v)
     {
-        if (vis[it] == 1)
-            fl = 1;
-        if (fl)
-            return;
-        if (!vis[it])
-            dfs(it, fl, vis, v);
+        s += tt / it;
+        if (s >= t)
+            return t;
     }
-    vis[n] = 2;
+    return s;
 }
 void solve(void)
 {
-    int n, k;
-    cin >> n >> k;
-    // dbg(n);
-    vector<vector<int>> v(n + 1);
-    while (k--)
+    int n, t;
+    cin >> n >> t;
+    vector<int> v(n);
+    for (auto &it : v)
+        cin >> it;
+    int l = 0, r = inf, ans;
+    while (l <= r)
     {
-        vector<int> temp(n);
-        for (auto &it : temp)
-            cin >> it;
-        for (int i = 2; i < n; i++)
-            v[temp[i - 1]].push_back(temp[i]);
-    }
-    vector<int> vis(n + 1, 0);
-    for (int i = 1; i <= n; i++)
-    {
-        int fl = 0;
-        if (!vis[i])
-            dfs(i, fl, vis, v);
-        if (fl)
-        {
-            cout << "NO\n";
-            return;
-        }
-    }
-    cout << "YES\n";
+        int m = (l + r) / 2;
+        if (ok(m, t, v) >= t)
+            ans = m, r = m - 1;
+        else
+            l = m + 1;
+    }r
+    cout << ans << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -69,7 +54,7 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    cin >> test;
+    // cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";

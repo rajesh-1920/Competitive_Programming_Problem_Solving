@@ -1,11 +1,11 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  11.02.2025
+// Date  :  31.10.2025
 
 #include <bits/stdc++.h>
 using namespace std;
 //----------------------------(definition section)-----------------------------------------
-#define dbg(x) cout << #x << " = " << x << '\n'
+#define dbg(x) cout << #x << " = " << x << '\n';
 #define int long long int
 #define fi first
 #define sc second
@@ -17,7 +17,7 @@ const double eps = 1e-1;
 const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
 const int N = 1e5 + 10;
-//-----------------------------------------------------------------------------------------
+//------------------------------(solve)----------------------------------------------------
 inline int normal(int a, int m)
 {
     a = a - (a / m) * m;
@@ -28,8 +28,6 @@ inline int normal(int a, int m)
 inline int modadd(int a, int b, int m)
 {
     a = normal(a, m), b = normal(b, m);
-    if (a - m < b)
-        return normal((b - a + m), m);
     return normal(a + b, m);
 }
 inline int modsub(int a, int b, int m)
@@ -62,9 +60,9 @@ inline int moddiv(int a, int b, int m)
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    int a, b;
-    cin >> a >> b;
-    cout << binexpo(a, b, MOD) << '\n';
+    int n;
+    cin >> n;
+    cout << binexpo(2, n, MOD) << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -73,7 +71,7 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    cin >> test;
+    // cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";

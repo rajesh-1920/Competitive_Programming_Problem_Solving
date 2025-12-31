@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  19.10.2025
+// Date  :  13.11.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -16,51 +16,46 @@ using namespace std;
 const double eps = 1e-1;
 const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
-const int N = 2e5 + 10;
+const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
-void dfs(int n, int &fl, vector<int> &vis, vector<vector<int>> &v)
+void dfs(int n, vector<vector<int>> &g, vector<int> &topo, vector<int> &vis)
 {
     vis[n] = 1;
-    if (fl)
-        return;
-    for (auto it : v[n])
-    {
-        if (vis[it] == 1)
-            fl = 1;
-        if (fl)
-            return;
+    for (auto it : g[n])
         if (!vis[it])
-            dfs(it, fl, vis, v);
-    }
-    vis[n] = 2;
+            dfs(it, g, topo, vis);
+    topo.push_back(n);
 }
 void solve(void)
 {
-    int n, k;
-    cin >> n >> k;
-    // dbg(n);
-    vector<vector<int>> v(n + 1);
-    while (k--)
-    {
-        vector<int> temp(n);
-        for (auto &it : temp)
-            cin >> it;
-        for (int i = 2; i < n; i++)
-            v[temp[i - 1]].push_back(temp[i]);
-    }
-    vector<int> vis(n + 1, 0);
+    int n, m;
+    cin >> n >> m;
+    vector<pair<int, int>> edge(m);
+    for (auto &it : edge)
+        cin >> it.fi >> it.sc;
+    vector<vector<int>> g(n + 1), rg(n + 1);
+    for (auto it : edge)
+        g[it.fi].push_back(it.sc), rg[it.sc].push_back(it.fi);
+    vector<int> topo, vis(n + 1, 0), rvis(n + 1, 0), ans(n + 1, -1);
     for (int i = 1; i <= n; i++)
-    {
-        int fl = 0;
         if (!vis[i])
-            dfs(i, fl, vis, v);
-        if (fl)
-        {
-            cout << "NO\n";
-            return;
-        }
+            dfs(i, g, topo, vis);
+    int cnt = 0;
+    while (!topo.empty())
+    {
+        int t = topo.back();
+        topo.pop_back();
+        if (rvis[t])
+            continue;
+        vector<int> temp;
+        dfs(t, rg, temp, rvis);
+        cnt++;
+        for (auto it : temp)
+            ans[it] = cnt;
     }
-    cout << "YES\n";
+    cout << cnt << '\n';
+    for (int i = 1; i <= n; i++)
+        cout << ans[i] << ' ';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -69,7 +64,7 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    cin >> test;
+    // cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";

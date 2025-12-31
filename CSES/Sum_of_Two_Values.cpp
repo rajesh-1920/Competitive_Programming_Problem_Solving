@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  19.10.2025
+// Date  :  13.11.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -16,51 +16,52 @@ using namespace std;
 const double eps = 1e-1;
 const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
-const int N = 2e5 + 10;
+const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
-void dfs(int n, int &fl, vector<int> &vis, vector<vector<int>> &v)
+int ok(int x, vector<pair<int, int>> &v)
 {
-    vis[n] = 1;
-    if (fl)
-        return;
-    for (auto it : v[n])
+    int p = 0, l = 0, r = v.size() - 1;
+    while (l <= r)
     {
-        if (vis[it] == 1)
-            fl = 1;
-        if (fl)
-            return;
-        if (!vis[it])
-            dfs(it, fl, vis, v);
+        int m = (l + r) / 2;
+        if (v[m].fi > x)
+            r = m - 1;
+        else if (v[m].fi < x)
+            l = m + 1;
+        else
+            p = m, r = m - 1;
     }
-    vis[n] = 2;
+    return p;
 }
 void solve(void)
 {
-    int n, k;
-    cin >> n >> k;
-    // dbg(n);
-    vector<vector<int>> v(n + 1);
-    while (k--)
-    {
-        vector<int> temp(n);
-        for (auto &it : temp)
-            cin >> it;
-        for (int i = 2; i < n; i++)
-            v[temp[i - 1]].push_back(temp[i]);
-    }
-    vector<int> vis(n + 1, 0);
+    int n, x;
+    cin >> n >> x;
+    vector<pair<int, int>> v(n);
     for (int i = 1; i <= n; i++)
     {
-        int fl = 0;
-        if (!vis[i])
-            dfs(i, fl, vis, v);
-        if (fl)
+        cin >> v[i - 1].fi;
+        v[i - 1].sc = i;
+    }
+    sort(all(v));
+    for (auto it : v)
+    {
+        if (it.fi >= x)
+            break;
+        int t = x - it.fi;
+        int p = ok(t, v);
+        if (v[p].fi == t && v[p].sc != it.sc)
         {
-            cout << "NO\n";
+            cout << min(it.sc, v[p].sc) << ' ' << max(it.sc, v[p].sc) << '\n';
+            return;
+        }
+        if (p + 1 < n && v[p + 1].fi == t && v[p + 1].sc != it.sc)
+        {
+            cout << min(it.sc, v[p + 1].sc) << ' ' << max(it.sc, v[p + 1].sc) << '\n';
             return;
         }
     }
-    cout << "YES\n";
+    cout << "IMPOSSIBLE\n";
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -69,7 +70,7 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    cin >> test;
+    // cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";

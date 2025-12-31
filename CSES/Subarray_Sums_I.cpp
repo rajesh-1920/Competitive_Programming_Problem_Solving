@@ -1,11 +1,11 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  11.02.2025
+// Date  :  13.11.2025
 
 #include <bits/stdc++.h>
 using namespace std;
 //----------------------------(definition section)-----------------------------------------
-#define dbg(x) cout << #x << " = " << x << '\n'
+#define dbg(x) cout << #x << " = " << x << '\n';
 #define int long long int
 #define fi first
 #define sc second
@@ -16,23 +16,24 @@ using namespace std;
 const double eps = 1e-1;
 const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
-const int N = 1e6 + 10;
-//-----------------------------------------------------------------------------------------
-vector<int> nod(N, 1), sod(N, 1);
-void sieve()
-{
-    for (int i = 2; i < N; i++)
-        for (int j = i; j < N; j += i)
-        {
-            nod[j]++;
-            sod[j] += i;
-        }
-}
+const int N = 1e5 + 10;
+//------------------------------(solve)----------------------------------------------------
 void solve(void)
 {
-    int n;
-    cin >> n;
-    cout << nod[n] << '\n';
+    int n, x, ans = 0;
+    cin >> n >> x;
+    map<int, int> mp;
+    mp[0] = 1;
+    int s = 0;
+    while (n--)
+    {
+        int t;
+        cin >> t;
+        s += t;
+        ans += mp[s - x];
+        mp[s]++;
+    }
+    cout << ans << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -41,8 +42,7 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    sieve();
-    cin >> test;
+    // cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";
