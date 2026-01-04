@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
-// CF    :  rajesh-1920
-// Date  :  13.11.2025
+// CF    :  rajesh_1920
+// Date  :  04.01.2026
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -16,29 +16,41 @@ using namespace std;
 const double eps = 1e-1;
 const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
-const int N = 1e5 + 10;
+const int N = 1e6 + 10;
 //------------------------------(solve)----------------------------------------------------
+vector<int> is(N, 1);
+void sieve()
+{
+    is[1] = is[0] = 0;
+    for (int i = 4; i < N; i += 2)
+        is[i] = 0;
+    for (int i = 3; i < N; i += 2)
+        if (is[i])
+            for (int j = i + i + i; j < N; j += 2 * i)
+                is[j] = 0;
+}
 void solve(void)
 {
-    // int n;
-    // string s;
-    // cin >> n >> s;
-    // // vector<int> v(n); for (auto &it : v) cin >> it;
-    // // vector<vector<int>> v(110, vector<int>(110, 0));
-    // for (int i = 0; i + 3 < n; i++)
-    // {
-    //     if (s[i] == 'c' && s[i + 1] == 'o' && s[i + 2] == 'd' && s[i + 3] == 'e')
-    //     {
-    //         cout << "AC\n";
-    //         return;
-    //     }
-    //     if (s[i] == 'c' && s[i + 1] == 'h' && s[i + 2] == 'e' && s[i + 3] == 'f')
-    //     {
-    //         cout << "WA\n";
-    //         return;
-    //     }
-    // }
-     cout << "WA\n";
+    sieve();
+    int n;
+    cin >> n;
+    for (int i = 1, x; i <= n; i++)
+    {
+        cin >> x;
+        int t = ((int)sqrt(x)) - 5;
+        bool fl = false;
+        for (int j = max(1LL, t);; j++)
+        {
+            if (j * j > x)
+                break;
+            if (j * j == x && is[j])
+            {
+                fl = true;
+                break;
+            }
+        }
+        cout << (fl == true ? "YES\n" : "NO\n");
+    }
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -47,7 +59,7 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    cin >> test;
+    // cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";

@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
-// CF    :  rajesh-1920
-// Date  :  13.11.2025
+// CF    :  rajesh_1920
+// Date  :  04.01.2026
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -20,25 +20,36 @@ const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
 void solve(void)
 {
-    // int n;
-    // string s;
-    // cin >> n >> s;
-    // // vector<int> v(n); for (auto &it : v) cin >> it;
-    // // vector<vector<int>> v(110, vector<int>(110, 0));
-    // for (int i = 0; i + 3 < n; i++)
-    // {
-    //     if (s[i] == 'c' && s[i + 1] == 'o' && s[i + 2] == 'd' && s[i + 3] == 'e')
-    //     {
-    //         cout << "AC\n";
-    //         return;
-    //     }
-    //     if (s[i] == 'c' && s[i + 1] == 'h' && s[i + 2] == 'e' && s[i + 3] == 'f')
-    //     {
-    //         cout << "WA\n";
-    //         return;
-    //     }
-    // }
-     cout << "WA\n";
+    int n;
+    cin >> n;
+    int c0 = 0, p0, c1 = 0, p1;
+    for (int i = 1, x; i <= n; i++)
+    {
+        cin >> x;
+        if (x & 1)
+        {
+            if (c1 > 1)
+            {
+                cout << i << '\n';
+                return;
+            }
+            c0++;
+            p0 = i;
+        }
+        else
+        {
+            if (c0 > 1)
+            {
+                cout << i << '\n';
+                return;
+            }
+            c1++;
+            p1 = i;
+        }
+    }
+    if (c0 < c1)
+        p1 = p0;
+    cout << p1 << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -47,7 +58,7 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    cin >> test;
+    // cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";
