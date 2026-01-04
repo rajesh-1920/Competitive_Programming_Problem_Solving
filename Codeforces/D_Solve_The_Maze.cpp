@@ -20,46 +20,40 @@ const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
 void solve(void)
 {
-    int n;
-    cin >> n;
-    vector<int> temp(n + 5, inf), ind(n + 5, -1), ans;
-    map<int, int> pre, mp;
-    for (int i = 1, x; i <= n; i++)
-    {
-        cin >> x;
-        int t = upper_bound(all(temp), x) - temp.begin();
-        mp[x] = i;
-        temp[t] = x;
-        ind[t] = i;
-        if (t > 0 && temp[t - 1] + 1 == x)
-            pre[i] = ind[t - 1];
-        else if (mp.find(x - 1) != mp.end())
-            pre[i] = mp[x - 1];
-    }
-    set<int> st;
-    for (int i = n; i > 0; i--)
-    {
-        if (st.find(i) == st.end())
+    int n, m;
+    cin >> n >> m;
+    vector<vector<char>> gg(n, vector<char>(m)), bb(n, vector<char>(m));
+    vector<vector<int>> g(n, vector<int>(m, -1)), b(n, vector<int>(m, -1));
+    queue<pair<int, int>> good, bad;
+    for (int i = 0; i < n; i++)
+
+        for (int j = 0; j < m; j++)
         {
-            vector<int> aa;
-            int x = i, cnt = n + 5;
-            while (x && cnt--)
-            {
-                aa.push_back(x);
-                st.insert(x);
-                x = pre[x];
-                if (st.find(x) != st.end())
-                    break;
+            cin >> gg[i][j];
+            bb[i][j] = gg[i][j];
+            if (bb[i][j] == 'G')
+                good.push({i, j}), g[i][j] = 0;
+            if (bb[i][j] == 'B')
+                bad.push({i, j}), b[i][j] = 0;
+        }
+    if (good.empty() || bad.empty())
+    {
+        cout << "Yes\n";
+        return;
+    }
+    vector<int> dx = {0, 0, -1, 1}, dy = {1, -1, 0, 0};
+    while (!good.empty())
+    {
+        int x = good.front().fi, y = good.front().sc;
+        good.pop();
+        for (int i = 0; i < 4; i++)
+        {
+            int tx = x + dx[i], ty = y + dy[i];
+            if(tx>=0&&tx<n&&ty>=0&&ty<m&&gg[tx][ty]=='.'){
+                gg[tx][ty]=='.';
             }
-            if (aa.size() > ans.size())
-                ans = aa;
         }
     }
-    reverse(all(ans));
-    cout << ans.size() << '\n';
-    for (auto it : ans)
-        cout << it << ' ';
-    cout << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -68,7 +62,7 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    // cin >> test;
+    cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";

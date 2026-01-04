@@ -22,43 +22,23 @@ void solve(void)
 {
     int n;
     cin >> n;
-    vector<int> temp(n + 5, inf), ind(n + 5, -1), ans;
-    map<int, int> pre, mp;
-    for (int i = 1, x; i <= n; i++)
+    vector<int> v(n + 1);
+    priority_queue<pair<int, pair<int, int>>> pq;
+    pq.push({n, {-1, -n}});
+    int i = 1;
+    while (!pq.empty())
     {
-        cin >> x;
-        int t = upper_bound(all(temp), x) - temp.begin();
-        mp[x] = i;
-        temp[t] = x;
-        ind[t] = i;
-        if (t > 0 && temp[t - 1] + 1 == x)
-            pre[i] = ind[t - 1];
-        else if (mp.find(x - 1) != mp.end())
-            pre[i] = mp[x - 1];
+        int sz = pq.top().fi, st = -pq.top().sc.fi, en = -pq.top().sc.sc;
+        pq.pop();
+        int mid = st + (en - st) / 2;
+        v[mid] = i++;
+        if (mid < en)
+            pq.push({(en - mid), {-(mid + 1), -en}});
+        if (st < mid)
+            pq.push({(mid - st), {-st, -(mid - 1)}});
     }
-    set<int> st;
-    for (int i = n; i > 0; i--)
-    {
-        if (st.find(i) == st.end())
-        {
-            vector<int> aa;
-            int x = i, cnt = n + 5;
-            while (x && cnt--)
-            {
-                aa.push_back(x);
-                st.insert(x);
-                x = pre[x];
-                if (st.find(x) != st.end())
-                    break;
-            }
-            if (aa.size() > ans.size())
-                ans = aa;
-        }
-    }
-    reverse(all(ans));
-    cout << ans.size() << '\n';
-    for (auto it : ans)
-        cout << it << ' ';
+    for (int i = 1; i <= n; i++)
+        cout << v[i] << ' ';
     cout << '\n';
 }
 //-----------------------------------------------------------------------------------------
@@ -68,7 +48,7 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1, T;
-    // cin >> test;
+    cin >> test;
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";
