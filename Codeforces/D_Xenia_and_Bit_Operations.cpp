@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  16.06.2025
+// Date  :  05.01.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -42,7 +42,7 @@ int init(int nd, int l, int r)
 }
 int update(int nd, int l, int r, int &pos, int &val)
 {
-    if (l == pos || r == pos)
+    if (l == pos && r == pos)
     {
         tree[nd] = val;
         return 1;
@@ -68,7 +68,7 @@ void solve(void)
 {
     int n, m;
     cin >> n >> m;
-    for (int i = 0; i < (1 << n); i++)
+    for (int i = 1; i <=(1 << n); i++)
         cin >> a[i];
     int tt = init(1, 1, (1 << n));
     while (m--)

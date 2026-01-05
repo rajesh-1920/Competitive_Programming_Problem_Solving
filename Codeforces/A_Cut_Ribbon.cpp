@@ -18,39 +18,19 @@ const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
 const int N = 1e6 + 10;
 //------------------------------(solve)----------------------------------------------------
-vector<int> is(N, 1);
-void sieve()
-{
-    is[1] = is[0] = 0;
-    for (int i = 4; i < N; i += 2)
-        is[i] = 0;
-    for (int i = 3; i < N; i += 2)
-        if (is[i])
-            for (int j = i + i + i; j < N; j += 2 * i)
-                is[j] = 0;
-}
 void solve(void)
 {
-    sieve();
-    int n;
-    cin >> n;
-    for (int i = 1, x; i <= n; i++)
-    {
-        cin >> x;
-        int t = ((int)sqrt(x)) - 5;
-        bool fl = false;
-        for (int j = max(1LL, t);; j++)
+    int n, a, b, c;
+    cin >> n >> a >> b >> c;
+    int ans = 0;
+    for (int i = 0; i <= n; i++)
+        for (int j = 0; j <= n; j++)
         {
-            if (j * j > x)
-                break;
-            if (j * j == x && is[j])
-            {
-                fl = true;
-                break;
-            }
+            int t = n - (a * i + b * j);
+            if (t >= 0 && t % c == 0)
+                ans = max(ans, i + j + (t / c));
         }
-        cout << (fl == true ? "YES\n" : "NO\n");
-    }
+    cout << ans << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()

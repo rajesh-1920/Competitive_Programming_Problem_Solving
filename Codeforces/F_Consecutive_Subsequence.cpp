@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh_1920
-// Date  :  04.01.2026
+// Date  :  02.01.2026
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -14,48 +14,62 @@ using namespace std;
 #define rall(s) s.rbegin(), s.rend()
 
 const double eps = 1e-1;
-const int inf = 1e16 + 7;
+const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
 const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
+void dfs(int n, vector<int> &vis, vector<int> &ch, vector<int> &depth, vector<vector<int>> &v)
+{
+    vis[n] = 1;
+    for (auto it : v[n])
+        if (!vis[it])
+        {
+            dfs(it, vis, ch, depth, v);
+            if (depth[n] < depth[it] + 1)
+                depth[n] = depth[it] + 1, ch[n] = it;
+        }
+}
 void solve(void)
 {
     int n;
     cin >> n;
-    vector<int> temp(n + 5, inf), ind(n + 5, -1), ans;
-    map<int, int> pre, mp;
+    vector<vector<int>> v(n + 1);
+    map<int, int> mp;
     for (int i = 1, x; i <= n; i++)
     {
         cin >> x;
-        int t = upper_bound(all(temp), x) - temp.begin();
-        mp[x] = i;
-        temp[t] = x;
-        ind[t] = i;
-        if (t > 0 && temp[t - 1] + 1 == x)
-            pre[i] = ind[t - 1];
-        else if (mp.find(x - 1) != mp.end())
-            pre[i] = mp[x - 1];
-    }
-    set<int> st;
-    for (int i = n; i > 0; i--)
-    {
-        if (st.find(i) == st.end())
+        if (mp.find(x) == mp.end())
+            mp[x] = i;
+        auto it = mp.lower_bound(x);
+        if (it != mp.begin())
         {
-            vector<int> aa;
-            int x = i, cnt = n + 5;
-            while (x && cnt--)
-            {
-                aa.push_back(x);
-                st.insert(x);
-                x = pre[x];
-                if (st.find(x) != st.end())
-                    break;
-            }
-            if (aa.size() > ans.size())
-                ans = aa;
+            it--;
+            if ((*it).fi == x - 1)
+                v[(*it).sc].push_back(i);
         }
     }
-    reverse(all(ans));
+    vector<int> ans, vis(n + 1, 0), ch(n + 1, 0), depth(n + 1, 0);
+    for (int i = 1; i <= n; i++)
+        if (!vis[i])
+            dfs(i, vis, ch, depth, v);
+    // for (auto it : depth)
+    //     cout << it << ' ';
+    // cout << '\n';
+    // for (auto it : ch)
+    //     cout << it << ' ';
+    // cout << '\n';
+
+    int mx = 0, pp = 1;
+    for (int i = 1; i <= n; i++)
+    {
+        if (depth[i] > mx)
+            mx = depth[i], pp = i;
+    }
+    while (pp)
+    {
+        ans.push_back(pp);
+        pp = ch[pp];
+    }
     cout << ans.size() << '\n';
     for (auto it : ans)
         cout << it << ' ';
