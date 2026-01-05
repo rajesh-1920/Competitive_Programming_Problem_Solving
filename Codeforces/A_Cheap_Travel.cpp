@@ -22,8 +22,8 @@ void solve(void)
 {
     int n, m, a, b, ans = inf;
     cin >> n >> m >> a >> b;
-    for (int i = 0; i * m <= n; i++)
-        ans = min(ans, n * a - i * m * a + i * b);
+    for (int i = 0; i * m <= 1000*n; i++)
+        ans = min(ans, max(0LL,(n - i * m) * a) + i * b);
     cout << ans << '\n';
 }
 //-----------------------------------------------------------------------------------------
