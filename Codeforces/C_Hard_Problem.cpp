@@ -1,84 +1,73 @@
+// Author:  Rajesh Biswas
+// CF    :  rajesh_1920
+// Date  :  11.01.2026
 
 #include <bits/stdc++.h>
 using namespace std;
-
-// tazim vai
-
+//----------------------------(definition section)-----------------------------------------
+#define dbg(x) cout << #x << " = " << x << '\n';
 #define int long long int
-inline int binpow(int a, int b, int _mod)
-{
-    int res = 1;
-    while (b)
-    {
-        if (b & 1)
-            res = (res * a) % _mod;
-        a = (a * a) % _mod;
-    }
-    return res % _mod;
-}
-const int N = 1e6 + 10;
-const int mod1 = 1e9 + 7, p1 = 137, mod2 = 1e9 + 9, p2 = 277;
-vector<pair<int, int>> powers(N), inv_powers(N);
-void precal()
-{
-    inv_powers[0] = powers[0] = {1, 1};
-    int ip1 = binpow(p1, mod1 - 2, mod1);
-    int ip2 = binpow(p2, mod2 - 2, mod2);
-    for (int i = 1; i < N; i++)
-    {
-        powers[i].first = powers[i - 1].first * p1 % mod1;
-        powers[i].second = powers[i - 1].second * p2 % mod2;
+#define fi first
+#define sc second
 
-        inv_powers[i].first = inv_powers[i - 1].first * ip1 % mod1;
-        inv_powers[i].second = inv_powers[i - 1].second * ip2 % mod2;
-    }
-}
+#define all(s) s.begin(), s.end()
+#define rall(s) s.rbegin(), s.rend()
 
-pair<int, int> forward_hash(string &s)
+const double eps = 1e-1;
+const int inf = 9e16 + 7;
+const int MOD = 1e9 + 7;
+const int N = 1e5 + 10;
+//------------------------------(solve)----------------------------------------------------
+int dp[N][2];
+int ok(int i, int fl, vector<int> &cost, vector<string> &s)
 {
-    pair<int, int> hsh = {0, 0};
-    for (int j = 0; j < s.size(); j++)
-    {
-        hsh.first = (hsh.first + (powers[j].first * s[j]) % mod1) % mod1;
-        hsh.second = (hsh.second + (powers[j].second * s[j]) % mod2) % mod2;
-    }
-    return hsh;
-}
-pair<int, int> reverse_hash(string &s)
-{
-    pair<int, int> hsh = {0, 0};
-    for (int j = s.size() - 1, i = 0; j >= 0; j--, i++)
-    {
-        hsh.first = (hsh.first + (powers[i].first * s[j]) % mod1) % mod1;
-        hsh.second = (hsh.second + (powers[i].second * s[j]) % mod2) % mod2;
-    }
-    return hsh;
-}
-
-int ok(int n, int f, const vector<int> &v, const vector<pair<int, int>> forr,
-       vector<pair<int, int>> revv)
-{
-    if (n == v.size())
+    if (i == cost.size())
         return 0;
-    int ans = 0;
-    
-    return ans;
+    if (dp[i][fl] >= 0)
+        return dp[i][fl];
+    int ans = inf;
+    string t = s[i];
+    reverse(all(t));
+    if (fl == 0)
+    {
+        int c = 1;
+        if (s[i - 1] <= s[i])
+            ans = min(ans, ok(i + 1, 0, cost, s)), c = 0;
+        if (s[i - 1] <= t)
+            ans = min(ans, ok(i + 1, 1, cost, s) + cost[i]), c = 0;
+        if (c)
+            return inf;
+    }
+    else
+    {
+        int c = 1;
+        string temp = s[i - 1];
+        reverse(all(temp));
+        if (temp <= s[i])
+            ans = min(ans, ok(i + 1, 0, cost, s)), c = 0;
+        if (temp <= t)
+            ans = min(ans, ok(i + 1, 1, cost, s) + cost[i]), c = 0;
+        if (c)
+            return inf;
+    }
+    return dp[i][fl] = ans;
 }
 void solve(void)
 {
+    memset(dp, -1, sizeof(dp));
     int n;
     cin >> n;
-    vector<int> v(n);
-    for (auto &it : v)
+    vector<int> cost(n);
+    vector<string> s(n);
+    for (auto &it : cost)
         cin >> it;
-    vector<pair<int, int>> forr(n), revv(n);
-    for (int i = 0; i < n; i++)
-    {
-        string s;
-        cin >> s;
-        forr[i] = forward_hash(s);
-        revv[i] = reverse_hash(s);
-    }
+    for (auto &it : s)
+        cin >> it;
+    int ans = ok(1, 0, cost, s);
+    ans = min(ans, ok(1, 1, cost, s) + cost.front());
+    if (ans >= inf)
+        ans = -1;
+    cout << ans << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
@@ -91,7 +80,6 @@ signed main()
     for (T = 1; T <= test; T++)
     {
         // cout << "Case " << T << ": ";
-        precal();
         solve();
     }
     return 0;
