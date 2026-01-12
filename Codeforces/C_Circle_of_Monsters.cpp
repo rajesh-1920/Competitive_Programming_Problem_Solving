@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh_1920
-// Date  :  08.01.2026
+// Date  :  12.01.2026
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -29,7 +29,7 @@ void solve(void)
     {
         if (v[i].fi > v[i - 1].sc)
         {
-            ans += v[i].fi - v[i].sc;
+            ans += v[i].fi - v[i - 1].sc;
             v[i].fi = v[i - 1].sc;
         }
     }
