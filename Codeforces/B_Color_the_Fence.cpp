@@ -6,7 +6,6 @@
 using namespace std;
 //----------------------------(definition section)-----------------------------------------
 #define dbg(x) cout << #x << " = " << x << '\n';
-#define int long long int
 #define fi first
 #define sc second
 
@@ -14,28 +13,28 @@ using namespace std;
 #define rall(s) s.rbegin(), s.rend()
 
 const double eps = 1e-1;
-const int inf = 9e16 + 7;
+const int inf = 1e9 + 7;
 const int MOD = 1e9 + 7;
 const int N = 1e6 + 10;
 //------------------------------(solve)----------------------------------------------------
 int dp[N][10], choise[N][10];
 int ok(int n, int i, vector<int> &v)
 {
-    if (i >= v.size() || n <= 0)
+    if (i <= 0 || n <= 0)
         return 0;
     if (dp[n][i] != -1)
         return dp[n][i];
-    int ans = ok(n, i + 1, v);
+    int ans = ok(n, i - 1, v);
     choise[n][i] = 0;
     if (n >= v[i])
     {
-        int next = ok(n - v[i], i + 1, v) + 1;
+        int next = ok(n - v[i], i, v) + 1;
         if (next >= ans)
         {
             ans = next;
             choise[n][i] = 1;
         }
-        next = ok(n - v[i], i, v) + 1;
+        next = ok(n - v[i], i - 1, v) + 1;
         if (next > ans)
         {
             ans = next;
@@ -46,19 +45,19 @@ int ok(int n, int i, vector<int> &v)
 }
 void path(int n, int i, vector<int> &v, vector<int> &ans)
 {
-    if (n <= 0 || i >= 10)
+    if (n <= 0 || i <= 0)
         return;
     if (choise[n][i] == 0)
-        path(n, i + 1, v, ans);
+        path(n, i - 1, v, ans);
     else if (choise[n][i] == 1)
     {
         ans.push_back(i);
-        path(n - v[i], i + 1, v, ans);
+        path(n - v[i], i, v, ans);
     }
     else
     {
         ans.push_back(i);
-        path(n - v[i], i, v, ans);
+        path(n - v[i], i - 1, v, ans);
     }
 }
 void solve(void)
@@ -66,16 +65,23 @@ void solve(void)
     memset(dp, -1, sizeof(dp));
     int n;
     cin >> n;
-    vector<int> v(10), ans;
+    map<int, int> mp;
     for (int i = 1, x; i <= 9; i++)
-        cin >> v[i];
-    int t = ok(n, 1, v);
+    {
+        cin >> x;
+        mp[x] = max(mp[x], i);
+    }
+    vector<int> v(10, inf);
+    for (auto &it : mp)
+        v[it.sc] = it.fi;
+    int t = ok(n, 9, v);
     if (t == 0)
     {
         cout << -1 << '\n';
         return;
     }
-    path(n, 1, v, ans);
+    vector<int> ans;
+    path(n, 9, v, ans);
     sort(rall(ans));
     for (auto &it : ans)
         cout << it;
