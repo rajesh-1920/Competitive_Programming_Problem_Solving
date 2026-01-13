@@ -1,11 +1,12 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh_1920
-// Date  :  12.01.2026
+// Date  :  13.01.2026
 
 #include <bits/stdc++.h>
 using namespace std;
 //----------------------------(definition section)-----------------------------------------
 #define dbg(x) cout << #x << " = " << x << '\n';
+#define int long long int
 #define fi first
 #define sc second
 
@@ -17,31 +18,35 @@ const int inf = 9e16 + 7;
 const int MOD = 1e9 + 7;
 const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
+int ok(int i, int fl, vector<pair<int, int>> &v, vector<vector<int>> &dp)
+{
+    if (i == v.size())
+        return (fl == 0 ? inf : 0);
+    if (dp[i][fl] != -1)
+        return dp[i][fl];
+    int ans = inf;
+    if (fl)
+        ans = ok(i + 1, fl, v, dp) + (max(0LL, (v[i].fi - v[i].sc)));
+    else
+    {
+        ans = ok(i + 1, 0, v, dp) + (max(0LL, (v[i].fi - v[i].sc)));
+        ans = min(ans, ok(i + 1, 1, v, dp) + v[i].fi);
+    }
+    return dp[i][fl] = ans;
+}
 void solve(void)
 {
     int n;
     cin >> n;
     vector<pair<int, int>> v(n);
+    vector<vector<int>> dp(2 * n + 10, vector<int>(5, -1));
     for (auto &it : v)
         cin >> it.fi >> it.sc;
-    int ans = 0;
-    for (int i = 1; i < n; i++)
-    {
-        if (v[i].fi > v[i - 1].sc)
-        {
-            ans += v[i].fi - v[i - 1].sc;
-            v[i].fi = v[i - 1].sc;
-        }
-    }
-    if (v[0].fi > v[n - 1].sc)
-    {
-        ans += v[0].fi - v[n - 1].sc;
-        v[0].fi = v[n - 1].sc;
-    }
-    int mn = inf;
-    for (auto it : v)
-        mn = min(mn, it.fi);
-    cout << ans + mn << '\n';
+    for (int i = 0; i < n; i++)
+        v.push_back({v[i].fi, v[i].sc});
+    int ans = ok(0, 0, v, dp);
+    ans - min(ans, ok(0, 1, v, dp) + v[0].fi);
+    cout << ans << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
