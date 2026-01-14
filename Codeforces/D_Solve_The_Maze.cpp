@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh_1920
-// Date  :  04.01.2026
+// Date  :  14.01.2026
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -23,7 +23,7 @@ void solve(void)
     int n, m;
     cin >> n >> m;
     vector<vector<char>> gg(n, vector<char>(m)), bb(n, vector<char>(m));
-    vector<vector<int>> g(n, vector<int>(m, -1)), b(n, vector<int>(m, -1));
+    vector<vector<int>> gtime(n, vector<int>(m, MOD)), btime(n, vector<int>(m, MOD));
     queue<pair<int, int>> good, bad;
     for (int i = 0; i < n; i++)
 
@@ -32,9 +32,9 @@ void solve(void)
             cin >> gg[i][j];
             bb[i][j] = gg[i][j];
             if (bb[i][j] == 'G')
-                good.push({i, j}), g[i][j] = 0;
+                good.push({i, j}), gtime[i][j] = 0;
             if (bb[i][j] == 'B')
-                bad.push({i, j}), b[i][j] = 0;
+                bad.push({i, j}), btime[i][j] = 0;
         }
     if (good.empty() || bad.empty())
     {
@@ -42,18 +42,19 @@ void solve(void)
         return;
     }
     vector<int> dx = {0, 0, -1, 1}, dy = {1, -1, 0, 0};
-    while (!good.empty())
+    while (!bad.empty())
     {
-        int x = good.front().fi, y = good.front().sc;
-        good.pop();
+        int x = bad.front().fi, y = bad.front().sc;
+        bad.pop();
         for (int i = 0; i < 4; i++)
         {
             int tx = x + dx[i], ty = y + dy[i];
-            if(tx>=0&&tx<n&&ty>=0&&ty<m&&gg[tx][ty]=='.'){
-                gg[tx][ty]=='.';
-            }
+            if (tx >= 0 && tx < n && ty >= 0 && ty < m &&
+                bb[tx][ty] != '#' && btime[tx][ty] > btime[x][y] + 1)
+                btime[tx][ty] = btime[x][y] + 1, bad.push({tx, ty});
         }
     }
+    
 }
 //-----------------------------------------------------------------------------------------
 signed main()
