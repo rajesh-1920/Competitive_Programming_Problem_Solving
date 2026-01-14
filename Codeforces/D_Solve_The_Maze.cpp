@@ -6,7 +6,6 @@
 using namespace std;
 //----------------------------(definition section)-----------------------------------------
 #define dbg(x) cout << #x << " = " << x << '\n';
-#define int long long int
 #define fi first
 #define sc second
 
@@ -18,45 +17,58 @@ const int inf = 1e16 + 7;
 const int MOD = 1e9 + 7;
 const int N = 1e5 + 10;
 //------------------------------(solve)----------------------------------------------------
-void solve(void)
+void solve()
 {
     int n, m;
     cin >> n >> m;
-    vector<vector<char>> gg(n, vector<char>(m)), bb(n, vector<char>(m));
-    vector<vector<int>> gtime(n, vector<int>(m, MOD)), btime(n, vector<int>(m, MOD));
-    queue<pair<int, int>> good, bad;
-    for (int i = 0; i < n; i++)
-
-        for (int j = 0; j < m; j++)
-        {
-            cin >> gg[i][j];
-            bb[i][j] = gg[i][j];
-            if (bb[i][j] == 'G')
-                good.push({i, j}), gtime[i][j] = 0;
-            if (bb[i][j] == 'B')
-                bad.push({i, j}), btime[i][j] = 0;
-        }
-    if (good.empty() || bad.empty())
-    {
-        cout << "Yes\n";
-        return;
-    }
+    vector<vector<char>> v(n, vector<char>(m));
+    for (auto &it : v)
+        for (auto &ii : it)
+            cin >> ii;
     vector<int> dx = {0, 0, -1, 1}, dy = {1, -1, 0, 0};
-    while (!bad.empty())
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++)
+            if (v[i][j] == 'B')
+                for (int ii = 0; ii < 4; ii++)
+                {
+                    int tx = i + dx[ii], ty = j + dy[ii];
+                    if (tx >= 0 && tx < n && ty >= 0 && ty < m)
+                    {
+                        if (v[tx][ty] == 'G')
+                        {
+                            cout << "No\n";
+                            return;
+                        }
+                        if (v[tx][ty] != 'B')
+                            v[tx][ty] = '#';
+                    }
+                }
+
+    queue<pair<int, int>> q;
+    vector<vector<int>> vis(n, vector<int>(m, 0));
+    if (v[n - 1][m - 1] != '#')
+        q.push({n - 1, m - 1}), vis[n - 1][m - 1] = 1;
+    while (!q.empty())
     {
-        int x = bad.front().fi, y = bad.front().sc;
-        bad.pop();
-        for (int i = 0; i < 4; i++)
+        int x = q.front().fi, y = q.front().sc;
+        q.pop();
+        for (int ii = 0; ii < 4; ii++)
         {
-            int tx = x + dx[i], ty = y + dy[i];
+            int tx = x + dx[ii], ty = y + dy[ii];
             if (tx >= 0 && tx < n && ty >= 0 && ty < m &&
-                bb[tx][ty] != '#' && btime[tx][ty] > btime[x][y] + 1)
-                btime[tx][ty] = btime[x][y] + 1, bad.push({tx, ty});
+                vis[tx][ty] == 0 && v[tx][ty] != '#')
+                vis[tx][ty] = 1, q.push({tx, ty});
         }
     }
-    
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++)
+            if (v[i][j] == 'G' && vis[i][j] == 0)
+            {
+                cout << "No\n";
+                return;
+            }
+    cout << "Yes\n";
 }
-//-----------------------------------------------------------------------------------------
 signed main()
 {
     // cout << fixed << showpoint << setprecision(10);
