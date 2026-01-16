@@ -22,7 +22,6 @@ void solve(void)
 {
     string t, s = "#";
     cin >> t;
-    cout << t.size() << '\n';
     for (auto &it : t)
         s += it, s += "#";
     int n = s.size(), C = 0, R = 0;
@@ -33,14 +32,12 @@ void solve(void)
         if (i < R)
             p[i] = min(R - i, p[mir]);
         int a = i + p[i] + 1, b = i - p[i] - 1;
-        if (s[i] == '#')
+        // if (s[i] == '#')
         {
-            int fl = 0;
             while (a < n && b >= 0 &&
                    ((s[a] == '(' && s[b] == ')') || (s[a] == ')' && s[b] == '(') || (s[a] == '#' && s[b] == '#')))
-                p[i]++, a++, b--, fl = 1;
-            if (fl)
-                a--, b++;
+                p[i]++, a++, b--;
+            a--, b++;
             while (p[i] > 0 && ((s[a] == '(' && s[b] == ')') || (s[a] == '#' && s[b] == '#')))
                 p[i]--, a--, b++;
         }
@@ -48,16 +45,19 @@ void solve(void)
             C = i, R = i + p[i];
     }
     int mx = 0, ans = 0;
-    for (int i = 0; i < n; i++)
-        if (mx < p[i])
+    for (int i = 1; i + 1 < n; i++)
+        if (mx < p[i] && s[i] == '#' && ((s[i - 1] == ')' && s[i + 1] == '(') || (s[i - 1] == '(' && s[i + 1] == ')')))
             mx = p[i];
-    for (auto it : p)
-        cout << it << ' ';
-    cout << '\n';
+    // cout << s << '\n';
+    // for (auto it : p)
+    //     cout << it;
+    // cout << '\n';
+
     if (mx)
     {
         for (int i = 0; i < n; i++)
-            if (mx == p[i])
+            if (mx == p[i] && s[i] == '#' &&
+                ((s[i - 1] == ')' && s[i + 1] == '(') || (s[i - 1] == '(' && s[i + 1] == ')')))
                 ans++;
         if (mx & 1)
             mx++;
