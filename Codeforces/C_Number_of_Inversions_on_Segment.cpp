@@ -1,11 +1,9 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh_1920
-// Date  :  15.01.2026
+// Date  :  16.01.2026
 
 #include <bits/stdc++.h>
 using namespace std;
-
-#define dbg(x) cout << #x << " = " << x << '\n';
 #define int long long int
 struct stc
 {
