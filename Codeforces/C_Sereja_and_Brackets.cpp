@@ -68,22 +68,6 @@ void solve(void)
             else
                 cleft++, stl.insert(curr);
         }
-        while (curr > it.r)
-        {
-            if (s[curr] == ')')
-                if (cont[curr] != -1)
-                {
-                    cleft++, cans--;
-                    stl.insert(cont[curr]);
-                    cont[cont[curr]] = -1;
-                    cont[curr] = -1;
-                }
-                else
-                    cright--, str.erase(curr);
-            else
-                cleft--, stl.erase(curr);
-            curr--;
-        }
         while (curl > it.l)
         {
             curl--;
@@ -100,6 +84,22 @@ void solve(void)
                     cleft++, stl.insert(curl);
             else
                 cright++, str.insert(curl);
+        }
+        while (curr > it.r)
+        {
+            if (s[curr] == ')')
+                if (cont[curr] != -1)
+                {
+                    cleft++, cans--;
+                    stl.insert(cont[curr]);
+                    cont[cont[curr]] = -1;
+                    cont[curr] = -1;
+                }
+                else
+                    cright--, str.erase(curr);
+            else
+                cleft--, stl.erase(curr);
+            curr--;
         }
         while (curl < it.l)
         {
