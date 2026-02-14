@@ -22,28 +22,12 @@ class Solution
     const ll N = 1e9 + 10;
 
 public:
-    string findValidPair(string s)
+    vector<bool> palindromePath(int n, vector<vector<int>> &edges, string s, vector<string> &queries)
     {
-        map<char, int> mp;
-        for (auto it : s)
-            mp[it]++;
-        string ans = "";
-        for (int i = 0; i + 1 < s.size(); i++)
-        {
-            int tm = s[i] - '0';
-            int tt = s[i + 1] - '0';
-            // dbg(tt);
-            // dbg(mp[s[i + 1]]);
-            if (tt == mp[s[i + 1]] && tm == mp[s[i]] && s[i] != s[i + 1])
-            {
-                ans.push_back(s[i]);
-                ans.push_back(s[i + 1]);
-                break;
-            }
-        }
-        if (ans.size() == 1)
-            ans.pop_back();
-        return ans;
+        vector<vector<int>> g(n + 5);
+        for (auto &it : edges)
+            g[it[0]].push_back(it[1]), g[it[1]].push_back(it[0]);
+        
     }
 };
 //-----------------------------------------------------------------------------------------
@@ -53,9 +37,15 @@ int main()
     cin.tie(NULL);
     {
         Solution aa;
-        string s;
-        cin >> s;
-        cout << aa.findValidPair(s);
+        int n = 4;
+        vector<vector<int>> edges = {{0, 1}, {0, 2}, {0, 3}};
+        string s = "abca";
+        vector<string> queries = {"query 1 2", "update 0 b",
+                                  "query 2 3", "update 3 a", "query 1 3"};
+
+        vector<bool> ans = aa.palindromePath(n, edges, s, queries);
+        for (auto it : ans)
+            cout << it << ' ';
     }
     return 0;
 }
