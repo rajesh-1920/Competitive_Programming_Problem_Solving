@@ -19,15 +19,42 @@ const int N = 1e7 + 1;
 //-----------------------------------------------------------------------------------------
 void solve(void)
 {
-    int n;
-    cin >> n;
-    int ans = 0;
-    for (int i = 2; i <= n; i++)
-        if (i & 1)
-            ans = ((ans - 1) * 3) % MOD;
+    int n, k;
+    string s;
+    cin >> n >> k >> s;
+    int ans = 0, l = 0, r = n;
+    while (l <= r)
+    {
+        int m = (l + r) / 2;
+        int ca = 0, cb = 0, fl = 0;
+        for (int i = 0; i < m; i++)
+            if (s[i] == 'a')
+                ca++;
+            else
+                cb++;
+        if (min(ca, cb) <= k)
+            fl = 1;
+        for (int i = m; i < n; i++)
+        {
+            if (fl)
+                break;
+            if (s[i - m] == 'a')
+                ca--;
+            else
+                cb--;
+            if (s[i] == 'a')
+                ca++;
+            else
+                cb++;
+            if (min(ca, cb) <= k)
+                fl = 1;
+        }
+        if (fl)
+            ans = max(ans, m), l = m + 1;
         else
-            ans = ((ans + 1) * 3) % MOD;
-    cout << ans;
+            r = m - 1;
+    }
+    cout << ans << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()
