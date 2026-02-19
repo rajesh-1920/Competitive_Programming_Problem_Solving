@@ -1,6 +1,6 @@
 // Author:  Rajesh Biswas
 // CF    :  rajesh-1920
-// Date  :  18.02.2026
+// Date  :  19.02.2026
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -15,31 +15,30 @@ using namespace std;
 
 const double eps = 1e-1;
 const int MOD = 1e9 + 7;
-const int N = 1e7 + 1;
+const int N = 5e5 + 100;
 //-----------------------------------------------------------------------------------------
-void solve(void)
+void solve()
 {
     int l, r, m;
     cin >> l >> r >> m;
     if (m < l)
-        for (int i = l; i <= r; i++)
-        {
-            int md = m - (m / i) * i;
-            int mn = min(md, i - md);
-            if (mn <= r - l)
-            {
-                cout << i << ' ' << min(r, r - mn) << ' ' << max(r, (r - mn)) << '\n';
-                return;
-            }
-        }
+    {
+        cout << l << ' ' << l << ' ' << l + l - m << '\n';
+        return;
+    }
     else
         for (int i = r; i >= l; i--)
         {
             int md = m - (m / i) * i;
-            int mn = min(md, i - md);
-            if (mn <= r - l)
+            if (md <= r - l)
             {
-                cout << i << ' ' << r << ' ' << (r - mn) << '\n';
+                cout << i << ' ' << r << ' ' << (r - md) << '\n';
+                return;
+            }
+            md = i - md;
+            if (md <= r - l)
+            {
+                cout << i << ' ' << r - md << ' ' << r << '\n';
                 return;
             }
         }
