@@ -22,9 +22,20 @@ void solve(void)
 {
     int n;
     cin >> n;
-    vector<int> v(n);
-    for (auto &it : v)
-        cin >> it;
+    int ans = 0, x = 1, mod = 1e9 + 7;
+    for (int i = n; i >= 1; i--)
+    {
+        int t = i;
+        while (t)
+        {
+            if (t & 1)
+                ans = (ans + x) % mod;
+            x = (x * 2) % mod;
+            t >>= 1;
+        }
+    }
+    int t = ans % mod;
+    cout << t << '\n';
 }
 //-----------------------------------------------------------------------------------------
 signed main()

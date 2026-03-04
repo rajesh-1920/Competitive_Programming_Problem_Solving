@@ -1,12 +1,12 @@
 // Author:  Rajesh Biswas
-// CF    :  rajesh-1920
-// Date  :  05.01.2025
+// CF    :  rajesh_1920
+// Date  :  04.03.2026
 
 #include <bits/stdc++.h>
 using namespace std;
-typedef long long int ll;
 //----------------------------(definition section)-----------------------------------------
-#define dbg(x) cout << #x << " = " << x << '\n'
+#define dbg(x) cout << #x << " = " << x << '\n';
+#define int long long int
 #define fi first
 #define sc second
 
@@ -14,15 +14,15 @@ typedef long long int ll;
 #define rall(s) s.rbegin(), s.rend()
 
 const double eps = 1e-1;
-const ll inf = 9e15 + 7;
-const ll MOD = 1e9 + 7;
-const ll N = 1e9 + 10;
-//-----------------------------------------------------------------------------------------
+const int inf = 9e16 + 7;
+const int MOD = 1e9 + 7;
+const int N = 1e5 + 10;
+//------------------------------(solve)----------------------------------------------------
 void solve(void)
 {
 }
 //-----------------------------------------------------------------------------------------
-int main()
+signed main()
 {
     // cout << fixed << showpoint << setprecision(10);
     ios_base::sync_with_stdio(false);
@@ -31,7 +31,7 @@ int main()
     // cin >> test;
     for (T = 1; T <= test; T++)
     {
-        // cout << "Case " << T << ": ";
+        // cout << "Case #" << T << ": ";
         solve();
     }
     return 0;
